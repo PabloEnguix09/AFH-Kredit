@@ -1,4 +1,4 @@
-const { db } = require("../utils/firebase/admin");
+const { db, auth, storage } = require("../utils/firebase/admin");
 const users = db.collection("usuarios");
 const { check_error } = require("../utils/utils");
 const Usuario = require("./models")
@@ -53,17 +53,27 @@ let get = async function (req, res) {
 
 let create = async (req, res) => {
         try {
-            console.log(req.body);
+            let response = {}
+            let photoURL = await get_default_image();
+
+            req.body.photoURL = photoURL;
+
+            response = await auth.createUser({
+                email: req.body.email,
+                password: generate_password(),
+                emailVerified: false,
+                disabled:false
+            })
+            console.log("Usuario autenticado");
+
             const usersRef = users.doc(req.body.email);
-            const response = await usersRef.create(req.body);
-    
-    
-            console.log(response);
+            response = await usersRef.create(req.body);
+            console.log("Usuario creado");
+
             res.status(201).send({message: "Usuario creado correctamente"})
-            console.log("res correcto: ", res)
         }
         catch (error) {
-            console.log("ERROR");
+            console.log("ERROR al crear usuario: ", error);
             check_error(error, res);
         }
 }
@@ -84,7 +94,11 @@ let update = async function (req, res) {
 
 let borrar = async function (req, res) {
     try {
-        const response = await users.doc(req.body.id).delete();
+        let response = await users.doc(req.body.id).delete();
+
+        response = await auth.getUserByEmail(req.body.id).then(async (user) => {
+            await auth.deleteUser(user.uid)
+        })
 
         console.log(response);
         res.status(204).send({});
@@ -94,10 +108,37 @@ let borrar = async function (req, res) {
     }
 }
 
+let login = async function (req, res) {
+
+}
+
+function generate_password() {
+    let longitud = 12,
+    charset = "@#$&*0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$&*0123456789abcdefghijklmnopqrstuvwxyz",
+    password = "";
+
+    for (let i = 0, n = charset.length; i < longitud; i++) {
+        password += charset.charAt(Math.floor(Math.random() * n));
+    }
+
+    return password;
+}
+
+async function get_default_image() {
+    const image = await storage.bucket().file("default-profile.png").cloudStorageURI.pathname
+    console.log(image);
+    return image
+    /*.then((res) => {
+        console.log(res);
+        return res;
+    })*/
+}
+
 module.exports = {
     list:list,
     get:get,
     update: update,
     create: create,
-    delete: borrar
+    delete: borrar,
+    login:login
 };

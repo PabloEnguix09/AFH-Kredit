@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 const cors = require("cors")
 const config = require("./config");
-const PORT = config.port || 5050
+const PORT = process.env.PORT || 5050
 const bodyParser = require("body-parser");
 app.get('/', (req, res) => {
 res.send('This is my project')

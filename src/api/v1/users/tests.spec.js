@@ -5,7 +5,8 @@ const router = require("./urls")
 const app = require ("../../../../index")
 let request = {};
 
-process.env.PORT = "8080";
+let auth = require("firebase/auth")
+
 
 describe("Abrir base de datos", () => {
   app.close()
@@ -37,6 +38,9 @@ describe("POST /users/create", () => {
   })
 
   test("Deberia funcionar correctamente", async() => {
+    resData = defaultUserData;
+    resData.photoURL = "/default-profile.png";
+    
     await request.post("/api/users/create")
     .send(defaultUserData)
     .set("Accept", "application/json")
