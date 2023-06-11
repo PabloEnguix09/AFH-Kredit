@@ -6,3 +6,5 @@ afh-kredit-firebase-adminsdk-5xcx9-d1b3921982.json
 coverage/
 
 .env
+
+serviceAccountKey.json
