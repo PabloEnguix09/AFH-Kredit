@@ -1,0 +1,9 @@
+{
+    "name": "AFH Kredit",
+    "version": "1.0.0",
+    "description": "AFH Kredit API Methods",
+    "apidoc": {
+      "title": "Custom apiDoc browser title",
+      "url" : "https://afhkredit.com/api"
+    }
+  }
