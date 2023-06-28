@@ -1,13 +1,10 @@
-const user = require("./api")
-const http = require("http");
 const supertest = require("supertest")
-const router = require("./urls")
 const app = require ("../../../../index")
 let request = {};
 const TestSequencer = require("@jest/test-sequencer").default
-let auth = require("firebase/auth")
 
 const userTestSuite = () => describe("-----TESTS USUARIOS-----", () => {
+  console.log("---EMPEZANDO TESTS USUARIOS---");
   beforeAll(() => {
     app.close()
     request = supertest(app)
@@ -28,8 +25,7 @@ const userTestSuite = () => describe("-----TESTS USUARIOS-----", () => {
     email: newUserId,
     rol: "Usuario"
   };
-  
-  describe("POST /users/create", () => {
+  describe("POST /users/create", async() => {
   
     test("No deberian haber usuarios", async() => {
       await request.get("/api/users")
@@ -144,6 +140,8 @@ const userTestSuite = () => describe("-----TESTS USUARIOS-----", () => {
       await request.delete("/api/users/delete").send({id:newUserId})
     });
   });
+
+  console.log("---FIN TESTS USUARIOS---");
 })
 
 module.exports = {userTestSuite}

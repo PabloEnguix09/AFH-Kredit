@@ -1,8 +1,6 @@
-const { storage } = require("../utils/firebase/admin");
 const { check_error } = require("../utils/utils");
-const Documento = require("./models")
-const fs = require('fs');
-const path = require("path")
+const {DocumentoAPI} = require("./models")
+const api = new DocumentoAPI();
 
 /**
  * 
@@ -41,37 +39,12 @@ const path = require("path")
  * 
  */
 let list = async (req, res) => {
-    try {
-        await storage.getFiles({prefix: req.params.id}, async (err, files) => {
-            if(files.length == 0) {
-                res.status(404).send({message: "No hay documentos"})
-            }
-            else {
-                let documentos = [];
-                console.log("HAY FILES");
-
-                for(let file of files) {
-                    await file.getSignedUrl({
-                        action:"read",
-                        expires: "01-01-9999"
-                    }).then((data) => {
-                        if(file.name != req.params.id+"/") {
-                            let documento = new Documento(
-                                file.name.replace(req.params.id+"/", ""),
-                                data[0]
-                            );
-                            documentos.push(documento);
-                        }
-                    });
-                }
-                console.log(documentos);
-                res.status(200).send(documentos);
-            }
-        })
-    } 
-    catch (error) {
-        check_error(error, res)
+    let body = {
+        body: req.body,
+        params: req.params
     }
+    let response = await api.getAll(body)
+    res.status(response.status).send(response.data)
 }
 
 /**
@@ -109,31 +82,13 @@ let list = async (req, res) => {
  * 
  */
 let get = async function(req, res) {
-    try {
-        let file = await storage.file(req.params.id + "/" + req.params.nombre)
-        
-        file.exists().then((existe) => {
-            if(existe[0]){
-                file.getSignedUrl({
-                    action:"read",
-                    expires: "01-01-9999"
-                }).then((data) => {
-                    console.log(data);
-                    let file = new Documento(
-                        req.params.nombre,
-                        data[0]
-                    )
-                    console.log(file);
-                    res.status(200).send(file)
-                })
-            }
-            else {
-                res.status(404).send({message: "No existe el archivo especificado"})
-            }
-        })
-    } catch (error) {
-        check_error(error, res);
+    let body = {
+        body: req.body,
+        params: req.params
     }
+    await api.get(body).then((response) => {
+        res.status(response.status).send(response.data)
+    })
 }
 
 /**
@@ -165,25 +120,34 @@ let get = async function(req, res) {
  * }
  * 
  */
-let create = async (req, res) => {
-    try {
-        fs.createReadStream(path.resolve(req.body.relPath+req.body.name))
-        .on("error", (err) => {
-            console.log("ERROR LEYENDO ARCHIVO");
-            res.status(404).send({message: "No existe el archivo especificado"});
-        })
-        .pipe(storage.file(req.params.id + "/"+req.body.name).createWriteStream())
-        .on("finish", function(){
-            res.status(201).send({message: "Archivo subido"})
-        })
-        .on("error", (err) => {
-            console.log("ERROR ESCRIBIENDO ARCHIVO");
-            console.log(err);
-        })
+let create = async function(req, res) {
+    let body = {
+        body: req.body,
+        params: req.params
+    }
+    let response = await api.create(body)
+    let mensaje = response.data.message;
+    if(response.status == 201) {
+        body = {
+            body: {},
+            params: {
+                id: req.params.id,
+                nombre: req.body.name
+            }
+        }
+        response = await api.get(body)
 
-    } catch (error) {
-        console.log("ERROR");
-        check_error(error, res);
+        let data = {
+            message: mensaje, 
+            contenido: response.data.contenido
+        }
+        if(response.status == 200) {
+            response.status = 201;
+        }
+        res.status(response.status).send(data)
+    }
+    else {
+        res.status(response.status).send(response.data)
     }
 }
 
@@ -217,14 +181,13 @@ let create = async (req, res) => {
  * 
  */
 let borrar = async (req, res) => {
-    try {
-        await storage.file(req.params.id + "/" + req.params.nombre).delete().then(() => {
-            console.log("Archivo borrado");
-            res.status(200).send({message: "Documento borrado correctamente"});
-        })
-    } catch (error) {
-        check_error(error, res);
+    let body = {
+        body: req.body,
+        params: req.params
     }
+    await api.delete(body).then((response) => {
+        res.status(response.status).send(response.data)
+    })
 }
 
 module.exports = {

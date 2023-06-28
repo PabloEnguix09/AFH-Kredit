@@ -1,7 +1,5 @@
-const { db, auth, storage } = require("../utils/firebase/admin");
-const users = db.collection("usuarios");
-const { check_error } = require("../utils/utils");
-const Usuario = require("./models")
+const {UsuarioAPI} = require("./models");
+const api = new UsuarioAPI();
 
 /**
  * 
@@ -42,32 +40,13 @@ const Usuario = require("./models")
  */
 let list = async function (req, res) {
     
-    try {
-        const usersRef = users;
-        const response = await usersRef.get();
-        let usuarios = [];
-        if(response.docs.length == 0) {
-            res.status(404).send({message: "No hay usuarios"})
-        }
-        else {
-            response.forEach(doc => {
-                let datos = doc.data();
-                const usuario = new Usuario(
-                    datos.id,
-                    datos.nombre,
-                    datos.apellidos,
-                    datos.email,
-                    datos.photoURL,
-                    datos.rol
-                );
-                usuarios.push(usuario);
-            });
-            res.status(200).send(usuarios);
-        }
+    let body = {
+        body: req.body,
+        params: req.params
     }
-    catch (error) {
-        check_error(error, res);
-    }
+    let response = await api.getAll(body)
+    res.status(response.status).send(response.data)
+
 }
 
 /**
@@ -106,27 +85,12 @@ let list = async function (req, res) {
  * 
  */
 let get = async function (req, res) {
-        try {
-            const userRef = db.collection("usuarios").doc(req.params.id);
-            const response = await userRef.get();
-            if(!response.exists){
-                res.status(404).send({message: "Usuario no existente"})
-            }
-            else {
-                const datos = response.data();
-                res.status(200).send(new Usuario(
-                    datos.id,
-                    datos.nombre,
-                    datos.apellidos,
-                    datos.email,
-                    datos.photoURL,
-                    datos.rol
-                ));
-            }
-        }
-        catch (error) {
-            check_error(error, res);
-        }
+    let body = {
+        body: req.body,
+        params: req.params
+    }
+    let response = await api.get(body)
+    res.status(response.status).send(response.data)
 }
 
 /**
@@ -165,27 +129,12 @@ let get = async function (req, res) {
  * 
  */
 let create = async (req, res) => {
-        try {
-            let response = {}
-            let photoURL = await get_default_image();
-
-            req.body.photoURL = photoURL;
-
-            response = await auth.createUser({
-                email: req.body.email,
-                password: generate_password(),
-                emailVerified: false,
-                disabled:false
-            })
-
-            const usersRef = users.doc(req.body.email);
-            response = await usersRef.create(req.body);
-
-            res.status(201).send({message: "Usuario creado correctamente"})
-        }
-        catch (error) {
-            check_error(error, res);
-        }
+    let body = {
+        body: req.body,
+        params: req.params
+    }
+    let response = await api.create(body)
+    res.status(response.status).send(response.data)
 }
 
 /**
@@ -223,16 +172,12 @@ let create = async (req, res) => {
  * 
  */
 let update = async function (req, res) {
-    try {
-        const usersRef = users.doc(req.body.id);
-        const body = req.body.data;
-        const response = await usersRef.update(body);
-        
-        res.status(204).send({});
+    let body = {
+        body: req.body,
+        params: req.params
     }
-    catch (error) {
-        check_error(error, res);
-    }
+    let response = await api.update(body)
+    res.status(response.status).send(response.data)
 }
 
 /**
@@ -257,18 +202,12 @@ let update = async function (req, res) {
  * 
  */
 let borrar = async function (req, res) {
-    try {
-        let response = await users.doc(req.body.id).delete();
-
-        response = await auth.getUserByEmail(req.body.id).then(async (user) => {
-            await auth.deleteUser(user.uid)
-        })
-
-        res.status(204).send({});
+    let body = {
+        body: req.body,
+        params: req.params
     }
-    catch (error) {
-        check_error(error, res);
-    }
+    let response = await api.delete(body)
+    res.status(response.status).send(response.data)
 }
 
 /**
@@ -302,22 +241,7 @@ let login = async function (req, res) {
 
 }
 
-function generate_password() {
-    let longitud = 12,
-    charset = "@#$&*0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$&*0123456789abcdefghijklmnopqrstuvwxyz",
-    password = "";
 
-    for (let i = 0, n = charset.length; i < longitud; i++) {
-        password += charset.charAt(Math.floor(Math.random() * n));
-    }
-
-    return password;
-}
-
-async function get_default_image() {
-    const image = await storage.file("default-profile.png").cloudStorageURI.pathname
-    return image
-}
 
 module.exports = {
     list:list,

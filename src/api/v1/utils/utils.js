@@ -1,15 +1,27 @@
-function check_error(error, res) {
+function check_error(error) {
     if(error.code == 5 ) {
-        res.status(404).send({message: "Usuario no existente"})
+        return {
+            status: 404,
+            data: {message: "Usuario no existente"}
+        }
     }
     else if(error.code == 6 || error.code == "auth/email-already-exists") {
-        res.status(400).send({message: "Usuario ya existente"})
+        return {
+            status: 400,
+            data: {message: "Usuario ya existente"}
+        }
     }
     else if(error.code == 404) {
-        res.status(404).send({message: "Registro no existente"})
+        return {
+            status: 404,
+            data: {message: "Registro no existente"}
+        }
     }
     else {
-        res.status(500).send(error);
+        return {
+            status: 500,
+            data: error
+        }
     }
 }
 

@@ -1,12 +1,7 @@
-const documents = require("./api")
-const http = require("http");
 const supertest = require("supertest")
-const router = require("./urls")
 const app = require ("../../../../index");
-const fs = require("fs");
 let request = {};
-const path = require("path")
-
+const path = require("path");
 
 const defaultUserId = "test@afhkredit.com";
 const defaultUserData = {
@@ -28,9 +23,11 @@ let testFilePath = "\\documents\\testFiles\\";
 let testTxt = "test.txt";
 let testPng = __dirname+"/testFiles/test.png";
 let testPdf = __dirname+"/testFiles/test.pdf";
+let filePath = path.resolve(path.dirname(require.main.filename))
 
 
 const documentTestSuite = () => describe("-----TESTS DOCUMENTOS-----", () => {
+  console.log("---EMPEZANDO TESTS DOCUMENTOS---");
   beforeAll(async()=> {
     app.close()
     request = supertest(app)
@@ -43,24 +40,31 @@ const documentTestSuite = () => describe("-----TESTS DOCUMENTOS-----", () => {
     await request.delete("/api/users/delete").send({id: newUserData.email}).set("Accept", "application/json")
   })
   
-  describe("POST /users/:id/documents/new", () => {
+  describe("POST /users/:id/documents/new", async() => {
 
     test("Deberia funcionar correctamente", async() => {
-      let filePath = path.resolve(path.dirname(require.main.filename))
+      console.log("POST /users/:id/documents/new");
       await request.post("/api/users/"+defaultUserData.email+"/documents/new")
-      .set("Content-Type", "multipart/form-data")
-      .field("name", "test.txt")
-      .field("relPath", filePath+testFilePath)
+      .set("Accept", "application/json")
+      .send({
+        relPath: filePath + testFilePath,
+        name: testTxt
+      })
       .expect(201)
-      .expect({message: "Archivo subido"})
+      .expect((res) => {
+        expect(res.body.message).toEqual("Archivo subido")
+        expect(res.body.contenido).toBeDefined()
+      })
     })
 
     test("Deberia dar 404", async() => {
-      let filePath = path.resolve(path.dirname(require.main.filename))
+      console.log("POST /users/:id/documents/new");
       await request.post("/api/users/"+defaultUserData.email+"/documents/new")
-      .set("Content-Type", "multipart/form-data")
-      .field("name", "a.txt")
-      .field("relPath", filePath+testFilePath)
+      .set("Accept", "application/json")
+      .send({
+        relPath: filePath + testFilePath,
+        name: "a"
+      })
       .expect(404)
       .expect({message: "No existe el archivo especificado"})
     })
@@ -68,6 +72,8 @@ const documentTestSuite = () => describe("-----TESTS DOCUMENTOS-----", () => {
 
   describe("GET /users/:id/documents/:nombre", () => {
     test("Deberia funcionar correctamente", async() => {
+      console.log("GET /users/:id/documents/:nombre");
+
       await request.get("/api/users/"+defaultUserData.email+"/documents/"+testTxt)
       .expect(200)
       .expect((respuesta) => {
@@ -97,9 +103,15 @@ const documentTestSuite = () => describe("-----TESTS DOCUMENTOS-----", () => {
       .expect(404)
       .expect({message: "No hay documentos"})
     })
+
+    test("Deberia dar 404", async() => {
+      await request.get("/api/users/a/documents")
+      .expect(404)
+      .expect({message: "No hay documentos"})
+    })
   })
 
-  describe("DELETE /users/:id/documents/:nombre", () => {
+  describe("DELETE /users/:id/documents/:nombre/delete", () => {
     test("Deberia funcionar correctamente", async() => {
       await request.delete("/api/users/"+defaultUserData.email+"/documents/"+testTxt+"/delete")
       .expect(200)
@@ -112,6 +124,8 @@ const documentTestSuite = () => describe("-----TESTS DOCUMENTOS-----", () => {
       .expect({message: "Registro no existente"})
     })
   })
+
+  console.log("---FIN TESTS DOCUMENTOS---");
 })
 
 module.exports = {documentTestSuite}
