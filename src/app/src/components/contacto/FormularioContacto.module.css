@@ -1,0 +1,136 @@
+.contacto {
+    width: 99.1vw;
+}
+
+.contacto .metodos {
+    display: flex;
+    margin: 0 10.7vh;
+    margin-top: 4vw;
+    margin-bottom: 8vh;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.formulario h1 {
+    padding-top: 3.125vw;
+    text-align: center;
+}
+
+.contacto .formulario {
+    width: 26vw;
+    padding: 3.36vw;
+    background-color: #d9d9d9;
+    border-radius: 2vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contacto .formulario h2 {
+    font-size: 2.5vw;
+    margin-bottom: 5vh;
+}
+
+.contacto .formulario .datos {
+    display: flex;
+    flex-direction: column;
+}
+
+.datos textArea {
+    padding: 1.25vw;
+    font-family: 'Roboto', sans-serif;
+    width: 23.5vw;
+    height: 37.5vh;
+
+    font-size: 1.25vw;
+}
+
+.datos button {
+    margin-top: 1.25vw;
+    height: 6vh;
+    font-size: 1.8vw;
+    font-weight: bold;
+    border-radius: 1vw;
+    color: var(--blanco);
+}
+
+.datos div {
+    display: flex;
+    align-items: center;
+}
+
+#checkbox {
+    width: 2.7vw;
+    height: 1.7vw;
+    margin-right: 1vh;
+    background-color: white;
+    appearance: none;
+    outline: none;
+    border: 1px solid var(--grisOscuro);
+    border-radius: 25%;
+}
+#checkbox:checked {
+    background-color: var(--verdeEmpresa);
+}
+
+.datos label {
+    display: flex;
+    align-items: center;
+    font-size: 1.25vw;
+}
+
+.alternativos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 41vw;
+}
+
+.alternativos h2 {
+    font-size: 2.5vw;
+}
+
+.alternativos .alternativo {
+    display: flex;
+    align-items: center;
+    width: 21vw;
+    margin-top: 2.6vh;
+}
+
+.alternativos .alternativo img {
+    width: 4vw;
+    height: 7vh;
+    margin-right: 1.17vw;
+}
+
+.alternativos .alternativo a {
+    font-size: 1.72vw;
+}
+
+.linea {
+    color: var(--verdeEmpresa);
+    display: flex;
+    align-items: center;
+    margin: 12.5vh 0;
+}
+
+.linea hr {
+    border: none;
+    border:1px solid var(--verdeEmpresa);
+    width: 18.75vw;
+}
+
+.linea span {
+    margin: 0 1vw;
+    font-size: 2.5vw;
+}
+
+.alternativos .redes {
+    margin-top: 4vh;
+}
+
+.alternativos .redes img {
+    width: 3.9vw;
+    height: 7vh;
+    margin-left: 1.875vw;
+}

@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+:root {
+  --grisOscuro: #333333;
+  --verdeEmpresa: #64feda;
+  --blanco: #fafafa;
+  --verdeBoton: #399C85;
+  --gris: #ccc;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  max-width:99.1vw;
+}
+
+html,
+body {
+  font-size: 2.22vh;
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--blanco);
+  overflow-x: hidden;
+}
+
+button {
+  font-family: 'Roboto', sans-serif;
+  border-radius: 0.3125rem;
+  border: none;
+  background: var(--verdeBoton);
+}
+a {
+  text-decoration: none;
+  color: var(--grisOscuro);
+}
+
+input[type="text"], 
+input[type="password"],
+textArea, 
+input[type="number"] {
+    margin-bottom: 5vh;
+    border: none;
+    border-radius: 0.5vw;
+}
+
+input[type="text"], 
+input[type="password"], 
+input[type="number"] {
+    height: 6vh;
+    text-indent: 1.25vw;
+    font-size: 1.25vw;
+}
+
+input[type="text"]::placeholder, 
+input[type="password"]::placeholder,
+textArea::placeholder, 
+input[type="number"]::placeholder {
+    color: var(--verdeBoton);
+}
+
+.link {
+  text-decoration: underline;
+  color: var(--verdeBoton);
+}
+
+button, select, input[type="checkbox"], input[type="radio"] {
+  cursor: pointer;
+}
+
+h1 {
+  padding-top: 5vh;
+  text-align: center;
+}
+
+#root > div {
+  margin-top: 4rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}

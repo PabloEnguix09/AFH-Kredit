@@ -1,0 +1,130 @@
+.simulador {
+    width: 82vw;
+    height: 69vh;
+    background-color: #d9d9d9;
+    border-radius: 25px;
+    padding: 4vh 3.2vw;
+    margin-top: 4vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.simulador > .formulario {
+    display: flex;
+
+}
+
+.simulador > .formulario > div > div:first-child {
+    display: flex;
+}
+
+.simulador > .formulario > div > div:first-child img {
+    margin-right: .5vw;
+}
+
+.radioInput, 
+.textInput {
+    width: 16vw;
+}
+
+.textInput > p {
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.25vw;
+    margin-top: .8vw;
+}
+
+.textInput > span {
+    display: flex;
+    font-size: 1.1vw;
+    text-align: center;
+}
+
+.radioInput > p {
+    font-weight: bold;
+    text-align: center;
+    font-size: .94vw;
+    margin-top: .8vw;
+}
+.opciones .opcion {
+    display: flex;
+    align-items: center;
+    background-color: var(--blanco);
+    padding: 0.86vw;
+}
+
+.opciones .opcion:first-child {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+
+    margin-top: .8vw;
+}
+
+.opciones .opcion:last-child {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+
+.radioInput input[type="radio"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 2vw;
+    height: 3.6vh;
+    border: 0.1em solid var(--verdeBoton);
+    border-radius: 50%;
+    margin-right: 1.25vw;
+
+}
+
+.radioInput input[type="radio"]:checked {
+    background-color: var(--verdeBoton);
+}
+
+.textInput > div {
+    display: flex;
+    align-items: center;
+    margin-top: 1vh;
+    position: relative;
+}
+
+.textInput > div > input {
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.textInput > div > span {
+    position: absolute;
+    right: 1vw;
+    color: var(--grisOscuro);
+    font-size: 1.7vw;
+}
+
+.datos {
+    display: flex;
+}
+
+.datos > div {
+    margin-right: 3vw;
+}
+
+.simulador hr {
+    border: 1px solid var(--verdeBoton);
+    height: 62vh;
+    margin: 0 6vh;
+    position: relative;
+    top: -1.25vh;
+}
+
+.simulador button {
+    width: 25.6vw;
+    height: 6vh;
+    color: var(--blanco);
+    font-size: 1.7vw;
+    font-weight: bold;
+    margin-top: 1.25vh;
+    position: absolute;
+    bottom: 4vh;
+
+}

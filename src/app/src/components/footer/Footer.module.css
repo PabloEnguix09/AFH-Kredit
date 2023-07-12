@@ -1,0 +1,103 @@
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.foot {
+    width: 99.1vw;
+    background-color: #d9d9d9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.foot .enlaces {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 1.25vw;
+    width: 96vw;
+    justify-content: space-between;
+}
+
+.enlaces img {
+    width: 10vw;
+    height: 10vh;
+}
+
+.enlaces div a {
+    margin-left: 1.72vw;
+}
+
+.enlaces div:last-child {
+    margin-left: 0;
+}
+
+.footer hr {
+    width: 96vw;
+    border:1px solid var(--verdeEmpresa);
+    margin: 3.75vh 0;
+}
+
+.copyRedes {
+    display: flex;
+    width: 96vw;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4vh;
+}
+
+.copy {
+    font-size: 1.5vh;
+}
+
+.redes img {
+    margin-left: 1vw;
+    width: 2.11vw;
+    height: 2.11vw;
+}
+
+.grupoEmpresas {
+    background-color: #fafafa;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5.8vh;
+}
+
+.grupoEmpresas div {
+    margin-top: 6.6vh;
+    margin-bottom: 3.33vh;
+}
+
+.grupoEmpresas div img:first-child {
+    margin-right: 2.7vw;
+}
+
+.empezamos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 4vh;
+}
+
+.empezamos p {
+    font-size: 1.7vw;
+    margin: 3vh 0;
+}
+
+.empezamos button {
+    width: 23.5vw;
+    height: 5.8vh;
+    color: var(--blanco);
+    font-size: 1.5vw;
+    font-weight: bold;
+    border-radius: 1vw;
+    cursor: pointer;
+}
+
+.empezamos a {
+    margin-bottom: 6vh;
+}

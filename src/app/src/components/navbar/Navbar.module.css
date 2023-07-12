@@ -1,0 +1,63 @@
+.navbar {
+    display: flex;
+    flex-direction: row;
+    height: 8.9vh;
+    justify-content:space-between;
+    align-items: center;
+    padding: 0 1.8vw;
+    background-color: var(--grisOscuro);
+    border-bottom: 2px solid var(--verdeEmpresa);
+
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    box-sizing: border-box;
+    z-index: 999;
+}
+
+.navbar img {
+    width: 3.125vw;
+    height: 3.125vw;
+}
+
+.navbar ul{
+    display: flex;
+    list-style: none;
+    width: auto;
+}
+
+.navbar ul li {
+    float: right;
+    margin-left: 2.38rem;
+}
+
+.navbar ul li a {
+    color: var(--blanco);
+}
+
+.navbar select {
+    width: 4.22vw;
+    background: none;
+    color: var(--blanco);
+    text-decoration: underline;
+    outline: none;
+    border: none;
+    margin-right: 1.64vw;
+    text-align: center;
+}
+
+.navbar select option {
+    text-align: center;
+    color: var(--grisOscuro);
+}
+
+.navbar select option:hover {
+    color: var(--verdeBoton);
+    background-color: var(--gris);
+}
+
+.navbar button {
+    width: 7.8vw;
+    height: 3.5vh;
+    font-size: 1.8vh;
+}
