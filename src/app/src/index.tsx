@@ -9,6 +9,8 @@ import Login from './login';
 import RecuperarPass from './recuperarPass';
 import Simulador from './simulador';
 import Blog from './blog';
+import AdminApp from './app/admin/app';
+import UserApp from './app/user/app';
 
 
 const root = ReactDOM.createRoot(
@@ -25,6 +27,9 @@ root.render(
       <Route path='/recuperarContraseña' Component={RecuperarPass} />
       <Route path='/simulador' Component={Simulador} />
       <Route path='/blog' Component={Blog} />
+
+      <Route path='/app/admin' Component={AdminApp}/>
+      <Route path='/app/user' Component={UserApp}/>
     </Routes>
 
   </Router>

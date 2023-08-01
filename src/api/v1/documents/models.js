@@ -129,6 +129,28 @@ class DocumentoAPI {
         })
         
     }
+
+    getLocalFile = async function (req) {
+        return new Promise(async(resolve, reject) => {
+            let relPath = new Buffer.from(req.params.relPath, "base64").toString("ascii")
+            let fullPath = path.resolve(relPath+req.params.name)
+            if(fs.existsSync(fullPath)) {
+                fs.readFile(fullPath, "utf-8", (err, data) => {
+                    resolve({
+                        status:201,
+                        data: data.split("/\r?\n/")
+                    })
+                })
+                
+            }
+            else {
+                resolve({
+                    status:404,
+                    data: {message: "No existe el archivo especificado"}
+                })
+            }
+        })   
+    }
 }
 
 module.exports = {Documento, DocumentoAPI}

@@ -238,7 +238,23 @@ let borrar = async function (req, res) {
  * 
  */
 let login = async function (req, res) {
-
+    let body = {
+        body: req.body,
+        params: req.params
+    }
+    let response = await api.login(body)
+    try {
+        
+        if (response.data.providerData[0].isAdmin) {
+            res.status(response.status).redirect("http://localhost:3000/app/admin")
+            return
+        } else if(!response.data.providerData[0].isAdmin){
+            res.status(response.status).redirect("http://localhost:3000/app/user")
+            return
+        }
+    } catch (error) {
+        res.status(response.status).send(response.data)
+    }
 }
 
 

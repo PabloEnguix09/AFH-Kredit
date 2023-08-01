@@ -190,9 +190,20 @@ let borrar = async (req, res) => {
     })
 }
 
+let getLocalFile = async (req, res) => {
+    let body = {
+        body: req.body,
+        params: req.params
+    }
+    await api.getLocalFile(body).then((response) => {
+        res.status(response.status).send(response.data)
+    })
+}
+
 module.exports = {
     list:list,
     get:get,
     create: create,
-    delete: borrar
+    delete: borrar,
+    getLocalFile: getLocalFile
 };

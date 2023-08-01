@@ -21,8 +21,6 @@ const newUserData = {
 
 let testFilePath = "\\documents\\testFiles\\";
 let testTxt = "test.txt";
-let testPng = __dirname+"/testFiles/test.png";
-let testPdf = __dirname+"/testFiles/test.pdf";
 let filePath = path.resolve(path.dirname(require.main.filename))
 
 

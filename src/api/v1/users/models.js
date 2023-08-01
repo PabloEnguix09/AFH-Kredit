@@ -1,6 +1,9 @@
 const { db, auth, storage } = require("../utils/firebase/admin");
 const { check_error } = require("../utils/utils");
 const users = db.collection("usuarios");
+const { authClient, signInWithEmailAndPassword } = require("../utils/firebase/app")
+
+const CryptoJS = require("crypto-js");
 
 class Usuario {
     constructor(id, nombre, apellidos, email, photoURL, rol) {
@@ -85,14 +88,22 @@ class UsuarioAPI {
         return new Promise(async(resolve, reject) => {
             try {
                 let response = {}
+                console.log(req.body.email.split("@")[0]);
+                //let pass = await bcrypt.hash(req.body.email.split("@")[0], 10)
+                //console.log(pass);
                 let photoURL = await this.get_default_image();
                 req.body.photoURL = photoURL;
                 response = await auth.createUser({
                     email: req.body.email,
-                    password: this.generate_password(),
+                    password: req.body.email.split("@")[0],
+                    //password: pass,
                     emailVerified: false,
-                    disabled:false
+                    disabled: false,
+                    uid: req.body.email,
+                    displayName: req.body.nombre + " " + req.body.apellidos,
                 })
+
+                response = await auth.setCustomUserClaims(req.body.email, {admin: req.body.rol == "Admin" ? true : false})
                 const usersRef = users.doc(req.body.email);
                 response = await usersRef.create(req.body);
                 resolve({
@@ -138,21 +149,40 @@ class UsuarioAPI {
         })
     }
 
-    generate_password = function() {
-        let longitud = 12,
-        charset = "@#$&*0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$&*0123456789abcdefghijklmnopqrstuvwxyz",
-        password = "";
+    generate_password = async function(email) {
     
-        for (let i = 0, n = charset.length; i < longitud; i++) {
-            password += charset.charAt(Math.floor(Math.random() * n));
-        }
-    
-        return password;
+        //return await bcrypt.hash(, 10);
     }
     
     get_default_image = async function() {
         const image = await storage.file("default-profile.png").cloudStorageURI.pathname
         return image
+    }
+
+    login = async function (req) {
+        return new Promise(async(resolve, reject) => {
+            try {
+                let pass = CryptoJS.AES.decrypt(req.body.password, process.env.SECRET_KEY).toString(CryptoJS.enc.Utf8)
+                await signInWithEmailAndPassword(authClient, req.body.email, pass).then(async(credenciales) => {
+                    let tokenId = await authClient.currentUser.getIdToken()
+                    await auth.verifyIdToken(tokenId).then((claims) => {
+                        if(claims.admin == true) {
+                            credenciales.user.providerData[0].isAdmin = true
+                        }
+                        else {
+                            credenciales.user.providerData[0].isAdmin = false
+                        }
+                        resolve({status: 301, data: credenciales.user})
+                    })
+                }).catch((error) => {
+                    throw new Error(error)
+                })
+            } catch (error) {
+                console.log(error);
+                resolve(check_error(error))
+            }
+        })
+        
     }
 }
 

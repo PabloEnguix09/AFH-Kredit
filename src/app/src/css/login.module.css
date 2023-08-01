@@ -15,6 +15,11 @@
 
 }
 
+.login input[type="text"],
+.login input[type="password"] {
+    width: 90%;
+}
+
 input[type="password"] {
     margin-bottom: 1vw;
 }

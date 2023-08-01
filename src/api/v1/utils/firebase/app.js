@@ -2,6 +2,7 @@
 const { initializeApp } = require("firebase/app");
 //const { getAnalytics } = require("firebase/analytics");
 const { getStorage, ref, getDownloadURL } = require("firebase/storage");
+const { getAuth, signInWithEmailAndPassword } = require("firebase/auth");
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -21,5 +22,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 //const analytics = getAnalytics(app);
 const storage = getStorage(app)
+const authClient = getAuth(app)
 
-module.exports = {app, storage, ref, getDownloadURL}
+module.exports = {app, storage, authClient, signInWithEmailAndPassword, ref, getDownloadURL}

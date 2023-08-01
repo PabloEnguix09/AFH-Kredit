@@ -90,3 +90,26 @@ h1 {
   flex-direction: column;
   justify-content: space-between;
 }
+
+.checkboxDiv {
+  display: flex;
+  align-items: center;
+}
+
+#checkbox {
+  width: 1.7vw;
+  height: 1.7vw;
+  margin-right: 1vh;
+  background-color: white;
+  appearance: none;
+  outline: none;
+  border: 1px solid var(--grisOscuro);
+  border-radius: 25%;
+}
+#checkbox:checked {
+  background-color: var(--verdeEmpresa);
+}
+
+input:disabled {
+  background-color: #eee;
+}
