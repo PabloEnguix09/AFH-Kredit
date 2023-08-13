@@ -52,7 +52,7 @@
     display: inline-block;
     font-size: 1.1vw;
     text-align: center;
-    white-space:break-spaces;
+    white-space: break-spaces;
 }
 
 .radioInput > p {
@@ -186,7 +186,12 @@
 }
 
 .resultado h2, .resultado h3 {
+    font-size: 1.875vw;
     color: var(--verdeBoton);
+}
+
+.mensualidad span {
+    font-size: 1.25vw;
 }
 
 .resultado hr {
@@ -235,6 +240,10 @@
     padding: 0.78vw;
     border-radius: 0.4vw;
     border: 2px solid transparent;
+}
+
+.opcionHipoteca h2 {
+    font-size: 1.875vw;
 }
 
 .opcionHipoteca:hover {
@@ -310,4 +319,10 @@
     display: flex;
     flex-direction:column;
     align-items: center;
+}
+
+@media screen and (min-width: 1920px) {
+    .textInput > div > input {
+        font-size: 1.25rem;
+    }
 }

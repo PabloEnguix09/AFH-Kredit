@@ -1,0 +1,45 @@
+.navbar {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    align-items: center;
+    padding-top: 4.16vh;
+}
+
+.navbar div {
+    cursor: pointer;
+}
+
+.navbar img {
+    width: 2rem;
+    height: 2rem;
+}
+
+.navbar p {
+    margin-top: 2rem;
+    font-size: 2rem;
+}
+
+.navbar > ul {
+    display: flex;
+    width: inherit;
+    justify-content: space-around;
+    list-style: none;
+}
+
+.selected {
+    filter: brightness(0) saturate(100%) invert(88%) sepia(8%) saturate(2586%) hue-rotate(101deg) brightness(104%) contrast(99%);
+}
+
+.navbar ul li div {
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+}
+
+.navbar ul li div span {
+    font-size: 2.5vw;
+    color: var(--verdeOscuro);
+}

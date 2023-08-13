@@ -1,0 +1,82 @@
+.baseDatos {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.listaTabla {
+    width: 49rem;
+    height: 31.7rem;
+    background: var(--blanco);
+    border-radius: 1.5rem;
+    margin: 0.56rem 0;
+    padding: 1rem 1.56rem;
+}
+
+.listaTabla > div {
+    display: flex;
+    flex-direction: column;
+    height: 25.5rem;
+    width: 50rem;
+    overflow-y: auto;
+    gap: 0.5rem;
+    margin-top: 1rem;
+
+}
+
+.registro {
+    width: 47rem;
+    height: 3rem;
+    border-radius: 15rem;
+    background: var(--gris);
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+
+    position: relative;
+}
+
+.registro > p {
+    font-size: 1.375rem;
+    width: 9.5rem;
+    text-align: end;
+    color: #333;
+}
+
+.registro > div {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.registro > div > input {
+
+    width: 12rem;
+    height: 2.5rem;
+    border-radius: 1.5rem;
+    font-size: 1.375rem;
+    color: #333;
+    margin: 0 0.5rem;
+}
+
+.registro > div > span {
+    font-size: 1.375rem;
+    position: absolute;
+    z-index: 1;
+    right: 1rem;
+
+}
+
+.tick {
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+}
+.eliminar {
+    width: 2rem;
+    height: 2rem;
+    filter: brightness(0) saturate(100%) invert(35%) sepia(98%) saturate(595%) hue-rotate(318deg) brightness(89%) contrast(82%);
+    position: absolute;
+    right: 1rem;
+    cursor: pointer;
+}

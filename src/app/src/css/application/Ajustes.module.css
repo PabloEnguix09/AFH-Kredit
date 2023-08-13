@@ -1,0 +1,94 @@
+.ajustes {
+    display: flex;
+    justify-content: space-between;
+    width: 72rem;
+}
+
+.infoBasica {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+.avatar, .inputs {
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    align-items: end;
+}
+
+.avatar img {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 0.7rem;
+}
+
+.avatar p,
+.inputs p {
+    width: 8.5rem;
+    text-align: end;
+    margin-right: 0.5rem;
+}
+
+.inputs input {
+    width: 17.5rem;
+    height: 3rem;
+    margin: 0;
+    background: #d9d9d9;
+}
+
+.cuentas {
+    display: flex;
+    flex-direction: column;
+    gap: 2.2rem;
+}
+
+.vinculadas,
+.sinVincular {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.cuenta {
+    width: 26rem;
+    height: 4.6rem;
+    border-radius: 1.5rem;
+    background: #d9d9d9;
+    display: flex;
+    gap:1rem;
+    position: relative;
+    align-items: center;
+}
+
+.cuenta > img:first-child {
+    width: 3rem;
+    height: 3rem;
+    margin-left: 1rem;
+}
+
+.cuenta > p {
+    font-size: 1.5rem;
+}
+
+.cuenta > img:last-child {
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    right: 1rem;
+}
+
+.noVinculada {
+    filter: brightness(0) saturate(100%) invert(83%) sepia(15%) saturate(1333%) hue-rotate(109deg) brightness(104%) contrast(99%);
+}
+
+.cerrarSesion {
+    width: 13rem;
+    height: 2.7rem;
+    font-weight: bold;
+    color: var(--blanco);
+    background-color: var(--verdeBoton);
+    border-radius: 0.7rem;
+}

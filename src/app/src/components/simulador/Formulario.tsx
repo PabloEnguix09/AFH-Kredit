@@ -171,7 +171,7 @@ const Formulario = (props: Props) => {
                         <RadioInputSim titulo={"¿Sabes cuál va a ser tu casa?"} opcion1={"Sí"} opcion2={"No"} estadoCb={props.sabeCasa.cb} estado={props.sabeCasa.estado} />
                         <TextInputSim titulo={"¿Cuánto cuesta?"} explicacion={"Entre 20.000 y 1.000.000€"} tipo={"number"} placeholder={"Total"} magnitud={"€"} valorDefault={props.precio.estado} valorDefaultCb={props.precio.cb} disabled={false}  />
                         <TextInputSim titulo={"¿Dónde está?"} explicacion={"Introduzca el código postal de su localidad"} tipo={"number"} placeholder={"Código postal"} magnitud={""} valorDefault={props.provincia.estado} valorDefaultCb={props.provincia.cb} disabled={false} />
-                        <p style={{visibility: cpCorrecto ? "visible" : "hidden", textAlign: "center", fontWeight: "bold", fontSize: "1.2rem", marginTop: "1vh"}}>{provinciaCp}</p>
+                        <p style={{visibility: cpCorrecto ? "visible" : "hidden", textAlign: "center", fontWeight: "bold", fontSize: "1.25vw", marginTop: "1vh"}}>{provinciaCp}</p>
 
                     </div>
                     <div>

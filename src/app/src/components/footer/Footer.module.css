@@ -2,10 +2,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .foot {
-    width: 99.1vw;
+    width: 100%;
     background-color: #d9d9d9;
     display: flex;
     flex-direction: column;
@@ -16,8 +17,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 1.25vw;
-    width: 96vw;
+    margin-top: 1rem;
+    width: 97%;
     justify-content: space-between;
 }
 
@@ -27,7 +28,7 @@
 }
 
 .enlaces div a {
-    margin-left: 1.72vw;
+    margin-left: 1.4rem;
 }
 
 .enlaces div:last-child {
@@ -35,27 +36,27 @@
 }
 
 .footer hr {
-    width: 96vw;
-    border:1px solid var(--verdeEmpresa);
-    margin: 3.75vh 0;
+    width: 98%;
+    border: 1px solid var(--verdeEmpresa);
+    margin: 1.7rem 0;
 }
 
 .copyRedes {
     display: flex;
-    width: 96vw;
+    width: 97%;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 4vh;
+    margin-bottom: 1.8rem;
 }
 
 .copy {
-    font-size: 1.5vh;
+    font-size: 0.625rem;
 }
 
 .redes img {
-    margin-left: 1vw;
-    width: 2.11vw;
-    height: 2.11vw;
+    margin-left: 0.8rem;
+    width: 2.125vw;
+    height: 2.125vw;
 }
 
 .grupoEmpresas {
@@ -64,40 +65,54 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 5.8vh;
+    margin-bottom: 2.6rem;
 }
 
 .grupoEmpresas div {
-    margin-top: 6.6vh;
-    margin-bottom: 3.33vh;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
 }
 
 .grupoEmpresas div img:first-child {
-    margin-right: 2.7vw;
+    margin-right: 2.2rem;
 }
 
 .empezamos {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 4vh;
+    margin-top: 1.8rem;
 }
 
 .empezamos p {
-    font-size: 1.7vw;
-    margin: 3vh 0;
+    font-size: 1rem;
+    margin: 1.4rem 0;
 }
 
 .empezamos button {
     width: 23.5vw;
     height: 5.8vh;
     color: var(--blanco);
-    font-size: 1.5vw;
+    font-size: 1.4rem;
     font-weight: bold;
-    border-radius: 1vw;
+    border-radius: 0.8rem;
     cursor: pointer;
 }
 
 .empezamos a {
-    margin-bottom: 6vh;
+    margin-bottom: 2.7rem;
+}
+
+@media screen and (min-width: 1920px) {
+    .copy {
+        font-size: 0.8rem;
+    }
+
+    .empezamos p {
+        font-size: 1.4rem;
+    }
+
+    .empezamos button {
+        font-size: 1.8rem;
+    }
 }

@@ -1,4 +1,4 @@
-import React, { Dispatch } from "react"
+import React from "react"
 import styles from "../../css/simulador.module.css"
 
 interface Props {

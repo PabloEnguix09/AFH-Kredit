@@ -243,18 +243,19 @@ let login = async function (req, res) {
         params: req.params
     }
     let response = await api.login(body)
-    try {
+    res.status(response.status).send(response.data)
+    /*try {
         
         if (response.data.providerData[0].isAdmin) {
             res.status(response.status).redirect("http://localhost:3000/app/admin")
             return
         } else if(!response.data.providerData[0].isAdmin){
-            res.status(response.status).redirect("http://localhost:3000/app/user")
+            res.status(response.status).send(response.data)
             return
         }
     } catch (error) {
         res.status(response.status).send(response.data)
-    }
+    }*/
 }
 
 

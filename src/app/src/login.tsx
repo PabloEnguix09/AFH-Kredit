@@ -9,12 +9,13 @@ import React, { Dispatch, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CryptoJS from "crypto-js";
 
+import Cookies from "js-cookie"
+
 
 async function log(email: string, password: string, setUrl: Dispatch<React.SetStateAction<string>>) {
     
     //let pass = cryptr.encrypt(password)
     let pass = CryptoJS.AES.encrypt(password, process.env.REACT_APP_SECRET_KEY as string).toString()
-    
     
     let body : BodyInit = JSON.stringify({
         email:email, 
@@ -27,14 +28,23 @@ async function log(email: string, password: string, setUrl: Dispatch<React.SetSt
             'content-type': 'application/json;charset=UTF-8',
         },
         body: body
-    }).then((response) => {
-        if(response.status === 200) {
+    }).then(async(response) => {
+        let respuesta = await response.json()
+        console.log(response);
+        console.log(respuesta);
+        
+        
+        if(response.status === 301) {
+            console.log(respuesta.credenciales.items);
             
-            setUrl(response.url)
+            for(let key in respuesta.credenciales) {
+                console.log(`${key}: ${respuesta.credenciales[key]}`);
+                
+                Cookies.set(key, respuesta.credenciales[key])
+            }
+            setUrl(respuesta.url)
         }
     })
-    
-    
 }
 
 function Login() {

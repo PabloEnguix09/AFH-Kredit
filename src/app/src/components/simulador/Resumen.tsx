@@ -42,7 +42,7 @@ function calcular(capital: number, interes: number, anyos: number) {
             interesesTotales += interesMensual[i]
             totalAmortizado += amortizacionMensual[i]
     }
-    return [Math.ceil(cuotaMensual * 100) / 100, Math.ceil(interesesTotales * 100) /100]
+    return [Math.round(cuotaMensual * 100) / 100, Math.round(interesesTotales * 100) /100]
 }
 
 function calcularMensualidad(capital: number, interes: number, anyos: number): number {
@@ -60,7 +60,7 @@ function calcularMensualidad(capital: number, interes: number, anyos: number): n
 }
 
 function calcularInteresMensual(capital: number, cuota: number, interes: number): number {
-    return ((capital-cuota)*(interes/100))/12
+    return Math.ceil(((capital-cuota)*(interes/100))/12 * 100) / 100
 }
 
 function calcularAmortizadoMensual(cuota: number, intereses: number) {
@@ -82,9 +82,12 @@ function Resumen({capital, anyos, toggle, setToggle}: Props) {
         hoverOffset: 4
     }]})
 
+    const [intereses, setIntereses] = useState(0)
+
     useEffect(() => {
         const [cuota, intereses] = calcular(capitalState, interes, anyosState)
         setMensualidad(cuota)
+        setIntereses(intereses)
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
         setData({
@@ -118,11 +121,11 @@ function Resumen({capital, anyos, toggle, setToggle}: Props) {
                     <div className={styles.leyendaContainer}>
                         <div className={styles.leyendaDiv}>
                             <div className={`${styles.leyendaRecuadro} ${styles.verde}`}></div>
-                            <p>Capital</p>
+                            <p>Capital ({capitalState} €)</p>
                         </div>
                         <div className={styles.leyendaDiv}>
                             <div className={`${styles.leyendaRecuadro} ${styles.grisOscuro}`}></div>
-                            <p>Intereses totales</p>
+                            <p>Intereses totales ({intereses} €)</p>
                         </div>
                     </div>
                 </div>

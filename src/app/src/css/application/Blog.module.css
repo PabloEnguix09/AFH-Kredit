@@ -1,0 +1,30 @@
+.ventanaBlog {
+    width: 72rem;
+    height: 31.25rem;
+    border-radius: 1.5rem;
+    background-color: #d9d9d9;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.88rem;
+}
+
+.listaNoticias {
+    display: grid;
+    height: 24rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    grid-template-columns: repeat(7, 1fr);
+    grid-column-gap: 1.25rem;
+    grid-row-gap: 1.25rem;
+    padding: 0 1.85rem;
+}
+
+.buscadorNoticia {
+    margin-top: 1.25rem !important;
+}
+
+.buscarNoticia {
+    width: 69rem !important;
+}

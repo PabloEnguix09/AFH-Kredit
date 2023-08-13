@@ -1,56 +1,62 @@
 .contacto {
-    width: 99.1vw;
+    width: 100%;
 }
 
 .contacto .metodos {
     display: flex;
-    margin: 0 10.7vh;
-    margin-top: 4vw;
+    margin: 0 6vw;
+    margin-top: 2rem;
     margin-bottom: 8vh;
     justify-content: space-between;
     align-items: center;
 }
 
 .formulario h1 {
-    padding-top: 3.125vw;
+    padding-top: 2.5rem;
     text-align: center;
 }
 
 .contacto .formulario {
-    width: 26vw;
-    padding: 3.36vw;
+    width: 18rem;
+    padding: 2rem;
     background-color: #d9d9d9;
-    border-radius: 2vw;
+    border-radius: 1.6rem;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .contacto .formulario h2 {
-    font-size: 2.5vw;
-    margin-bottom: 5vh;
+    font-size: 1.5rem;
+    margin-bottom: 2.25rem;
 }
 
 .contacto .formulario .datos {
+    width: 18rem;
     display: flex;
     flex-direction: column;
 }
 
-.datos textArea {
-    padding: 1.25vw;
-    font-family: 'Roboto', sans-serif;
-    width: 23.5vw;
-    height: 37.5vh;
+.datos input {
+    height: 2.5rem;
+    text-indent: 1rem;
+    margin-bottom: 1rem;
+}
 
-    font-size: 1.25vw;
+.datos textArea {
+    padding: 1rem;
+    font-family: 'Roboto', sans-serif;
+    height: 4rem;
+    font-size: 1rem;
+    margin-bottom: 1rem;
 }
 
 .datos button {
-    margin-top: 1.25vw;
-    height: 6vh;
-    font-size: 1.8vw;
+    margin-top: 1rem;
+    height: 2.5rem;
+    font-size: 1rem;
     font-weight: bold;
-    border-radius: 1vw;
+    border-radius: 0.75rem;
     color: var(--blanco);
 }
 
@@ -60,14 +66,15 @@
 }
 
 #checkbox {
-    width: 2.7vw;
-    height: 1.7vw;
-    margin-right: 1vh;
+    width: 2rem;
+    height: 1.38rem;
+    margin-right: 0.4rem;
     background-color: white;
     appearance: none;
     outline: none;
     border: 1px solid var(--grisOscuro);
     border-radius: 25%;
+    margin-bottom: 0;
 }
 #checkbox:checked {
     background-color: var(--verdeEmpresa);
@@ -76,7 +83,7 @@
 .datos label {
     display: flex;
     align-items: center;
-    font-size: 1.25vw;
+    font-size: 0.8rem;
 }
 
 .alternativos {
@@ -87,50 +94,60 @@
 }
 
 .alternativos h2 {
-    font-size: 2.5vw;
+    font-size: 1.5rem;
 }
 
 .alternativos .alternativo {
     display: flex;
     align-items: center;
-    width: 21vw;
-    margin-top: 2.6vh;
+    width: 13rem;
+    margin-top: 1.2rem;
 }
 
 .alternativos .alternativo img {
-    width: 4vw;
-    height: 7vh;
-    margin-right: 1.17vw;
-}
-
-.alternativos .alternativo a {
-    font-size: 1.72vw;
+    width: 3.1rem;
+    height: 3.1rem;
+    margin-right: 1rem;
 }
 
 .linea {
     color: var(--verdeEmpresa);
     display: flex;
     align-items: center;
-    margin: 12.5vh 0;
+    margin: 2.5rem 0;
 }
 
 .linea hr {
     border: none;
-    border:1px solid var(--verdeEmpresa);
-    width: 18.75vw;
+    border: 1px solid var(--verdeEmpresa);
+    width: 15rem;
 }
 
 .linea span {
-    margin: 0 1vw;
-    font-size: 2.5vw;
+    margin: 0 0.8rem;
+    font-size: 1.5rem;
 }
 
 .alternativos .redes {
-    margin-top: 4vh;
+    margin-top: 2rem;
 }
 
 .alternativos .redes img {
-    width: 3.9vw;
-    height: 7vh;
-    margin-left: 1.875vw;
+    width: 3.1rem;
+    height: 3.1rem;
+    margin-left: 1.5rem;
+}
+
+@media screen and (min-width: 1920px) {
+    .contacto .metodos {
+        margin: 3rem 12vw;
+    }
+
+    .datos input {
+        margin-bottom: 1.5rem;
+    }
+
+    .datos button {
+        margin-top: 1.5rem;
+    }
 }

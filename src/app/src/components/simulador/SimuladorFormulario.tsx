@@ -57,7 +57,6 @@ function SimuladorFormulario() {
     const [tipoVivienda, setTipoVivienda] = useState("Segunda mano")
     const [anyos, setAnyos] = useState("")
 
-    const [toggle, setToggle] = useState(false)
     const [paso, setPaso] = useState(1)
     
     let estados : Estados = {

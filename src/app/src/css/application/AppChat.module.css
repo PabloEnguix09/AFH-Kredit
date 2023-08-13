@@ -1,0 +1,159 @@
+.chat {
+    display: flex;
+    align-items: center;
+    gap: 2.5vw;
+}
+
+.ventanaChat {
+    width: 66vw;
+    height: 72.8vh;
+    background-color: var(--grisMenu);
+    border-radius: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.69vh;
+}
+
+.infoContacto {
+    background-color: var(--verdeChat);
+    width: 65vw;
+    height: 9vh;
+    display: flex;
+    align-items: center;
+    border-radius: 1.5rem 1.5rem 0 0;
+    margin-top: 0.4rem;
+    gap: 1vw;
+}
+
+.infoContacto img {
+    width: 3.125vw;
+    height: 3.125vw;
+    margin-left: 1vw;
+}
+
+.infoContacto p {
+    font-size: 1.72vw;
+    font-weight: 500;
+}
+
+.infoContacto span {
+    font-size: .95vw;
+}
+
+.infoContacto p,
+.infoContacto span {
+    color: #333;
+}
+
+.conversacion {
+    background-color: var(--blanco);
+    width: 65vw;
+    height: 60vh;
+    border-radius: 0 0 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.mensajes {
+    display: flex;
+    width: 62.5vw;
+    height: 48.2vh;
+    overflow: auto;
+    flex-direction: column;
+    margin-top: 0.8rem;
+}
+
+.fecha {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 0.95vw;
+}
+
+.mensaje {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5vw;
+    position: relative;
+    margin-bottom: 0.25rem;
+    margin-left: 0.8rem;
+}
+
+.mensaje img {
+    width: 1.875vw;
+    height: 1.875vw;
+}
+
+.contenidoMensaje {
+    display: flex;
+    align-items: flex-end;
+    max-width: 27.5vw;
+    gap: 0.5vw;
+    border-radius: 1.5rem;
+}
+
+.contenidoMensaje p {
+    font-size: 0.85rem;
+    padding-left: 0.81rem;
+    padding-top: 0.56rem;
+    padding-bottom: 0.56rem;
+    color: #333;
+}
+
+.contenidoMensaje span {
+    font-size: 0.65rem;
+    padding-right: 0.81rem;
+    padding-bottom: 0.25rem;
+
+    color: #999;
+}
+
+.entrante {
+    background-color: #d9d9d9;
+}
+
+.saliente {
+    background-color: var(--verdeChat);
+}
+
+.mensaje:has(> .saliente) {
+    align-self: flex-end;
+    margin-right: 1rem;
+}
+
+.saliente span {
+    color: #286758;
+}
+
+.chatInput {
+    margin-top: 1rem;
+    align-self: center;
+    justify-self: flex-end;
+    margin-bottom: 0.5rem;
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+.chatInput textarea {
+    width: 44.2rem;
+    height: 1.375rem;
+    border: 2px solid var(--gris);
+    border-radius: 2rem;
+    margin-bottom: 0;
+    font-size: 1rem;
+    padding: 1rem 3.4rem;
+}
+
+.adjuntar {
+    position: absolute;
+    z-index: 1;
+    left: 0.75rem;
+}
+
+.enviar {
+    position: absolute;
+    z-index: 2;
+    right: 1.3rem;
+}

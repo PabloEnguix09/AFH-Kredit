@@ -6,13 +6,14 @@ const { authClient, signInWithEmailAndPassword } = require("../utils/firebase/ap
 const CryptoJS = require("crypto-js");
 
 class Usuario {
-    constructor(id, nombre, apellidos, email, photoURL, rol) {
+    constructor(id, nombre, apellidos, email, photoURL, rol, contactos) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.email = email;
         this.photoURL = photoURL;
         this.rol = rol;
+        this.contactos = contactos
     }
 }
 
@@ -37,7 +38,8 @@ class UsuarioAPI {
                             datos.apellidos,
                             datos.email,
                             datos.photoURL,
-                            datos.rol
+                            datos.rol,
+                            datos.contactos
                         );
                         usuarios.push(usuario);
                     });
@@ -70,7 +72,8 @@ class UsuarioAPI {
                             datos.apellidos,
                             datos.email,
                             datos.photoURL,
-                            datos.rol
+                            datos.rol,
+                            datos.contactos
                         )
                         resolve({
                             status: 200,
@@ -166,13 +169,16 @@ class UsuarioAPI {
                 await signInWithEmailAndPassword(authClient, req.body.email, pass).then(async(credenciales) => {
                     let tokenId = await authClient.currentUser.getIdToken()
                     await auth.verifyIdToken(tokenId).then((claims) => {
+                        let url = ""
                         if(claims.admin == true) {
                             credenciales.user.providerData[0].isAdmin = true
+                            url = "http://localhost:3000/app/admin"
                         }
                         else {
                             credenciales.user.providerData[0].isAdmin = false
+                            url = "http://localhost:3000/app/user"
                         }
-                        resolve({status: 301, data: credenciales.user})
+                        resolve({status: 301, data: {credenciales: credenciales.user.providerData[0], url: url}})
                     })
                 }).catch((error) => {
                     throw new Error(error)

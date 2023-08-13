@@ -1,0 +1,124 @@
+.app {
+    margin-top: 22.2vh !important;
+}
+
+.listaContactos {
+    margin-top: 1.87rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.9vh;
+    max-height: 25.2rem;
+}
+
+.listaScrollable {
+    overflow-y: scroll;
+    padding-left: 1.2rem;
+    padding-right: .5rem;
+}
+
+.buscador {
+    width: 23.625vw;
+    height: 72.9vh;
+    border-radius: 1.5rem;
+    background-color: var(--grisMenu);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.buscarInput {
+    border-radius: 1.875vw !important;
+    width: 19.5vw;
+    height: 7.22vh !important;
+    background-color: #f0f0f0;
+    margin: 0 !important; 
+}
+
+.buscadorInput {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-top: 1.63rem;
+}
+
+.buscadorInput img {
+    position: absolute;
+    z-index: 1;
+    width: 1.8vw;
+    height: 3.2vh;
+    right: 1.44rem;
+}
+
+.buscarInput::placeholder {
+    font-size: 1.72vw;
+    color: #aaa !important;
+}
+
+.verde {
+    filter: brightness(0) saturate(100%) invert(88%) sepia(8%) saturate(2586%) hue-rotate(101deg) brightness(104%) contrast(99%);
+}
+
+.tarjetaContacto {
+    display: flex;
+    padding: 1.24vh 1.175vw;
+    width: 16.9vw;
+    height: 4.2vh;
+    border-radius: 1.9vw;
+    background-color: var(--blanco);
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    border: 2px solid transparent;
+
+}
+
+.tarjetaContacto div {
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+}
+
+.tarjetaContacto img {
+    width: 2.625vw;
+    height: 2.625vw;
+}
+
+.tarjetaContacto span {
+    font-size: 1.72vw;
+    max-width: 10.625vw;
+    overflow: hidden;
+    white-space: nowrap;
+    color: var(--grisOscuro);
+}
+
+.tarjetaContacto:hover {
+    background-color: var(--verdeChat);
+    transition: all 0.3s ease-in-out;
+}
+
+.tarjetaContacto:hover div span {
+    color: var(--blanco);
+    transition: all 0.3s ease-in-out;
+}
+.tarjetaContacto:hover .noLeidos {
+    background-color: var(--blanco);
+    transition: all 0.3s ease-in-out;
+
+}
+
+.selected {
+    border: 2px solid var(--verdeEmpresa);
+}
+
+.noLeidos {
+    background-color: var(--verdeEmpresa);
+    width: 1.8vw;
+    height: 1.8vw;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    float: right;
+    font-size: 1.25vw !important;
+    font-weight: bold;
+}

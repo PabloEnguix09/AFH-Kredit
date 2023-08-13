@@ -18,17 +18,20 @@ code {
   --blanco: #fafafa;
   --verdeBoton: #399C85;
   --gris: #ccc;
+  --verdeOscuro: #286758;
+  --grisMenu: #d9d9d9;
+  --verdeChat: #4EC19D;
+  
 }
 
 * {
   margin: 0;
   padding: 0;
-  max-width:99.1vw;
 }
 
 html,
 body {
-  font-size: 2.22vh;
+  font-size: 1rem;
   font-family: 'Roboto', sans-serif;
   background-color: var(--blanco);
   overflow-x: hidden;
@@ -45,13 +48,17 @@ a {
   color: var(--grisOscuro);
 }
 
+p {
+  font-size: 1rem;
+}
+
 input[type="text"], 
 input[type="password"],
 textArea, 
 input[type="number"] {
-    margin-bottom: 5vh;
+    margin-bottom: 2.25rem;
     border: none;
-    border-radius: 0.5vw;
+    border-radius: 0.4rem;
 }
 
 input[type="text"], 
@@ -59,7 +66,7 @@ input[type="password"],
 input[type="number"] {
     height: 6vh;
     text-indent: 1.25vw;
-    font-size: 1.25vw;
+    font-size: 1rem;
 }
 
 input[type="text"]::placeholder, 
@@ -79,16 +86,25 @@ button, select, input[type="checkbox"], input[type="radio"] {
 }
 
 h1 {
-  padding-top: 5vh;
+  padding-top: 2.25rem;
+  font-size: 2rem;
   text-align: center;
 }
 
-#root > div {
-  margin-top: 4rem;
+label {
+  font-size: 1rem;
+}
+
+#root > div,
+#rootApp > div {
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: space-between;
+}
+
+#root > div {
+  margin-top: 4rem;
 }
 
 .checkboxDiv {
@@ -97,9 +113,9 @@ h1 {
 }
 
 #checkbox {
-  width: 1.7vw;
-  height: 1.7vw;
-  margin-right: 1vh;
+  width: 1.625vw;
+  height: 1.625vw;
+  margin-right: 0.5rem;
   background-color: white;
   appearance: none;
   outline: none;
@@ -112,4 +128,41 @@ h1 {
 
 input:disabled {
   background-color: #eee;
+}
+
+input::-webkit-scrollbar,
+textarea::-webkit-scrollbar,
+div::-webkit-scrollbar {
+  width: 0.625rem;
+}
+
+input::-webkit-scrollbar-track,
+textarea::-webkit-scrollbar-track,
+div::-webkit-scrollbar-track {
+  border-radius: 1rem;
+  background: #f1f1f1;
+}
+
+input::-webkit-scrollbar-thumb,
+textarea::-webkit-scrollbar-thumb,
+div::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 1rem;
+}
+
+input::-webkit-scrollbar-thumb:hover,
+textarea::-webkit-scrollbar-thumb:hover,
+div::-webkit-scrollbar-thumb:hover {
+background: #555; 
+}
+
+@media screen and (min-width: 1920px) {
+  h1 {
+      font-size: 2.5rem;
+  }
+
+  label {
+    font-size: 1.25rem;
+  }
+
 }

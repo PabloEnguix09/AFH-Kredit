@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import TextInputSim from "./TextInputSim"
 import styles  from "../../css/simulador.module.css";
 
@@ -9,7 +9,7 @@ interface Detalle {
 }
 
 
-function calcular(capital: number, interes: number, anyos: number, posterior: boolean, interesPost: number, cambioInteres: number) {
+function calcular(capital: number, interes: number, anyos: number) {
     let capitalRestante = capital
     let interesesTotales = 0
     let totalAmortizado = 0
@@ -35,7 +35,6 @@ function calcular(capital: number, interes: number, anyos: number, posterior: bo
 
             detalles.push({capitalRestante: capitalRestante, cuota: cuotaMensual[i], interes: interesMensual[i]}) 
     }
-    
 }
 
 

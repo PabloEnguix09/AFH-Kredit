@@ -1,23 +1,23 @@
 .navbar {
     display: flex;
     flex-direction: row;
-    height: 8.9vh;
+    height: 4rem;
     justify-content:space-between;
     align-items: center;
-    padding: 0 1.8vw;
+    padding: 0 1.4rem;
     background-color: var(--grisOscuro);
     border-bottom: 2px solid var(--verdeEmpresa);
 
     position: fixed;
     top: 0;
-    width: 100vw;
+    width: 100%;
     box-sizing: border-box;
     z-index: 999;
 }
 
 .navbar img {
-    width: 3.125vw;
-    height: 3.125vw;
+    width: 100%;
+    height: 100%;
 }
 
 .navbar ul{
@@ -36,13 +36,13 @@
 }
 
 .navbar select {
-    width: 4.22vw;
+    width: 3.4rem;
     background: none;
     color: var(--blanco);
     text-decoration: underline;
     outline: none;
     border: none;
-    margin-right: 1.64vw;
+    margin-right: 1.3rem;
     text-align: center;
 }
 
@@ -57,7 +57,7 @@
 }
 
 .navbar button {
-    width: 7.8vw;
-    height: 3.5vh;
-    font-size: 1.8vh;
+    width: 6.2rem;
+    height: 1.6rem;
+    font-size: 0.8rem;
 }

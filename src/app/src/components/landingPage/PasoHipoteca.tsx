@@ -10,7 +10,7 @@ function Paso({numero, titulo, texto}:Props) {
     return (
         <div className={styles.paso}>
             <p className={styles.numeroPaso}>{numero}</p>
-            <h3>{titulo}</h3>
+            <h2>{titulo}</h2>
             <span>{texto}</span>
         </div>
     )
