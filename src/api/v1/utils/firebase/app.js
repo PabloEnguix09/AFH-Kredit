@@ -9,6 +9,9 @@ const { getAuth, signInWithEmailAndPassword, signInWithPopup, FacebookAuthProvid
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+var serviceAccount = require("../../../../app/src/serviceAccountAppKey.json");
+
 const firebaseConfig = {
   apiKey: "AIzaSyD_swTmWmGas3kdpWeULPQ3zqvyCgmFSAI",
   authDomain: "afh-kredit.firebaseapp.com",
@@ -19,7 +22,7 @@ const firebaseConfig = {
   measurementId: "G-DNVBPBMCET"
 };
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(serviceAccount);
 //const analytics = getAnalytics(app);
 const storage = getStorage(app)
 const authClient = getAuth(app)

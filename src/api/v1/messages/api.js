@@ -22,7 +22,19 @@ let receive = async(req, res) => {
     })
 }
 
+let listen = async(req, res) => {
+    let body = {
+        body: req.body,
+        params: req.params
+    }
+
+    await api.addListener(body).then((response) => {
+        res.status(response.status).send(response.data)
+    })
+}
+
 module.exports = {
     send:send,
-    get:receive
+    get:receive,
+    listen: listen
 }

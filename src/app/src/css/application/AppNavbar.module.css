@@ -19,7 +19,7 @@
 
 .navbar p {
     margin-top: 2rem;
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 .navbar > ul {
@@ -36,10 +36,17 @@
 .navbar ul li div {
     display: flex;
     align-items: center;
-    gap: 1vw;
+    gap: 0.8rem;
 }
 
 .navbar ul li div span {
-    font-size: 2.5vw;
+    font-size: 2rem;
     color: var(--verdeOscuro);
+}
+
+@media screen and (min-width:1920px) {
+    .navbar p {
+        font-size: 2rem;
+    }
+    
 }

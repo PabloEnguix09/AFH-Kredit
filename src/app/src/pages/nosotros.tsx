@@ -1,7 +1,8 @@
-import Empezamos from "./components/footer/Empezamos"
-import Footer from "./components/footer/Footer"
-import Navbar from "./components/navbar/Navbar"
-import styles from "./css/nosotros.module.css"
+
+import Empezamos from "../components/footer/Empezamos"
+import Footer from "../components/footer/Footer"
+import Navbar from "../components/navbar/Navbar"
+import styles from "../css/nosotros.module.css"
 
 function Nosotros() {
     return(

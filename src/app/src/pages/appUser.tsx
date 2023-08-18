@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction, useState } from "react"
-import UserNavbar from "../../components/application/user/UserNavbar"
-import Chat from "../../components/application/components/chat/Chat"
-import DocumentosUser from "../../components/application/components/documentos/DocumentosUser"
-import Ajustes from "../../components/application/components/Ajustes"
-import SelectorPrestamo from "../../components/application/components/amortizacion/SelectorPrestamo"
+import UserNavbar from "../components/application/user/UserNavbar"
+import Chat from "../components/application/components/chat/Chat"
+import DocumentosUser from "../components/application/components/documentos/DocumentosUser"
+import Ajustes from "../components/application/components/Ajustes"
+import SelectorPrestamo from "../components/application/components/amortizacion/SelectorPrestamo"
 
-import styles from "../../css/application/App.module.css"
+import styles from "../css/application/App.module.css"
 
 function setPaginaUser(pagina:string, userData: Object, contactoSelected:string, setContactoSelected:Dispatch<SetStateAction<string>>) {
     switch (pagina) {

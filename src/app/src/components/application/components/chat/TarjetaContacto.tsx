@@ -25,7 +25,7 @@ function TarjetaContacto(props: Props) {
                 <div className={`${styles.tarjetaContacto} ${styles.selected}`} onClick={() => props.setSelected("")} ref={estaTarjeta}>
                     <div>
                         {props.imagenContacto === "none" ? <></> : <img src={imagen} alt="Icono contacto" />}
-                        <span>{props.nombre}</span>
+                        <span className="nombreContacto">{props.nombre}</span>
                     </div>
                     <span className={styles.noLeidos} style={{display: props.noLeidos === 0 || props.imagenContacto ==="none" ? "none" : "flex"}}>{props.noLeidos}</span>
                 </div>
@@ -35,7 +35,7 @@ function TarjetaContacto(props: Props) {
                 <div className={styles.tarjetaContacto} onClick={() => props.setSelected(props.nombre)} ref={estaTarjeta}>
                     <div>
                         {props.imagenContacto === "none" ? <></> : <img src={imagen} alt="Icono contacto" />}
-                        <span>{props.nombre}</span>
+                        <span className="nombreContacto">{props.nombre}</span>
                     </div>
                     <span className={styles.noLeidos} style={{display: props.noLeidos === 0 || props.imagenContacto ==="none" ? "none" : "flex"}}>{props.noLeidos}</span>
                 </div>

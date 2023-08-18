@@ -22,7 +22,7 @@ function BaseDatos() {
 
     return(
         <div className={styles.baseDatos}>
-            <Buscador contactoSelected={tabla} setContactoSelected={setTabla} imgContactos={"none"} />
+            <Buscador contactoSelected={tabla} setContactoSelected={setTabla} imgContactos={"none"} contactos={[]} />
 
             <div className={commonStyles.ventanaChat}>
             {

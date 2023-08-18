@@ -21,6 +21,24 @@ class Mensaje {
 }
 
 class MensajeAPI {
+
+    addListener = async function (req) {
+        return new Promise(async(resolve, reject) => {
+            try {
+                realtime.ref("/mensajes/" + req.params.uid).on("value", (snapshot) => {
+                    console.log(snapshot);
+                    console.log("mensaje");
+                    resolve({
+                        status:200,
+                        data:snapshot.val()
+                    })
+                })
+            } catch (error) {
+                resolve(check_error(error))
+            }
+        })
+    }
+
     getAll = async function (req) {
         return new Promise(async(resolve, reject) => {
             try {
@@ -58,7 +76,6 @@ class MensajeAPI {
                 console.log("creando mensaje");
                 if(Object.keys(req.body.media).length != 0) {
                     console.log("hay adjunto");
-                    console.log(req.body.media);
                     let documentRequestData = {
                         body: req.body.media,
                         params: {
@@ -82,7 +99,7 @@ class MensajeAPI {
                             }
                             await documentAPI.get(data).then((response) => {
                                 mensaje = new Mensaje(
-                                    v4(),
+                                    Date.now().toString() + v4(),
                                     req.body.cliente,
                                     req.body.agente,
                                     req.body.isClienteSender,
@@ -98,7 +115,7 @@ class MensajeAPI {
                 else {
                     console.log("NO hay adjunto");
                     mensaje = new Mensaje(
-                        v4(),
+                        Date.now().toString() + v4(),
                         req.body.cliente,
                         req.body.agente,
                         req.body.isClienteSender,
@@ -108,7 +125,6 @@ class MensajeAPI {
                         );
                 }
                 realtime.ref("mensajes/"+req.body.chatId+"/"+mensaje.id).set(mensaje);
-                console.log("mensaje enviado");
             
                 resolve({
                     status: 201,

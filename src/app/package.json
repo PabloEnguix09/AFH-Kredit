@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@react-oauth/google": "^0.11.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -16,6 +17,8 @@
     "bcryptjs": "^2.4.3",
     "buffer": "^6.0.3",
     "chart.js": "^4.3.0",
+    "crypto": "^1.0.1",
+    "firebase": "^10.1.0",
     "js-cookie": "^3.0.5",
     "papaparse": "^5.4.1",
     "rc-tooltip": "^6.0.1",
@@ -28,11 +31,14 @@
     "react-scripts": "5.0.1",
     "react-tooltip": "^5.18.1",
     "rmc-tooltip": "^1.0.1",
+    "stream": "^0.0.2",
     "typescript": "^4.9.5",
+    "util": "^0.12.5",
     "web-vitals": "^2.1.4",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1"
+    "webpack-dev-server": "^4.15.1",
+    "ws": "^8.13.0"
   },
   "scripts": {
     "start": "react-scripts start",

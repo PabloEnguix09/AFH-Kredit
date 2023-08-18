@@ -1,7 +1,7 @@
-import Footer from "./components/footer/Footer"
-import Navbar from "./components/navbar/Navbar"
-import styles from "./css/login.module.css"
-import stylesRec from "./css/recuperar.module.css"
+import Footer from "../components/footer/Footer"
+import Navbar from "../components/navbar/Navbar"
+import styles from "../css/login.module.css"
+import stylesRec from "../css/recuperar.module.css"
 
 
 function RecuperarPass() {

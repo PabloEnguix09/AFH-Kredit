@@ -2,15 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./css/index.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LandingPage from "./landing";
-import Contacto from "./contacto";
-import Nosotros from "./nosotros";
-import Login from "./login";
-import RecuperarPass from "./recuperarPass";
-import Simulador from "./simulador";
-import Blog from "./blog";
-import AdminApp from "./app/admin/app";
-import UserApp from "./app/user/app";
+import LandingPage from "./pages/landing";
+import Contacto from "./pages/contacto";
+import Nosotros from "./pages/nosotros";
+import Login from "./pages/login";
+import RecuperarPass from "./pages/recuperarPass";
+import Simulador from "./pages/simulador";
+import Blog from "./pages/blog";
+import AdminApp from "./pages/appAdmin";
+import UserApp from "./pages/appUser";
+import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
@@ -36,3 +37,4 @@ root.render(
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals()

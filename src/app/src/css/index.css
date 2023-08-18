@@ -21,6 +21,7 @@ code {
   --verdeOscuro: #286758;
   --grisMenu: #d9d9d9;
   --verdeChat: #4EC19D;
+  --rojoError: #C14E4E;
   
 }
 
@@ -59,12 +60,14 @@ input[type="number"] {
     margin-bottom: 2.25rem;
     border: none;
     border-radius: 0.4rem;
+    font-family: 'Roboto', sans-serif;
+
 }
 
 input[type="text"], 
 input[type="password"], 
 input[type="number"] {
-    height: 6vh;
+    height: 2.7rem;
     text-indent: 1.25vw;
     font-size: 1rem;
 }

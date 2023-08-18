@@ -1,8 +1,8 @@
-import Navbar from './components/navbar/Navbar';
-import Footer from './components/footer/Footer';
 
-import styles from "./css/blog.module.css"
-import Titular from './components/blog/titular';
+import Titular from "../components/blog/titular"
+import Footer from "../components/footer/Footer"
+import Navbar from "../components/navbar/Navbar"
+import styles from "../css/blog.module.css"
 
 function Blog() {
   return(

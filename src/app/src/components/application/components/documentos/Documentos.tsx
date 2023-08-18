@@ -13,7 +13,7 @@ interface Props {
 function Documentos(props:Props) {
     return(
         <div className={styles.documentos}>
-            <Buscador contactoSelected={props.contactoSelected} setContactoSelected={props.setContactoSelected} imgContactos={""} />
+            <Buscador contactoSelected={props.contactoSelected} setContactoSelected={props.setContactoSelected} imgContactos={""} contactos={undefined}/>
 
             <div className={commonStyles.ventanaChat}>
             {props.contactoSelected !== ""

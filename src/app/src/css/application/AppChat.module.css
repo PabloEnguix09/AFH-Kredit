@@ -53,6 +53,7 @@
     border-radius: 0 0 1.5rem 1.5rem;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .mensajes {
@@ -127,17 +128,16 @@
 }
 
 .chatInput {
-    margin-top: 1rem;
+    width: 95%;
     align-self: center;
     justify-self: flex-end;
-    margin-bottom: 0.5rem;
-    position: relative;
-
+    position: absolute;
+    bottom: 0.5rem;
     display: flex;
     align-items: center;
 }
 .chatInput textarea {
-    width: 44.2rem;
+    width: 100%;
     height: 1.375rem;
     border: 2px solid var(--gris);
     border-radius: 2rem;
@@ -156,4 +156,10 @@
     position: absolute;
     z-index: 2;
     right: 1.3rem;
+}
+
+@media screen and (min-width: 1920px) {
+    .contenidoMensaje p {
+        font-size: 1rem;
+    }
 }
