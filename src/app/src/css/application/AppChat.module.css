@@ -65,6 +65,15 @@
     margin-top: 0.8rem;
 }
 
+.mensajes * {
+    overflow-anchor: none;
+}
+
+.anclarBajo {
+    overflow-anchor: auto;
+    height: 1px;
+}
+
 .fecha {
     display: block;
     width: 100%;
@@ -150,9 +159,11 @@
     position: absolute;
     z-index: 1;
     left: 0.75rem;
+    cursor: pointer;
 }
 
 .enviar {
+    cursor: pointer;
     position: absolute;
     z-index: 2;
     right: 1.3rem;

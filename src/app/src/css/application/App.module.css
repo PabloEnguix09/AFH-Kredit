@@ -28,7 +28,7 @@
 
 .buscarInput {
     border-radius: 1.875vw !important;
-    width: 19.5vw;
+    width: 100%; /*19.5vw*/
     height: 7.22vh !important;
     background-color: #f0f0f0;
     margin: 0 !important; 
@@ -39,6 +39,7 @@
     align-items: center;
     position: relative;
     margin-top: 1.63rem;
+    width: 83%;
 }
 
 .buscadorInput img {
@@ -124,5 +125,16 @@
 }
 
 .oculto {
-    display: none;
+    display: none !important;
+}
+
+.ventanaChat {
+    width: 66vw;
+    height: 72.8vh;
+    background-color: var(--grisMenu);
+    border-radius: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.69vh;
 }

@@ -2,9 +2,20 @@ import { Dispatch, SetStateAction } from "react"
 import styles from "../../../../css/application/Amortizacion.module.css"
 import iconoMas from "../../../../img/icono_mas.svg"
 
+interface Mensualidad {
+
+    mes: number,
+    cuota: number,
+    intereses: number,
+    principal: number,
+    restante: number,
+    pagado: boolean
+}
+
 interface Props {
     nuevo: boolean,
     nombrePrestamo: string,
+    prestamoDatos: Mensualidad[],
     setPagina: Dispatch<SetStateAction<number>>,
     setNombrePrestamo: Dispatch<SetStateAction<string>>
 }

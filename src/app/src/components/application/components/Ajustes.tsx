@@ -6,6 +6,8 @@ import logoGoogle from "../../../img/google_logo.svg"
 import logoFacebook from "../../../img/facebook_logo.svg"
 import logoTwitter from "../../../img/twitter_logo.svg"
 import logoApple from "../../../img/apple_logo.svg"
+import { signOut } from "firebase/auth"
+import { auth } from "../../../js/firebaseApp"
 
 interface Props {
     nombreCompleto: string,
@@ -32,7 +34,7 @@ function Ajustes(props:Props) {
                     <input type="text" name="Nombre" id="" value={props.correo} disabled/>
                 </div>
 
-                <button className={styles.cerrarSesion}>Cerrar sesión</button>
+                <button className={styles.cerrarSesion} onClick={async() => await signOut(auth)}>Cerrar sesión</button>
             </div>
 
             <div className={styles.cuentas}>

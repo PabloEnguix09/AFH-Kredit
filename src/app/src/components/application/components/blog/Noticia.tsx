@@ -8,7 +8,8 @@ interface Props {
     titular: string
 }
 
-function Noticia(props: Props) {
+function Noticia(props: Props) {    
+
     return(
         <div className={styles.doc}>
             <div>

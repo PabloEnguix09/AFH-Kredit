@@ -1,4 +1,3 @@
-import { log } from "console";
 import styles from "../../css/simulador.module.css"
 import Formulario from "./Formulario";
 import Resumen from "./Resumen"

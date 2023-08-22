@@ -1,4 +1,4 @@
-import { Dispatch, useEffect, useRef, useState } from "react"
+import { Dispatch, useRef } from "react"
 import styles from "../../../../css/application/App.module.css"
 import defaultImg from "../../../../img/application/default-profile.svg"
 

@@ -4,8 +4,8 @@ import defaultImg from "../../../../img/application/default-profile.svg"
 import ChatInput from "./ChatInput"
 import Mensaje from "./Mensaje"
 
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { Timestamp, collection, onSnapshot } from "firebase/firestore"
+import { Dispatch, SetStateAction, createRef, useEffect, useRef, useState } from "react"
+import { DocumentData, Timestamp, collection, doc, getDoc, getDocs, onSnapshot } from "firebase/firestore"
 import { auth, db } from "../../../../js/firebaseApp"
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
 
 interface ConversacionInterfaz {
     uid: string,
-    mensajes: any[]
+    mensajes: DocumentData
 }
 
 interface IMensaje { 
@@ -55,13 +55,10 @@ function averiguarDia(diaMensaje: number, timestamp:Timestamp) {
     
 }
 
-function setConversacion(imagen: string, mensajes: IMensaje[]) {
+function setConversacion(imagen: string, mensajes: DocumentData[]) {
 
-    const semana = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
-    let hoy = new Date().getUTCDate()
-
-    let ultimoMensaje : IMensaje | null = null
-    let conversacion = mensajes.map((mensaje: IMensaje) => {
+    let ultimoMensaje : DocumentData | null = null
+    let conversacion = mensajes.map((mensaje: DocumentData) => {
         
         let fechaMensaje = mensaje.timestamp.toDate().toLocaleString().split(",")        
 
@@ -99,27 +96,6 @@ function setConversacion(imagen: string, mensajes: IMensaje[]) {
         let hora = fecha.hora.hora + ":" + (fecha.hora.minutos < 10 ? "0" + fecha.hora.minutos : fecha.hora.minutos)
 
         let dia = averiguarDia(fecha.fecha.dia, mensaje.timestamp)
-
-        /*if(hoy === fecha.fecha.dia) {
-            dia = "Hoy"
-        }
-        else if(hoy - fecha.fecha.dia === 1) {
-            console.log("ayer");
-            console.log(mensaje.contenido);
-            
-            
-            dia = "Ayer"
-        }
-        else if(hoy-fecha.fecha.dia <= 7) {
-            console.log("esta semana");
-            console.log(mensaje.contenido);
-
-            dia = semana[mensaje.timestamp.toDate().getDay()]
-        }
-        else {
-            dia = mensaje.timestamp.toDate().toLocaleDateString()
-        } */
-        console.log(dia);
         
         if(fechaUltimoMensaje === null) {
             ultimoMensaje = mensaje
@@ -135,70 +111,34 @@ function setConversacion(imagen: string, mensajes: IMensaje[]) {
                     <Mensaje entrante={mensaje.senderId !== auth.currentUser?.email} imagenContacto={imagen} contenido={mensaje.contenido} hora={hora} />
                 </>
         }
-
-        /*if(fecha.fecha.dia === hoy) {
-            if (hoy === new Date().getUTCDate() && fechaUltimoMensaje?.fecha.dia === hoy) {
-                console.log("ES HOYYYYYYYYYYYYYY");
-                ultimoMensaje = mensaje
-                hoy--
-                return <>
-                    <span className={styles.fecha}>Hoy</span>
-                    <Mensaje entrante={mensaje.senderId !== auth.currentUser?.email} imagenContacto={imagen} contenido={mensaje.contenido} hora={hora} />
-                </>
-            }
-            else if(hoy === new Date().getUTCDate() - 1) {
-                console.log("AYER");
-                ultimoMensaje = mensaje
-                hoy--
-                return <>
-                    <span className={styles.fecha}>Ayer</span>
-                    <Mensaje entrante={mensaje.senderId !== auth.currentUser?.email} imagenContacto={imagen} contenido={mensaje.contenido} hora={hora} />
-                </>
-            }
-            else if(new Date().getUTCDate() - hoy < 7 ) {
-                console.log(new Date().getUTCDate() - hoy);
-                
-                console.log("mas tarde de ayer, pero en esta semana");
-                ultimoMensaje = mensaje
-                hoy--
-                return <>
-                    <span className={styles.fecha}>{hoy}</span>
-                    <Mensaje entrante={mensaje.senderId !== auth.currentUser?.email} imagenContacto={imagen} contenido={mensaje.contenido} hora={hora} />
-                </>
-            }
-            else {
-                console.log("poner fecha completa");
-            }                        
-        }*/
         ultimoMensaje = mensaje
         return <Mensaje entrante={mensaje.senderId !== auth.currentUser?.email} imagenContacto={imagen} contenido={mensaje.contenido} hora={hora} />
 
     })    
 
     return conversacion
-/*
-    return conversacion.mensajes.map((mensaje) => {
-        
-        let fecha = new Date(mensaje["fecha"] * 1000)
-        let hora = fecha.getHours() + ":" + fecha.getMinutes()
-
-        return <Mensaje key={mensaje["id"]} entrante={(mensaje["agente"] === uid && mensaje["isClienteSender"]) || (mensaje["cliente"] === uid && !mensaje["isClienteSender"])} imagenContacto={imagen} contenido={mensaje["contenido"]} hora={hora} />
-    })
-*/
 }
 
 function Conversacion(props:Props) {
     const imagen = props.imagenContacto !== "" ? props.imagenContacto : defaultImg
     
-    const [snapshot, setSnapshot] = useState(null)
-    const [mensajes, setMensajes] = useState<IMensaje[]>([])
-    useEffect(() => {
+    const [snapshot, setSnapshot] = useState<DocumentData[] | null>(null)
+    const [mensajes, setMensajes] = useState<DocumentData[]>([])
+
+    const conversacionRef = useRef<HTMLDivElement>(null)
     
-        const chatRef = collection(db, "chats", props.conversacion.uid)
-        onSnapshot(chatRef, (snapshot) => {
-            let mensajes = snapshot.docs[0].data()
-            setSnapshot(mensajes.mensajes)
-        })
+    useEffect(() => {
+        
+        if(props.conversacion.uid !== "") {
+            const chatRef = doc(db, "chats", props.conversacion.uid)
+
+            onSnapshot(chatRef, (snap) => {
+                let mensajes = snap.data()
+                if(mensajes) {
+                    setSnapshot(mensajes.mensajes)
+                }
+            })
+        }
         
     }, [props.conversacion.uid])
 
@@ -206,31 +146,29 @@ function Conversacion(props:Props) {
       if (snapshot !== null) {
         setMensajes(snapshot)
       }
+
     }, [snapshot])
+
+    useEffect(() => {
+      
+    if (mensajes.length) {
+        if(conversacionRef.current) {
+                        
+            conversacionRef.current.scrollIntoView({ block: "end", behavior: "auto" })
+        }
+    }
+    }, [mensajes])
+    
+    
     
     return(
         <div className={styles.conversacion}>
             <div className={styles.mensajes}>
-                {/*<span className={styles.fecha}>Hoy</span> */}
-
-
                 {setConversacion(imagen, mensajes)}
-
-
-                <Mensaje entrante={true} imagenContacto={imagen} contenido={"Buenas, Usuario. ¿En qué puedo ayudarte hoy?"} hora={"11:11"} />
-                <Mensaje entrante={false} imagenContacto={imagen} contenido={"Buenas, Asesor, tengo un par de dudas sobre mi hipoteca"} hora={"11:13"} />
-
-                <Mensaje entrante={true} imagenContacto={imagen} contenido={"Buenas, Usuario. ¿En qué puedo ayudarte hoy?"} hora={"11:11"} />
-                <Mensaje entrante={true} imagenContacto={imagen} contenido={"Buenas, Usuario. ¿En qué puedo ayudarte hoy?"} hora={"11:11"} />
-                <Mensaje entrante={true} imagenContacto={imagen} contenido={"Buenas, Usuario. ¿En qué puedo ayudarte hoy?"} hora={"11:11"} />
-
-                <Mensaje entrante={false} imagenContacto={imagen} contenido={"Buenas, Asesor, tengo un par de dudas sobre mi hipoteca"} hora={"11:13"} />
-                <Mensaje entrante={false} imagenContacto={imagen} contenido={"Buenas, Asesor, tengo un par de dudas sobre mi hipoteca"} hora={"11:13"} />
-                <Mensaje entrante={false} imagenContacto={imagen} contenido={"Buenas, Asesor, tengo un par de dudas sobre mi hipoteca"} hora={"11:13"} />
-                <Mensaje entrante={false} imagenContacto={imagen} contenido={"Buenas, Asesor, tengo un par de dudas sobre mi hipoteca"} hora={"11:13"} />
+                <div ref={conversacionRef}></div>
             </div>
         
-            <ChatInput />
+            <ChatInput chatUid={props.conversacion.uid} />
             
         </div>
     )

@@ -9,18 +9,21 @@ import React, { Dispatch, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Cookies from "js-cookie"
-import { GithubAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { GithubAuthProvider, UserCredential, browserSessionPersistence, setPersistence, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, db, fbProvider, googleProvider, twitterProvider } from "../js/firebaseApp";
-import { collection, where, getDocs, query } from "firebase/firestore";
+import { getDoc, doc } from "firebase/firestore";
 
-async function redirect(setUrl: Dispatch<React.SetStateAction<string>>) {
-    if(auth.currentUser) {
-        let q = query(collection(db, "usuarios"), where("email", "==", auth.currentUser.uid))
-        let user = (await getDocs(q)).docs[0].data()
+async function redirect(setUrl: Dispatch<React.SetStateAction<string>>, credentials: UserCredential) {
+    
+    if(credentials.user) {
+        let userRef = doc(db, "usuarios", credentials.user.email!)
+        await getDoc(userRef).then(async(res) => {
 
-        Cookies.set("uid", await auth.currentUser.getIdToken())
-
-        setUrl(user.rol === "Admin" ? "../app/admin" : "../app/user")
+            Cookies.set("uid", await credentials.user.getIdToken())
+    
+            setUrl(res.data()!.rol === "Admin" ? "../app/admin" : "../app/user")
+        })
+        
     }
     else {
         alert("Usuario no encontrado. Inténtelo de nuevo")
@@ -30,72 +33,79 @@ async function redirect(setUrl: Dispatch<React.SetStateAction<string>>) {
 async function login(email: string, password: string, setUrl: Dispatch<React.SetStateAction<string>>, method:string, setErrText:Dispatch<React.SetStateAction<string>>) {
     
     setErrText("")
-    switch(method) {
-        case "email":
-            signInWithEmailAndPassword(auth, email, password).then(async() => {
-                await redirect(setUrl)
-            }).catch(error => {
-                if(error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
-                    setErrText("El usuario o la contraseña son incorrectos, por favor, inténtelo de nuevo")
-                }
-                else {
-                    setErrText("Ha habido un problema al iniciar sesión. Inténtelo de nuevo más tarde")
-                }
-            })
-            break;
-        case "google":
-            signInWithPopup(auth, googleProvider).then(async() => {
-                await redirect(setUrl)
-            }).catch(error => {
-                if(error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
-                    setErrText("El usuario o la contraseña son incorrectos, por favor, inténtelo de nuevo")
-                }
-                else {
-                    setErrText("Ha habido un problema al iniciar sesión. Inténtelo de nuevo más tarde")
-                }
-            })
-            break;
-        case "facebook":
-            signInWithPopup(auth, fbProvider).then(async() => {
-                await redirect(setUrl)
-            }).catch(error => {
-                if(error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
-                    setErrText("El usuario o la contraseña son incorrectos, por favor, inténtelo de nuevo")
-                }
-                else {
-                    setErrText("Ha habido un problema al iniciar sesión. Inténtelo de nuevo más tarde")
-                }
-            })
-            break;
-        case "twitter":
-            signInWithPopup(auth, twitterProvider).then(async() => {
-                await redirect(setUrl)
-            }).catch(error => {
-                if(error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
-                    setErrText("El usuario o la contraseña son incorrectos, por favor, inténtelo de nuevo")
-                }
-                else {
-                    setErrText("Ha habido un problema al iniciar sesión. Inténtelo de nuevo más tarde")
-                }
-            })
-            break;
-
-        case "apple":
-            //TODO: Provider apple
-            signInWithPopup(auth, new GithubAuthProvider()).then(async() => {
-                await redirect(setUrl)
-            }).catch(error => {
-                if(error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
-                    setErrText("El usuario o la contraseña son incorrectos, por favor, inténtelo de nuevo")
-                }
-                else {
-                    setErrText("Ha habido un problema al iniciar sesión. Inténtelo de nuevo más tarde")
-                }
-            })
-            break;
-        default:
-            break;
-    }
+    setPersistence(auth, browserSessionPersistence).then(() => {
+        switch(method) {
+            case "email":
+                return signInWithEmailAndPassword(auth, email, password).then(async(credentials) => {
+                    
+                    await redirect(setUrl, credentials)
+                }).catch(error => {
+                    console.log(auth, email, password);
+                    
+                    if(error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
+                        setErrText("El usuario o la contraseña son incorrectos, por favor, inténtelo de nuevo")
+                    }
+                    else {
+                        console.log(error);
+                        
+                        setErrText("Ha habido un problema al iniciar sesión. Inténtelo de nuevo más tarde")
+                    }
+                })
+            case "google":
+                return signInWithPopup(auth, googleProvider).then(async(credentials) => {
+                    await redirect(setUrl, credentials)
+                }).catch(error => {
+                    if(error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
+                        setErrText("El usuario o la contraseña son incorrectos, por favor, inténtelo de nuevo")
+                    }
+                    else {
+                        setErrText("Ha habido un problema al iniciar sesión. Inténtelo de nuevo más tarde")
+                        setErrText(error.code)
+    
+                    }
+                })
+            case "facebook":
+                return signInWithPopup(auth, fbProvider).then(async(credentials) => {
+                    await redirect(setUrl, credentials)
+                }).catch(error => {
+                    if(error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
+                        setErrText("El usuario o la contraseña son incorrectos, por favor, inténtelo de nuevo")
+                    }
+                    else {
+                        setErrText("Ha habido un problema al iniciar sesión. Inténtelo de nuevo más tarde")
+                    }
+                })
+            case "twitter":
+                return signInWithPopup(auth, twitterProvider).then(async(credentials) => {
+                    await redirect(setUrl, credentials)
+                }).catch(error => {
+                    if(error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
+                        setErrText("El usuario o la contraseña son incorrectos, por favor, inténtelo de nuevo")
+                    }
+                    else {
+                        setErrText("Ha habido un problema al iniciar sesión. Inténtelo de nuevo más tarde")
+                    }
+                })    
+            case "apple":
+                //TODO: Provider apple
+                return signInWithPopup(auth, new GithubAuthProvider()).then(async(credentials) => {
+                    await redirect(setUrl, credentials)
+                }).catch(error => {
+                    if(error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
+                        setErrText("El usuario o la contraseña son incorrectos, por favor, inténtelo de nuevo")
+                    }
+                    else {
+                        setErrText("Ha habido un problema al iniciar sesión. Inténtelo de nuevo más tarde")
+                    }
+                })
+            default:
+                return
+        }
+    }).catch(error => {
+        console.log(error);
+        
+    })
+    
     
 }
 

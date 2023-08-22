@@ -18,6 +18,7 @@ h1 {
 .listaPrestamos {
     width: 58.7rem;
     height: 24.2rem;
+    overflow: auto;
     border-radius: 1.6rem;
     background: var(--blanco);
 
@@ -31,7 +32,8 @@ h1 {
 
 .lista {
     width: 57rem;
-    max-height: 24.2rem;
+    max-height: 23.7rem;
+    overflow: auto;
     display: flex;
     flex-direction: column;
     align-items: center;

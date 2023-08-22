@@ -4,7 +4,6 @@ import { Chart} from "react-chartjs-2"
 import {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js'
 import { Link } from "react-router-dom";
 import { Dispatch, useEffect, useState } from "react";
-import Mensualidades from "./Mensualidades";
 import TextInputSim from "./TextInputSim";
 
 ChartJS.register(ArcElement, Tooltip, Legend);

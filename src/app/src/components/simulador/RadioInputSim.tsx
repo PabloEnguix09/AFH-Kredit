@@ -1,6 +1,5 @@
-import { Dispatch, useState } from "react"
+import { Dispatch } from "react"
 import styles from "../../css/simulador.module.css"
-import { isBooleanObject } from "util/types"
 
 interface Props {
     titulo: string,

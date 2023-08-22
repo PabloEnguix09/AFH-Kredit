@@ -3,6 +3,8 @@ import styles from "../../../../css/application/BaseDatos.module.css"
 import commonStyles from "../../../../css/application/AppChat.module.css"
 import Buscador from "../Buscador"
 import Registro from "./Registro"
+import { DocumentData, collection, getDocs } from "firebase/firestore"
+import { db } from "../../../../js/firebaseApp"
 
 function checkIfScrollable() {
     let buscador = document.getElementsByClassName("listaTabla")[0]
@@ -14,15 +16,47 @@ function checkIfScrollable() {
     }
 }
 
+interface RegistroTabla {
+    nombre : number
+}
+
+interface Tabla {
+    displayName: string,
+    valores: DocumentData
+    uid: string
+}
+
+function setRegistros(listaRegistros: DocumentData) {
+
+    let lista = Object.entries(listaRegistros).map((registro) => {
+        return <Registro nombre={registro[0]} valor={registro[1]} magnitud={"%"} key={registro[0]} />
+    })
+    
+    return lista
+}
+
 function BaseDatos() {
     const [tabla, setTabla] = useState("")
+    const [listaTabla, setListaTabla] = useState<Tabla[]>([])
 
     useEffect(() => {
+        const dbRef = collection(db, "baseDatos")
+        const getBaseDatos = async() => {
+            await getDocs(dbRef).then((res) => {
+                let listaTabla : Tabla[] = []
+                res.docs.forEach(element => {
+                    listaTabla.push({displayName: element.id, valores: element.data(), uid: "baseDatos-"+element.id})
+                });
+                setListaTabla(listaTabla)
+            })
+        }
+
+        getBaseDatos()        
     }, [])
 
     return(
         <div className={styles.baseDatos}>
-            <Buscador contactoSelected={tabla} setContactoSelected={setTabla} imgContactos={"none"} contactos={[]} />
+            <Buscador contactoSelected={tabla} setContactoSelected={setTabla} imgContactos={"none"} contactos={listaTabla} />
 
             <div className={commonStyles.ventanaChat}>
             {
@@ -31,17 +65,7 @@ function BaseDatos() {
                     <div className={styles.listaTabla}>
                         <h2>{tabla}</h2>
                             <div>
-                                <Registro nombre={"xd"} valor={"culo"} magnitud={"%"} />
-                                <Registro nombre={""} valor={""} magnitud={""} />
-                                <Registro nombre={""} valor={""} magnitud={""} />
-                                <Registro nombre={""} valor={""} magnitud={""} />
-                                <Registro nombre={""} valor={""} magnitud={""} />
-                                <Registro nombre={""} valor={""} magnitud={""} />
-                                <Registro nombre={""} valor={""} magnitud={""} />
-                                <Registro nombre={""} valor={""} magnitud={""} />
-                                <Registro nombre={""} valor={""} magnitud={""} />
-                                <Registro nombre={""} valor={""} magnitud={""} />
-                                <Registro nombre={""} valor={""} magnitud={""} />
+                                {setRegistros(listaTabla.find((tablaLista) => {return tablaLista.displayName === tabla})!.valores)}
                             </div>
                     </div>                 
                     :

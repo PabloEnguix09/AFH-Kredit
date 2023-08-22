@@ -4,6 +4,21 @@
     gap: 2rem;
 }
 
+.documentosUser {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    width: 90%;
+    height: 31.25rem;
+    background-color: var(--gris);
+    border-radius: 1.56rem;
+}
+
+.documentosUser > .buscadorDocumentos {
+    width: 95%;
+}
+
 .doc {
     display: flex;
     flex-direction: column;
@@ -36,7 +51,7 @@
 
 .listaDocumentos {
     display: grid;
-    height: 24rem;
+    max-height: 24rem;
     overflow-y: scroll;
     overflow-x: hidden;
     grid-template-columns: repeat(5, 1fr);
@@ -44,7 +59,11 @@
     grid-row-gap: 1.25rem;
     margin-top: 1.3rem;
     padding: 0 2.86rem;
+}
 
+.documentosUser > .listaDocumentos {
+    grid-template-columns: repeat(7, 1fr);
+    margin-top: 0;
 }
 
 .iconoDoc {
@@ -61,4 +80,5 @@
     position: absolute;
     top: 0.75rem;
     right: 0.88rem;
+    z-index: 9;
 }

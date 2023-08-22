@@ -8,6 +8,7 @@ interface Props {
 }
 
 function InfoContacto(props: Props) {
+    
     const imagen = props.imagenContacto !== "" ? props.imagenContacto : defaultImg
 
 

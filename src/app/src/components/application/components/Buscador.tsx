@@ -4,17 +4,28 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 import styles from "../../../css/application/App.module.css"
 import Cookies from "js-cookie";
+import defaultImg from "../../../img/application/default-profile.svg"
 
 interface Props {
     contactoSelected: string,
     setContactoSelected: Dispatch<SetStateAction<string>>,
     imgContactos: string,
-    contactos: ContactoDatos[] | undefined
+    contactos: any[] | undefined
 }
 
 interface ContactoDatos {
     displayName : string,
     uid: string
+}
+
+interface RegistroTabla {
+    nombre : number
+}
+
+interface Tabla {
+    displayName: string,
+    valores: RegistroTabla[],
+    uid:string
 }
 
 function checkIfScrollable() {
@@ -34,6 +45,8 @@ function Buscador({contactoSelected, setContactoSelected, imgContactos, contacto
     }, [])
 
     let uid = Cookies.get("uid")
+    const imagen = imgContactos !== "" && imgContactos !== "none" ? imgContactos : defaultImg
+
 
     const [userName, setUserName] = useState("")
 
@@ -75,10 +88,10 @@ function Buscador({contactoSelected, setContactoSelected, imgContactos, contacto
 
                 <div className={styles.listaContactos}>
                     {
-                        document.getElementsByClassName(styles.listaContactos)[0] !== undefined
+                        document.getElementsByClassName(styles.tarjetaContacto).length !== undefined
                         ?
-                        contactos?.map((contacto) => {
-                            return <TarjetaContacto imagenContacto={""} nombre={contacto.displayName} noLeidos={0} selected={contactoSelected} setSelected={setContactoSelected} key={contacto.uid + "-" + uid} />
+                        contactos?.map((contacto : ContactoDatos | Tabla) => {
+                            return <TarjetaContacto imagenContacto={imgContactos} nombre={contacto.displayName} noLeidos={0} selected={contactoSelected} setSelected={setContactoSelected} key={contacto.uid + "-" + uid} />
                         })
                         :
                         <></>
