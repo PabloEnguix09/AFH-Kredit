@@ -39,24 +39,24 @@ function Doc(props: Props) {
                 <></>
             : 
             <div className={styles.doc} onClick={() => {props.linkDoc !== "" ? window.open(props.linkDoc) : clickDiv()}}>
-            <div>
-                {props.nuevo 
-                ?
-                    <>
-                    <img className={`${styles.nuevo} ${styles.iconoDoc}`} src={nuevo} alt="Nuevo documento" />
-                    <p>Nuevo documento</p>
-                    <input type="file" id="subirArchivo" style={{display: "none"}} ref={input}/>
-
-                    </>
-                : 
-                    <>
-                        <img src={eliminar} alt="Eliminar documento" className={styles.eliminarDoc} onClick={async(e) =>{e.stopPropagation(); await borrarArchivo(props.linkDoc, setIsBorrado)} }/>
-                        <img src={docs} className={styles.iconoDoc} alt="Icono documento" />
-                    </>
-                }
+                <div>
+                    {props.nuevo 
+                    ?
+                        <>
+                        <img className={`${styles.nuevo} ${styles.iconoDoc}`} src={nuevo} alt="Nuevo documento" />
+                        <p>Nuevo documento</p>
+                        <input type="file" id="subirArchivo" style={{display: "none"}} ref={input}/>
+                    
+                        </>
+                    : 
+                        <>
+                            <img src={eliminar} alt="Eliminar documento" className={styles.eliminarDoc} onClick={async(e) =>{e.stopPropagation(); await borrarArchivo(props.linkDoc, setIsBorrado)} }/>
+                            <img src={docs} className={styles.iconoDoc} alt="Icono documento" />
+                        </>
+                    }
+                </div>
+                <p className="nombreDoc">{props.nuevo ? "" : props.nombreDoc}</p>
             </div>
-            <p className="nombreDoc">{props.nuevo ? "" : props.nombreDoc}</p>
-        </div>
         }
         </>
     )

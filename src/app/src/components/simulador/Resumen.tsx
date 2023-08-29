@@ -83,10 +83,18 @@ function Resumen({capital, anyos, toggle, setToggle}: Props) {
 
     const [intereses, setIntereses] = useState(0)
 
+    const [gastosNotariaMin, setGastosNotariaMin] = useState(0)
+    const [gastosNotariaMax, setGastosNotariaMax] = useState(0)
+    const [gastosRegistroMin, setGastosRegistroMin] = useState(0)
+
     useEffect(() => {
         const [cuota, intereses] = calcular(capitalState, interes, anyosState)
         setMensualidad(cuota)
         setIntereses(intereses)
+        setGastosNotariaMin(0.3/100 * (capitalState+intereses))
+        setGastosNotariaMax(0.5/100 * (capitalState+intereses))
+
+        setGastosRegistroMin(0.1/100 * (capitalState+intereses))
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
         setData({
@@ -139,6 +147,24 @@ function Resumen({capital, anyos, toggle, setToggle}: Props) {
                     <h2>Mensualidad</h2>
                     <div>
                         <span className={styles.magnitud}>{mensualidad} €/mes</span>
+                    </div>
+                </div>
+                <div className={`${styles.mensualidad} ${styles.gastosExtra}`}>
+                    <h2>Gastos notaría</h2>
+                    <div>
+                        <span className={styles.magnitud}>{gastosNotariaMin.toFixed(2)} € - {gastosNotariaMax.toFixed(2)} €</span>
+                    </div>
+                </div>
+                <div className={`${styles.mensualidad} ${styles.gastosExtra}`}>
+                    <h2>Gastos gestoría</h2>
+                    <div>
+                        <span className={styles.magnitud}>{400} €</span>
+                    </div>
+                </div>
+                <div className={`${styles.mensualidad} ${styles.gastosExtra}`}>
+                    <h2>Gastos registro</h2>
+                    <div>
+                        <span className={styles.magnitud}>{gastosRegistroMin.toFixed(2)} € - {gastosNotariaMin.toFixed(2)} €</span>
                     </div>
                 </div>
             </div>

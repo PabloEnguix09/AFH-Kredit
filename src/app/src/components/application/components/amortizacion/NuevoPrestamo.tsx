@@ -1,9 +1,29 @@
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import TextInputSim from "../../../simulador/TextInputSim"
 import styles from "../../../../css/application/Amortizacion.module.css"
+import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore"
+import { db } from "../../../../js/firebaseApp"
+import { User } from "firebase/auth"
+
+interface Mensualidad {
+
+    mes: number,
+    cuota: number,
+    intereses: number,
+    principal: number,
+    restante: number,
+    pagado: boolean
+}
+
+interface IPrestamo {
+    nombre: string,
+    mensualidades: Mensualidad[]
+}
 
 interface Props {
-    setPagina: Dispatch<SetStateAction<number>>
+    userData: User,
+    setPagina: Dispatch<SetStateAction<number>>,
+    prestamos: IPrestamo[] | undefined,
 }
 
 interface Mensualidad {
@@ -16,9 +36,24 @@ interface Mensualidad {
     pagado: boolean
 }
 
-function calcularPrestamo(nombre: string, capital: number, interes: number, anyos: number) {
+async function calcularPrestamo(nombre: string, capital: number, interes: number, anyos: number, 
+    userData: User, prestamos: IPrestamo[] | undefined, setPagina: Dispatch<SetStateAction<number>>) {
+    
     if(nombre !== "" && capital !== 0 && anyos !== 0) {
-        calcular(capital, interes, anyos)
+        let mensualidades = calcular(capital, interes, anyos)
+        let userRef = doc(db, "usuarios", userData.email!)
+
+        let prestamo : IPrestamo = {"mensualidades": mensualidades, "nombre": nombre}
+
+        if(prestamos === undefined) {
+            prestamos = []
+        }
+        prestamos.push(prestamo)
+
+        await updateDoc(userRef, {"prestamos": prestamos}).then(() => {
+            setPagina(0)
+        })
+        
     }
 }
 
@@ -51,15 +86,12 @@ function calcular(capital: number, interes: number, anyos: number) {
                 cuota: cuotaMensual[i], 
                 intereses: interesMensual[i], 
                 principal: amortizacionMensual[i], 
-                restante: capital - totalAmortizado, 
+                restante: toDosDigitos(capital - totalAmortizado),
                 pagado:false
             }) 
     }
 
-    console.log(detalles);
-    console.log(toDosDigitos(interesesTotales));
-    
-    
+    return detalles
 }
 
 function toDosDigitos(numero:number) {
@@ -110,7 +142,7 @@ function  NuevoPrestamo(props: Props) {
 
             </div>
 
-            <button className={styles.anyadirBtn} onClick={() => calcularPrestamo(nombre, capital, interes, anyos)}>Añadir préstamo</button>
+            <button className={styles.anyadirBtn} onClick={() => calcularPrestamo(nombre, capital, interes, anyos, props.userData, props.prestamos, props.setPagina)}>Añadir préstamo</button>
             
         </div>
     )

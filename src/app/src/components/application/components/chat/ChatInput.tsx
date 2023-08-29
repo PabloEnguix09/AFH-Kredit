@@ -32,13 +32,19 @@ async function sendMensaje(contenido: string, chatUid : string, setContenido: Di
     }
 }
 
+async function sendOnEnter(e: React.KeyboardEvent<HTMLTextAreaElement>, contenido: string, chatUid: string, setContenido: Dispatch<SetStateAction<string>>) {
+    if(e.key === "Enter" && e.currentTarget.value !== "") {
+        await sendMensaje(contenido, chatUid, setContenido)
+    }
+}
+
 function ChatInput({chatUid} : Props) {
 
     const [contenido, setContenido] = useState("")
     return(
         <div className={styles.chatInput}>
             <img src={adjuntar} alt="Adjuntar archivo" className={styles.adjuntar} />
-            <textarea name="" id="" cols={30} rows={10} placeholder="Escribe un mensaje..." onChange={e => setContenido(e.target.value)} value={contenido}/>
+            <textarea name="" id="" cols={30} rows={10} placeholder="Escribe un mensaje..." onChange={e => setContenido(e.target.value)} onKeyDown={async(e) => await sendOnEnter(e, contenido, chatUid, setContenido)} value={contenido}/>
             <img src={enviar} alt="Enviar mensaje" className={styles.enviar} onClick={async() => await sendMensaje(contenido, chatUid, setContenido)}/>
         </div>
     )

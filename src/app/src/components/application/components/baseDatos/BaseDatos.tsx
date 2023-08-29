@@ -16,20 +16,16 @@ function checkIfScrollable() {
     }
 }
 
-interface RegistroTabla {
-    nombre : number
-}
-
 interface Tabla {
     displayName: string,
     valores: DocumentData
     uid: string
 }
 
-function setRegistros(listaRegistros: DocumentData) {
-
-    let lista = Object.entries(listaRegistros).map((registro) => {
-        return <Registro nombre={registro[0]} valor={registro[1]} magnitud={"%"} key={registro[0]} />
+function setRegistros(listaRegistros: Tabla) {
+    
+    let lista = Object.entries(listaRegistros.valores).map((registro) => {
+        return <Registro nombre={registro[0]} valor={registro[1]} magnitud={"%"} key={registro[0]} nombreTabla={listaRegistros.displayName}/>
     })
     
     return lista
@@ -51,7 +47,7 @@ function BaseDatos() {
             })
         }
 
-        getBaseDatos()        
+        getBaseDatos()
     }, [])
 
     return(
@@ -65,7 +61,7 @@ function BaseDatos() {
                     <div className={styles.listaTabla}>
                         <h2>{tabla}</h2>
                             <div>
-                                {setRegistros(listaTabla.find((tablaLista) => {return tablaLista.displayName === tabla})!.valores)}
+                                {setRegistros(listaTabla.find((tablaLista) => {return tablaLista.displayName === tabla})!)}
                             </div>
                     </div>                 
                     :

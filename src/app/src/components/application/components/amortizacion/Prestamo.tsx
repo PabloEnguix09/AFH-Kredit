@@ -32,7 +32,7 @@ function checkIfPrestamoScrollable() {
 
 function renderMensualidades(prestamo: IPrestamo) {
     return prestamo.mensualidades.map((mensualidad) => {
-        return <Mensualidad mes={mensualidad.mes} intereses={mensualidad.intereses} principal={mensualidad.principal} pagado={mensualidad.pagado} />
+        return <Mensualidad key={mensualidad.mes} mes={mensualidad.mes} intereses={mensualidad.intereses} principal={mensualidad.principal} restante={mensualidad.restante} cuota={mensualidad.cuota} />
     })
 }
 
@@ -50,15 +50,10 @@ function Prestamo(props: Props) {
                 <p>Intereses</p>
                 <p>Principal</p>
                 <p>Restante</p>
-                <p>Pagado</p>
+                <p>Cuota</p>
             </div>
             <div className={styles.mensualidades}>
                 {renderMensualidades(props.prestamos)}
-                <Mensualidad mes={1} intereses={0} principal={0} pagado={true} />
-                <Mensualidad mes={2} intereses={0} principal={0} pagado={false} />
-
-
-
             </div>
         </div>
     )

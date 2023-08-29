@@ -39,9 +39,12 @@ function setPaginaUser(pagina:string, userData: User | null, contactos: Contacto
 
 function UserApp() {
     const [userData, setUserData] = useState<User | null>(null)
+
     const [pagina, setPagina] = useState("Chat")
+
     const [contactoSelected, setContactoSelected] = useState("")
     const [contactos, setContactos] = useState<ContactoDatos[]>([])
+
     const [conversaciones, setConversaciones] = useState<ConversacionInterfaz[]>([])
 
     let navigate = useNavigate()
@@ -73,17 +76,30 @@ function UserApp() {
                 }
             })
         }
-
-        onAuthStateChanged(auth, (user) => {
-            if(user) {          
-                getUserData(user)                
+        let contador = 0
+        onAuthStateChanged(auth, (user) => {            
+            if(user && userData === null && contador < 5) {
+                contador++
+                console.log(user);
                 setUserData(user)
+                getUserData(user)
+                
             }
-            else {
-                navigate("/login")    
+            else if(!user || contador >= 5){
+                console.log(user);
+                console.log(userData);
+                console.log(contador);
+                
+                if (contador >= 5) {
+                    console.log("llama demasiado aqui");
+                    
+                }
+                contador = 0
+                
+                navigate("/login")
             }
         })
-    }, [navigate])
+    })
 
     return(
         <div className={styles.app}>

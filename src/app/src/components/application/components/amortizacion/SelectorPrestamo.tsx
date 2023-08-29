@@ -7,13 +7,17 @@ import { User } from "firebase/auth";
 import { collection, getDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../../js/firebaseApp";
 
-function setPaginaPrestamo(pagina:number, setPagina: Dispatch<SetStateAction<number>>, prestamos: IPrestamo[] | undefined, nombrePrestamo: string, setNombrePrestamo: Dispatch<SetStateAction<string>>) {
+function setPaginaPrestamo(
+    userData: User, pagina:number, 
+    setPagina: Dispatch<SetStateAction<number>>, 
+    prestamos: IPrestamo[] | undefined,
+    nombrePrestamo: string, setNombrePrestamo: Dispatch<SetStateAction<string>>) {
     if(prestamos) {
         switch (pagina) {
             case 0:
                 return <ListaPrestamos setPagina={setPagina} setNombrePrestamo={setNombrePrestamo} prestamos={prestamos}/>
             case 1:
-                return <NuevoPrestamo setPagina={setPagina} />
+                return <NuevoPrestamo userData={userData} setPagina={setPagina} prestamos={prestamos}/>
             case 2:
                 return <Prestamo setPagina={setPagina} prestamos={prestamos.find((prestamo) => {return prestamo.nombre === nombrePrestamo})!} />
             default:
@@ -58,7 +62,7 @@ interface IPrestamo {
 function SelectorPrestamo(props: Props) {
     const [pagina, setPagina] = useState(0)
     const [nombrePrestamo, setNombrePrestamo] = useState("")
-    const [prestamos, setPrestamos] = useState<IPrestamo[]>()
+    const [prestamos, setPrestamos] = useState<IPrestamo[]>([])
 
     useEffect(() => {
         const getPrestamos = async() => {
@@ -76,7 +80,7 @@ function SelectorPrestamo(props: Props) {
         <div className={styles.amortizacion}>
             <h1>{cambiarTituloSelector(pagina, nombrePrestamo)}</h1>
             <div className={styles.listaPrestamos}>
-                {setPaginaPrestamo(pagina, setPagina, prestamos, nombrePrestamo, setNombrePrestamo)}
+                {setPaginaPrestamo(props.userData, pagina, setPagina, prestamos, nombrePrestamo, setNombrePrestamo)}
             </div>
         </div>
     )

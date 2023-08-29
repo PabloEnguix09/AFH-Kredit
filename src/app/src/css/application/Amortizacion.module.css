@@ -113,8 +113,17 @@ h1 {
 
 .titulos {
     display: flex;
-    justify-content: space-between;
-    margin: 0 0.5rem;
+    gap: 8.7rem;
+    margin-left: 0.5rem;
+    margin-right: 1.5rem;
+}
+
+.titulos > p:nth-child(4) {
+    margin-left: 1rem;
+}
+
+.titulos > p:last-child {
+    margin-left: 2.2rem;
 }
 
 .titulosScrollable {

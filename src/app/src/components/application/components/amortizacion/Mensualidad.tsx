@@ -1,22 +1,24 @@
 import { useState } from "react"
 import styles from "../../../../css/application/Amortizacion.module.css"
+import { doc, updateDoc } from "firebase/firestore"
+import { db } from "../../../../js/firebaseApp"
 
 interface Props {
     mes: number,
     intereses: number,
     principal: number,
-    pagado: boolean,
+    restante: number,
+    cuota: number
 }
 
 function Mensualidad(props: Props) {
-    const [pagado, setPagado] = useState(props.pagado)
     return(
         <div className={styles.mensualidad}>
             <p>{props.mes}</p>
-            <p>{props.intereses} €</p>
-            <p>{props.principal} €</p>
-            <p>{props.intereses + props.principal} €</p>
-            <input type="checkbox" name="checkbox" id="checkbox" checked={pagado} onClick={() => setPagado(!pagado)}/>
+            <p>{props.intereses.toLocaleString("es", {useGrouping: false, minimumFractionDigits: 2})} €</p>
+            <p>{props.principal.toLocaleString("es", {useGrouping: false, minimumFractionDigits: 2})} €</p>
+            <p>{props.restante.toLocaleString("es", {useGrouping: false, minimumFractionDigits: 2})} €</p>
+            <p>{props.cuota.toLocaleString("es", {useGrouping: false, minimumFractionDigits: 2})} €</p>
         </div>
     )
 }

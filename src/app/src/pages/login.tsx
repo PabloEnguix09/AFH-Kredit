@@ -37,11 +37,8 @@ async function login(email: string, password: string, setUrl: Dispatch<React.Set
         switch(method) {
             case "email":
                 return signInWithEmailAndPassword(auth, email, password).then(async(credentials) => {
-                    
                     await redirect(setUrl, credentials)
-                }).catch(error => {
-                    console.log(auth, email, password);
-                    
+                }).catch(error => {                    
                     if(error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
                         setErrText("El usuario o la contraseña son incorrectos, por favor, inténtelo de nuevo")
                     }

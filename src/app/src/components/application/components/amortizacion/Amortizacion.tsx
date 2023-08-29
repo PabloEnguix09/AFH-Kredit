@@ -39,7 +39,7 @@ function ListaPrestamos({setPagina, setNombrePrestamo, prestamos}:Props) {
 
     return(
         <div className={styles.lista}>
-                <PrestamoLista nuevo={true} nombrePrestamo={""} setPagina={setPagina} setNombrePrestamo={setNombrePrestamo} prestamoDatos={[]}/>
+                <PrestamoLista nuevo={true} nombrePrestamo={""} setPagina={setPagina} setNombrePrestamo={setNombrePrestamo} prestamoDatos={[]} key={"nuevoPrestamo"}/>
                 {renderPrestamos({prestamos, setPagina, setNombrePrestamo})}
 
         </div>

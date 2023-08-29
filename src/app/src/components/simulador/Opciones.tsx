@@ -1,6 +1,7 @@
 import { Dispatch } from "react";
 import styles from "../../css/simulador.module.css"
 import { Tooltip } from "react-tooltip"
+import { calcularMensualidad } from "../../js/simulador";
 function seleccionarOpcion (id: string) {
     const opciones = document.getElementsByClassName(styles.opcionHipoteca)
 
@@ -24,40 +25,47 @@ function seleccionarOpcion (id: string) {
 
 interface Props {
     siguiente: number,
-    cb: Dispatch<React.SetStateAction<number>>
+    cb: Dispatch<React.SetStateAction<number>>,
+    capital: number,
+    anyos: number
     
 }
 
+function calcularTae(interes : number) {
+
+    let tae = (1+interes/1200)**12-1
+    return parseFloat((tae*100).toFixed(2))
+}
+
 function Opciones(props:Props) {
+
+    let tinAvg = 3.75
+    let eurAct = 4.149
     return(
         <div className={styles.opcionesHipotecas}>
-            <h1>Tipos de hipotecas</h1>
+            <h1>Selecciona una opción</h1>
             <div>
                 <div id="fija" className={styles.opcionHipoteca} onClick={e => seleccionarOpcion(e.currentTarget.id)} >
                     <Tooltip />
                     <h2>Hipoteca fija</h2>
-                    <p>Pago: {}€/mes</p>
-                    <p>Desde TIN: {}%</p>
-                    <p>TAE: {}%</p>
+                    <p>Pago: {calcularMensualidad(props.capital, calcularTae(tinAvg), props.anyos).toFixed(2)}€/mes</p>
+                    <p>TIN medio: {tinAvg}%</p>
+                    <p>TAE media: {calcularTae(tinAvg)}%</p>
                 </div>
             <hr />
             <div id="variable" className={styles.opcionHipoteca} onClick={e => seleccionarOpcion(e.currentTarget.id)}>
                 <h2>Hipoteca variable</h2>
-                <p>Pago: {}€/mes</p>
-                <p>EURIBOR: +{}%</p>
-                <p>TAE Variable: {}%</p>
+                <p>Pago: {calcularMensualidad(props.capital, calcularTae(eurAct), props.anyos).toFixed(2)}€/mes</p>
+                <p>EURIBOR: {eurAct}%</p>
+                <p>TAE Variable media: {calcularTae(eurAct)}%</p>
             </div>
             <hr />
             <div id="mixta" className={styles.opcionHipoteca} onClick={e => seleccionarOpcion(e.currentTarget.id)}>
                 <h2>Hipoteca mixta</h2>
                 <p className={styles.parteMixta}>Parte fija ({"< 20"} años)</p>
-                <p>Pago: {}€/mes</p>
-                <p>Desde TIN: {}%</p>
-                <p>TAE: {}%</p>
-                <p className={styles.parteMixta}>Parte variable</p>
-                <p>Pago: {}€/mes</p>
-                <p>EURIBOR: +{}%</p>
-                <p>TAE Variable: {}%</p>
+                <p>Pago: {calcularMensualidad(props.capital, calcularTae(tinAvg), props.anyos).toFixed(2)}€/mes</p>
+                <p>TIN medio: {tinAvg}%</p>
+                <p>TAE media: {calcularTae(tinAvg)}%</p>
             </div>
             </div>
             <div className={styles.botones}>

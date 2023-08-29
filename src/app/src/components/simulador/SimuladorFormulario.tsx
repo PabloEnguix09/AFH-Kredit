@@ -34,7 +34,7 @@ function pasosSimulador(estados: Estados) {
         case 1:
             return <Formulario titular={estados.titular} edad={estados.edad} ingresos={estados.ingresos} deudas={estados.deudas} sabeCasa={estados.sabeCasa} precio={estados.precio} provincia={estados.provincia} quiereCasa={estados.quiereCasa} uso={estados.uso} tipoVivienda={estados.tipoVivienda} anyos={estados.anyos} siguiente={estados.siguiente} />
         case 2:
-            return <Opciones siguiente={estados.siguiente.estado} cb={estados.siguiente.cb} />
+            return <Opciones siguiente={estados.siguiente.estado} cb={estados.siguiente.cb} capital={parseInt(estados.precio.estado)} anyos={parseInt(estados.anyos.estado)} />
         case 3:
             return <Resumen capital={parseInt(estados.precio.estado)} anyos={parseInt(estados.anyos.estado)} toggle={estados.siguiente.estado} setToggle={estados.siguiente.cb} />
         default:
