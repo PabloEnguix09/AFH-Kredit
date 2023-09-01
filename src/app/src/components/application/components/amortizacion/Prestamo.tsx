@@ -48,7 +48,7 @@ function Prestamo(props: Props) {
             <div className={styles.titulos}>
                 <p>Mes</p>
                 <p>Intereses</p>
-                <p>Principal</p>
+                <p>Amortizado</p>
                 <p>Restante</p>
                 <p>Cuota</p>
             </div>

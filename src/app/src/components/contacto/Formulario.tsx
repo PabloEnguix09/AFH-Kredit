@@ -1,5 +1,10 @@
 import styles from "./FormularioContacto.module.css"
 
+
+interface Props {
+    
+}
+
 function Formulario() {
     return(
         <form className={styles.formulario} action="">

@@ -4,6 +4,7 @@ function checkIfScrollable(nombreClase) {
     
     console.log(lista.clientHeight);
     console.log(listaCss.maxHeight);
+    console.log(lista);
     if(lista.clientHeight > parseFloat(listaCss.maxHeight)) {
         lista.classList.add("listaScrollable")
     }

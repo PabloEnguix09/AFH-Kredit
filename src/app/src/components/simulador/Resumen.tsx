@@ -86,6 +86,7 @@ function Resumen({capital, anyos, toggle, setToggle}: Props) {
     const [gastosNotariaMin, setGastosNotariaMin] = useState(0)
     const [gastosNotariaMax, setGastosNotariaMax] = useState(0)
     const [gastosRegistroMin, setGastosRegistroMin] = useState(0)
+    const [transmisiones, setTransmisiones] = useState(0)
 
     useEffect(() => {
         const [cuota, intereses] = calcular(capitalState, interes, anyosState)
@@ -95,6 +96,8 @@ function Resumen({capital, anyos, toggle, setToggle}: Props) {
         setGastosNotariaMax(0.5/100 * (capitalState+intereses))
 
         setGastosRegistroMin(0.1/100 * (capitalState+intereses))
+
+        setTransmisiones(0.4/100 * (capitalState+intereses))
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
         setData({
@@ -150,6 +153,12 @@ function Resumen({capital, anyos, toggle, setToggle}: Props) {
                     </div>
                 </div>
                 <div className={`${styles.mensualidad} ${styles.gastosExtra}`}>
+                    <h2>Gastos tasación</h2>
+                    <div>
+                        <span className={styles.magnitud}>{250} €</span>
+                    </div>
+                </div>
+                <div className={`${styles.mensualidad} ${styles.gastosExtra}`}>
                     <h2>Gastos notaría</h2>
                     <div>
                         <span className={styles.magnitud}>{gastosNotariaMin.toFixed(2)} € - {gastosNotariaMax.toFixed(2)} €</span>
@@ -165,6 +174,13 @@ function Resumen({capital, anyos, toggle, setToggle}: Props) {
                     <h2>Gastos registro</h2>
                     <div>
                         <span className={styles.magnitud}>{gastosRegistroMin.toFixed(2)} € - {gastosNotariaMin.toFixed(2)} €</span>
+                    </div>
+                </div>
+
+                <div className={`${styles.mensualidad} ${styles.gastosExtra}`}>
+                    <h2>Impuestos</h2>
+                    <div>
+                        <span className={styles.magnitud}>{transmisiones.toFixed(2)} €</span>
                     </div>
                 </div>
             </div>

@@ -18,7 +18,7 @@ h1 {
 .listaPrestamos {
     width: 58.7rem;
     height: 24.2rem;
-    overflow: auto;
+    overflow: none;
     border-radius: 1.6rem;
     background: var(--blanco);
 
@@ -109,21 +109,22 @@ h1 {
 
 .listaMensualidades {
     width: 57rem;
+    height: 24.2rem;
 }
 
 .titulos {
     display: flex;
-    gap: 8.7rem;
+    gap: 8.5rem;
     margin-left: 0.5rem;
     margin-right: 1.5rem;
 }
 
 .titulos > p:nth-child(4) {
-    margin-left: 1rem;
+    margin-left: 0.5rem;
 }
 
 .titulos > p:last-child {
-    margin-left: 2.2rem;
+    margin-left: 1.8rem;
 }
 
 .titulosScrollable {
@@ -144,6 +145,7 @@ h1 {
     justify-content: flex-start;
     position: relative;
     gap: 0.5rem;
+    overflow: auto;
 }
 
 .mensualidad {

@@ -70,25 +70,27 @@ async function verCSV() {
 function validarDatos(states: Estados) : number {
     
   try {
-      for(const [state, value] of Object.entries(states)) {
-          
-          if(states.sabeCasa === "Sí" && state === "quiereCasa") {
-              continue
-          }
+        for(const [state, value] of Object.entries(states)) {
 
-          if(value === "") {
-              throw new Error("Debe rellenar todos los campos")
-          }
-      }
+            if(states.sabeCasa === "Sí" && state === "quiereCasa") {
+                continue
+            }
 
-      if(parseInt(states.edad) < 18 || parseInt(states.edad) > 66)
-          throw new Error("La edad debe estar entre 18 y 66 años")
+            if(value === "") {
+                throw new Error("Debe rellenar todos los campos")
+            }
+        }
+
+        if(parseInt(states.edad) < 18 || parseInt(states.edad) > 65)
+            throw new Error("Debes tener entre 18 y 65 años para poder solicitar un préstamo")
+
+        if(parseInt(states.precio) < 20000 || parseInt(states.precio) > 1000000) 
+            throw new Error("El precio de la casa debe ser mayor que 20.000€ y menor que 1.000.000€. Asegúrate que el número no esté separado por puntos o comas. Si está fuera de estos límites, pida una consulta.")
       
-      if(parseInt(states.precio) < 20000 || parseInt(states.precio) > 1000000) 
-          throw new Error("El precio de la casa debe ser mayor que 20.000€ y menor que 1.000.000€. Asegúrate que el número no esté separado por puntos o comas. Si está fuera de estos límites, pida una consulta.")
-  
-      if(parseInt(states.anyos) < 10 || parseInt(states.anyos) > 40) 
-          throw new Error("El tiempo de la hipoteca debe estar entre 10 y 40 años. Si buca algo fuera de estos límites, pida una consulta.")
+        if(parseInt(states.anyos) < 10 || parseInt(states.anyos) > 40) 
+            throw new Error("El plazo de la hipoteca debe estar entre 10 y 40 años. Si buca algo fuera de estos límites, pida una consulta.")
+        if(parseInt(states.anyos) + parseInt(states.edad) > 75)
+            throw new Error("Usted debe poder acabar de pagar la hipoteca a los 75 años como máximo. Reduzca el plazo de la hipoteca o pida una consulta.")
 
   } catch (error) {
       alert(error)
