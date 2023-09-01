@@ -12,6 +12,7 @@ import Blog from "./pages/blog";
 import AdminApp from "./pages/appAdmin";
 import UserApp from "./pages/appUser";
 import reportWebVitals from "./reportWebVitals";
+import Estudio from "./pages/estudio";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
@@ -22,6 +23,7 @@ root.render(
         <Routes>
             <Route path="/" Component={LandingPage} />
             <Route path="/contacto" Component={Contacto} />
+            <Route path="/estudio" Component={Estudio} />
             <Route path="/nosotros" Component={Nosotros} />
             <Route path="/login" Component={Login} />
             <Route path="/recuperarContraseña" Component={RecuperarPass} />

@@ -2,8 +2,8 @@ const { db, auth, storage } = require("../utils/firebase/admin");
 const { check_error } = require("../utils/utils");
 const users = db.collection("usuarios");
 const { authClient, signInWithEmailAndPassword } = require("../utils/firebase/app")
-
 const CryptoJS = require("crypto-js");
+const nodemailer = require('nodemailer')
 
 class Usuario {
     constructor(id, nombre, apellidos, email, photoURL, rol, contactos) {
@@ -189,6 +189,49 @@ class UsuarioAPI {
             }
         })
         
+    }
+
+    sendEmail = async function (req) {
+        return new Promise(async(resolve, reject) => {
+            try {
+                let transporter = nodemailer.createTransport({
+                    service: "gmail",
+                    auth: {
+                        user: process.env.EMAIL_USER,
+                        pass: process.env.EMAIL_PASS
+                    }
+                })
+
+                await transporter.sendMail({
+                    from: process.env.EMAIL_USER,
+                    to: "strikertiger9@gmail.com",
+                    subject: "Nueva solicitud de estudio",
+                    text: "Nombre completo: " + req.body.nombre + " " + req.body.apellidos + "\n" + 
+                    "Correo electrónico: " + req.body.correo + "\n" + 
+                    (req.body.telefono !== "" ? ("Teléfono: " + req.body.telefono + "\n") : "") +
+                    "Descripción: " + req.body.descripcion
+                }).then(async() => {
+                    await transporter.sendMail({
+                        from: process.env.EMAIL_USER,
+                        to: req.body.correo,
+                        subject: "Correo enviado correctamente",
+                        text: "Tu solicitud ha sido recibida. Espera una respuesta de nuestros asesores en un plazo mínimo de 48 horas."
+                    }).then(() => {
+                        console.log("Correos enviados");
+                        resolve({status: 200, data: {}})
+                    }).catch((error) => {
+                        console.log("Error segundo correo");
+                        throw new Error(error)
+                    })
+                }).catch((error) => {
+                    console.log("Error primer correo");
+                    throw new Error(error)
+                })
+            } catch (error) {
+                console.log(error);
+                resolve(check_error(error))
+            }
+        })
     }
 }
 

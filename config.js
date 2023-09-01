@@ -6,7 +6,9 @@ dotenv.config()
 const {
     PORT,
     HOST,
-    HOST_URL
+    HOST_URL,
+    EMAIL_USER,
+    EMAIL_PASS
 } = process.env;
 
 assert(PORT, "Especifica el puerto");

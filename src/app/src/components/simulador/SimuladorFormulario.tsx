@@ -1,8 +1,9 @@
 import styles from "../../css/simulador.module.css"
 import Formulario from "./Formulario";
 import Resumen from "./Resumen"
-import React, { Dispatch, useState } from "react"
+import React, { Dispatch, useEffect, useState } from "react"
 import Opciones from "./Opciones";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 interface Estado {
     estado: string,
@@ -28,7 +29,7 @@ interface Estados {
     }
 }
 
-function pasosSimulador(estados: Estados) {
+function pasosSimulador(estados: Estados, navigate: NavigateFunction) {
     
     switch (estados.siguiente.estado) {
         case 1:
@@ -36,7 +37,7 @@ function pasosSimulador(estados: Estados) {
         case 2:
             return <Opciones siguiente={estados.siguiente.estado} cb={estados.siguiente.cb} capital={parseInt(estados.precio.estado)} anyos={parseInt(estados.anyos.estado)} />
         case 3:
-            return <Resumen capital={parseInt(estados.precio.estado)} anyos={parseInt(estados.anyos.estado)} toggle={estados.siguiente.estado} setToggle={estados.siguiente.cb} />
+            return <Resumen capital={estados.precio} anyos={estados.anyos} toggle={estados.siguiente} estados={estados}/>
         default:
             break;
     }
@@ -57,6 +58,7 @@ function SimuladorFormulario() {
     const [anyos, setAnyos] = useState("")
 
     const [paso, setPaso] = useState(1)
+    let navigate = useNavigate()
     
     let estados : Estados = {
         titular: {estado: titular, cb: setTitular},
@@ -75,7 +77,7 @@ function SimuladorFormulario() {
 
     return(
         <div id={styles.simulador}>
-            {pasosSimulador(estados)}
+            {pasosSimulador(estados, navigate)}
         </div>
     )
 }

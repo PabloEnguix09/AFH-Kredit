@@ -9,6 +9,7 @@ router.put("/users/update", api.update);
 router.post("/users/create", api.create);
 router.delete("/users/delete", api.delete);
 router.post("/login", api.login);
+router.post("/sendContactMail", api.sendEmail);
 
 module.exports = {
     routes: router

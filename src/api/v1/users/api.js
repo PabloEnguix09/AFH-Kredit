@@ -258,6 +258,15 @@ let login = async function (req, res) {
     }*/
 }
 
+let sendContactMail = async function (req, res) {
+    let body = {
+        body: req.body,
+        params: req.params
+    }
+    let response = await api.sendEmail(body)
+    res.status(response.status).send(response.data)
+}
+
 
 
 module.exports = {
@@ -266,5 +275,6 @@ module.exports = {
     update: update,
     create: create,
     delete: borrar,
-    login:login
+    login:login,
+    sendEmail: sendContactMail
 };

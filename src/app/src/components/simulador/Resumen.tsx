@@ -2,17 +2,58 @@ import styles from "../../css/simulador.module.css"
 import { Chart} from "react-chartjs-2" 
 
 import {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js'
-import { Link } from "react-router-dom";
+import { Link, createSearchParams, useNavigate } from "react-router-dom";
 import { Dispatch, useEffect, useState } from "react";
 import TextInputSim from "./TextInputSim";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+interface Estado {
+    estado: string,
+    cb: Dispatch<React.SetStateAction<string>>
+}
+
+interface Estados {
+    titular: Estado
+    edad: Estado,
+    ingresos: Estado,
+    deudas: Estado,
+    sabeCasa: Estado,
+    precio: Estado,
+    provincia: Estado,
+    quiereCasa: Estado,
+    uso: Estado,
+    tipoVivienda: Estado,
+    anyos: Estado,
+
+    siguiente: {
+        estado: number,
+        cb: Dispatch<React.SetStateAction<number>>
+    }
+}
+
+interface Datos {
+    titular: string
+    edad: string,
+    ingresos: string,
+    deudas: string,
+    sabeCasa: string,
+    precio: string,
+    provincia: string,
+    quiereCasa: string,
+    uso: string,
+    tipoVivienda: string,
+    anyos: string
+}
+
 interface Props {
-    capital: number,
-    anyos: number,
-    toggle: number,
-    setToggle: Dispatch<React.SetStateAction<number>>
+    capital: Estado,
+    anyos: Estado,
+    toggle: {
+        estado: number,
+        cb: Dispatch<React.SetStateAction<number>>
+    },
+    estados: Estados
 }
 
 /**
@@ -66,11 +107,11 @@ function calcularAmortizadoMensual(cuota: number, intereses: number) {
     return cuota - intereses
 }
 
-function Resumen({capital, anyos, toggle, setToggle}: Props) {
+function Resumen({capital, anyos, toggle, estados}: Props) {
 
-    const [capitalState, setCapital] = useState<number>(capital)
+    const [capitalState, setCapital] = useState<number>(parseInt(capital.estado))
     const [interes, setInteres] = useState<number>(3)
-    const [anyosState, setAnyos] = useState<number>(anyos)
+    const [anyosState, setAnyos] = useState<number>(parseInt(anyos.estado))
 
     const [mensualidad, setMensualidad] = useState(0)
     const [data, setData] = useState({labels: ["Intereses totales", "Capital"], 
@@ -87,6 +128,9 @@ function Resumen({capital, anyos, toggle, setToggle}: Props) {
     const [gastosNotariaMax, setGastosNotariaMax] = useState(0)
     const [gastosRegistroMin, setGastosRegistroMin] = useState(0)
     const [transmisiones, setTransmisiones] = useState(0)
+
+    const [datos, setDatos] = useState<Datos>()
+    let navigate = useNavigate()
 
     useEffect(() => {
         const [cuota, intereses] = calcular(capitalState, interes, anyosState)
@@ -108,6 +152,19 @@ function Resumen({capital, anyos, toggle, setToggle}: Props) {
                 borderColor: ["#333", "#399C85"],
                 hoverOffset: 4
             }]
+        })
+        setDatos({
+            titular: estados.titular.estado,
+            edad: estados.edad.estado,
+            ingresos: estados.ingresos.estado,
+            deudas: estados.deudas.estado,
+            sabeCasa: estados.sabeCasa.estado,
+            precio: estados.precio.estado,
+            provincia: estados.provincia.estado,
+            quiereCasa: estados.quiereCasa.estado,
+            uso: estados.uso.estado,
+            tipoVivienda: estados.tipoVivienda.estado,
+            anyos: estados.anyos.estado
         })
     }, [capitalState, interes, anyosState])
 
@@ -142,7 +199,7 @@ function Resumen({capital, anyos, toggle, setToggle}: Props) {
                 <div className="inputs">
                 <TextInputSim titulo={"Capital inicial"} explicacion={""} tipo={"number"} placeholder={"Capital"} magnitud={"€"} valorDefault={capitalState} valorDefaultCb={setCapital} disabled={false}  />
                 <TextInputSim titulo={"Intereses"} explicacion={"Fijo: 3%, Variable: 4%, Mixto: 5%"} tipo={"number"} placeholder={"Intereses"} magnitud={"%"} valorDefault={interes} valorDefaultCb={setInteres} disabled={false}  />
-                <TextInputSim titulo={"Plazo de amortización"} explicacion={"Máximo fijo: 30 años\nMáximo variable: 40 años"} tipo={"number"} placeholder={"Años"} magnitud={"Años"} valorDefault={anyos.toString()} valorDefaultCb={setAnyos} disabled={false}  />
+                <TextInputSim titulo={"Plazo de amortización"} explicacion={"Máximo fijo: 30 años\nMáximo variable: 40 años"} tipo={"number"} placeholder={"Años"} magnitud={"Años"} valorDefault={anyos.estado.toString()} valorDefaultCb={setAnyos} disabled={false}  />
             </div>
 
             <div className={styles.resultadoMensualidades}>
@@ -186,10 +243,8 @@ function Resumen({capital, anyos, toggle, setToggle}: Props) {
             </div>
             </div>
             <div className={styles.botones}>
-                <button className={styles.botonSecundario} onClick={() => setToggle(1)}>Recalcular</button>
-                <Link to={"/contacto"}>
-                    <button className={styles.botonPrimario}>SOLICITAR ESTUDIO</button>
-                </Link>
+                <button className={styles.botonSecundario} onClick={() => toggle.cb(1)}>Recalcular</button>
+                <button className={styles.botonPrimario} onClick={() => navigate({pathname: "/estudio", search: createSearchParams({data: JSON.stringify(datos)}).toString()})}>SOLICITAR ESTUDIO</button>
             </div>
         </div>
     )
