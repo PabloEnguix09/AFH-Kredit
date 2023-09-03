@@ -55,11 +55,4 @@ function Footer() {
         </footer>
     )
 }
-/*
-<div className={styles.empezamos}>
-    <h2>¿Empezamos?</h2>
-    <p>Rellena el siguiente formulario y te contactaremos para empezar todo el proceso</p>
-    <button>Contacta con nosotros</button>
-</div>
-*/
 export default Footer

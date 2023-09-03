@@ -16,9 +16,9 @@ interface Documento {
     linkDescarga:string
 }
 
-function renderDocumentos(documentos: Documento[]) {
+function renderDocumentos(documentos: Documento[], emailUsuario: string) {
         return documentos.map((documento) => {        
-            return <Doc nuevo={false} nombreDoc={documento.nombre} linkDoc={documento.linkDescarga} key={documento.nombre} />
+            return <Doc nuevo={false} nombreDoc={documento.nombre} linkDoc={documento.linkDescarga} key={documento.nombre} isAdmin={false} emailUsuario={emailUsuario} />
         })
 }
 
@@ -26,26 +26,31 @@ function DocumentosUser(props:Props) {
 
     const [documento, setDocumento] = useState("")
     const [documentos, setDocumentos] = useState<Documento[]>([])
+    const [userEmail, setUserEmail] = useState("")
+
+    const getAllFiles = async(email: string) => {
+        setDocumentos([])
+        let documentos : Documento[] = []
+        
+        await listAll(ref(storage, `/${email}/`)).then((res) => {
+            res.items.forEach(async(item) => {
+                documentos.push({nombre: item.name, linkDescarga: await getDownloadURL(item)})
+
+                if (documentos.length === res.items.length) {
+                    setDocumentos(documentos)
+                }
+            })
+        })
+    }
 
     useEffect(() => {
-        const getAllFiles =  async() => {
-            setDocumentos([])
-            let documentos : Documento[] = []
-            
-            await listAll(ref(storage, props.datos.email!)).then((res) => {
-                res.items.forEach(async(item) => {
-                    await getDownloadURL(item).then((res) => {
-                        documentos.push({nombre: item.name, linkDescarga: res})
-                    })                    
-
-                    if (documentos.length === res.items.length) {
-                        setDocumentos(documentos)
-                    }
-                })
-            })
+        if(props.datos.email!) {            
+            setUserEmail(props.datos.email)
+            getAllFiles(props.datos.email)
         }
-        getAllFiles()
     }, [])
+
+
 
     const handleBuscar = (docu: string) => {
 
@@ -87,9 +92,8 @@ function DocumentosUser(props:Props) {
             </div>
 
             <div className={styles.listaDocumentos}>
-                <Doc nuevo={true} nombreDoc={""} linkDoc={""} />
-                {renderDocumentos(documentos)}
-                
+                <Doc nuevo={true} nombreDoc={""} linkDoc={""} isAdmin={false} emailUsuario={userEmail} onUpdated={getAllFiles} />
+                {renderDocumentos(documentos, userEmail)}
             </div>
         </div>
     )

@@ -1,0 +1,25 @@
+.privacidad {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.privacidad h2 {
+    text-align: center;
+}
+
+.privacidad p {
+    width: 95%;
+    margin: 0 auto;
+    text-align: justify;
+}
+
+.privacidad li {
+    width: 85%;
+    margin: 0 auto;
+}
+
+.privacidad a {
+    text-decoration: underline;
+}

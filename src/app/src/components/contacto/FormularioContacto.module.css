@@ -58,6 +58,7 @@
     font-weight: bold;
     border-radius: 0.75rem;
     color: var(--blanco);
+    background-color: var(--verdeOscuro);
 }
 
 .datos div {

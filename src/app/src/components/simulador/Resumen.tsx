@@ -2,109 +2,22 @@ import styles from "../../css/simulador.module.css"
 import { Chart} from "react-chartjs-2" 
 
 import {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js'
-import { Link, createSearchParams, useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import { Dispatch, useEffect, useState } from "react";
 import TextInputSim from "./TextInputSim";
+import { calcularTotalHipoteca } from "../../js/simulador";
+import { ISimuladorEstado, ISimuladorEstados, ISimuladorValores } from "../../types/simulador.types";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-interface Estado {
-    estado: string,
-    cb: Dispatch<React.SetStateAction<string>>
-}
-
-interface Estados {
-    titular: Estado
-    edad: Estado,
-    ingresos: Estado,
-    deudas: Estado,
-    sabeCasa: Estado,
-    precio: Estado,
-    provincia: Estado,
-    quiereCasa: Estado,
-    uso: Estado,
-    tipoVivienda: Estado,
-    anyos: Estado,
-
-    siguiente: {
-        estado: number,
-        cb: Dispatch<React.SetStateAction<number>>
-    }
-}
-
-interface Datos {
-    titular: string
-    edad: string,
-    ingresos: string,
-    deudas: string,
-    sabeCasa: string,
-    precio: string,
-    provincia: string,
-    quiereCasa: string,
-    uso: string,
-    tipoVivienda: string,
-    anyos: string
-}
-
 interface Props {
-    capital: Estado,
-    anyos: Estado,
+    capital: ISimuladorEstado,
+    anyos: ISimuladorEstado,
     toggle: {
         estado: number,
         cb: Dispatch<React.SetStateAction<number>>
     },
-    estados: Estados
-}
-
-/**
- * 
- * TODO: Backend impuestos/comunidad, revisar Figma
- * 
- * 
- * 
-*/
-
-function calcular(capital: number, interes: number, anyos: number) {
-    let interesesTotales = 0
-    let totalAmortizado = 0
-
-    let cuotaMensual = calcularMensualidad(capital, interes, anyos)
-    let interesMensual = []
-    let amortizacionMensual = []
-
-    interesMensual.push(0)
-    amortizacionMensual.push(0)
-
-    for (let i = 1; i < anyos*12; i++) {        
-            interesMensual.push(calcularInteresMensual(capital, totalAmortizado, interes))
-            amortizacionMensual.push(calcularAmortizadoMensual(cuotaMensual, interesMensual[i]))
-
-            interesesTotales += interesMensual[i]
-            totalAmortizado += amortizacionMensual[i]
-    }
-    return [Math.round(cuotaMensual * 100) / 100, Math.round(interesesTotales * 100) /100]
-}
-
-function calcularMensualidad(capital: number, interes: number, anyos: number): number {
-    let prestado = capital
-    let interesMensual = interes/1200
-    let plazo = anyos
-    let denominador = 1-((1+interesMensual)**(-plazo*12))
-
-    let mensualidad = prestado * interesMensual / denominador
-    
-    if(Number.isNaN(mensualidad) || mensualidad === Infinity) {
-        mensualidad = 0
-    }
-    return mensualidad
-}
-
-function calcularInteresMensual(capital: number, cuota: number, interes: number): number {
-    return Math.ceil(((capital-cuota)*(interes/100))/12 * 100) / 100
-}
-
-function calcularAmortizadoMensual(cuota: number, intereses: number) {
-    return cuota - intereses
+    estados: ISimuladorEstados
 }
 
 function Resumen({capital, anyos, toggle, estados}: Props) {
@@ -129,11 +42,11 @@ function Resumen({capital, anyos, toggle, estados}: Props) {
     const [gastosRegistroMin, setGastosRegistroMin] = useState(0)
     const [transmisiones, setTransmisiones] = useState(0)
 
-    const [datos, setDatos] = useState<Datos>()
+    const [datos, setDatos] = useState<ISimuladorValores>()
     let navigate = useNavigate()
 
     useEffect(() => {
-        const [cuota, intereses] = calcular(capitalState, interes, anyosState)
+        const [cuota, intereses] = calcularTotalHipoteca(capitalState, interes, anyosState)
         setMensualidad(cuota)
         setIntereses(intereses)
         setGastosNotariaMin(0.3/100 * (capitalState+intereses))
@@ -143,7 +56,6 @@ function Resumen({capital, anyos, toggle, estados}: Props) {
 
         setTransmisiones(0.4/100 * (capitalState+intereses))
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         setData({
             labels: ["Intereses totales", "Capital"],
             datasets: [{
@@ -164,8 +76,10 @@ function Resumen({capital, anyos, toggle, estados}: Props) {
             quiereCasa: estados.quiereCasa.estado,
             uso: estados.uso.estado,
             tipoVivienda: estados.tipoVivienda.estado,
-            anyos: estados.anyos.estado
+            anyos: estados.anyos.estado,
+            siguiente: estados.siguiente.estado
         })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [capitalState, interes, anyosState])
 
     

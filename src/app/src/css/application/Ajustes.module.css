@@ -13,6 +13,7 @@
 .avatar, .inputs {
     display: flex;
     align-items: center;
+    gap: 0.5rem;
 }
 
 .avatar {
@@ -29,7 +30,6 @@
 .inputs p {
     width: 8.5rem;
     text-align: end;
-    margin-right: 0.5rem;
 }
 
 .inputs input {

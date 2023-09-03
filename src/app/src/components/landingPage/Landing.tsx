@@ -2,6 +2,8 @@ import styles from "./Landing.module.css";
 import logoCompleto from "../../img/logo completo.svg";
 import flechaAbajo from "../../img/dropdown_arrow_white.svg";
 
+import fondoLanding from "../../img/fondoLanding.png"
+
 import Cosa from "./CosaQueNecesitas";
 import cosaFacilidad from "../../img/cosa-facilidad.svg";
 import cosaCercania from "../../img/cosa-cercania.svg";
@@ -30,8 +32,8 @@ function Landing() {
     }
 
     return (
-        <div className={styles.landing}>
-            <main className={styles.landingPage}>
+        <div className={styles.landing} >
+            <main className={styles.landingPage} style={{background: `url(${fondoLanding})`}}>
                 <article className={styles.promo}>
                     <img src={logoCompleto} alt="Logo AFH Kredit con nombre de empresa" />
                     <p>Tu hipoteca más fácil que nunca</p>
@@ -66,10 +68,10 @@ function Landing() {
 
             <section className={styles.faqs}>
                 <h1>Preguntas frecuentes</h1>
-                <FAQ pregunta="pregunta" respuesta="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi, cupiditate? Delectus maxime mollitia ea fuga magnam vel neque sequi totam, vero rerum. Nemo, inventore illum eveniet accusantium alias quas dolore!"/>
-                <FAQ pregunta="pregunta" respuesta="respuesta generica"/>
-                <FAQ pregunta="pregunta" respuesta="respuesta generica"/>
-                <FAQ pregunta="pregunta" respuesta="respuesta generica"/>
+                <FAQ pregunta="¿Qué hace un intermediario?" respuesta="Un intermediario se encarga de encontrar las mejores condiciones en el mercado hipotecario para tus necesidades y de acompañarte en todo el proceso."/>
+                <FAQ pregunta="¿Qué características determinarán mi cuota?" respuesta="Las características que determinan la cuota son: el tipo de interés, el cual puede ir bonificado dependiendo de los productos que contrates; el plazo, con un límite de 30 años para las hipotecas a tipo fijo y 40 para las de tipo variable, y que la edad de los solicitantes más el plazo no supere los 75 años."/>
+                <FAQ pregunta="¿Sois un banco?" respuesta="AFH Kredit no es un banco, somos intermediarios financieros. Nosotros nos dedicamos a hablar con los bancos por ti para proteger tus intereses y asegurar tus necesidades."/>
+                <FAQ pregunta="¿Podéis conseguirme una hipoteca si mi banco me la ha denegado?" respuesta="Sí, podemos ayudarte a explorar opciones para obtener una hipoteca incluso si tu banco te la ha denegado. Nosotros trabajamos con una gran cantidad de opciones para mejorar tu elegibilidad y aumentar tus posibilidades de conseguir una hipoteca."/>
             </section>
         </div>
     )

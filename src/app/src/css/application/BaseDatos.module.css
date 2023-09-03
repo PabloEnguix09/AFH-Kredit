@@ -36,11 +36,55 @@
     position: relative;
 }
 
-.registro > p {
+.registro p {
     font-size: 1.375rem;
     min-width: 9.5rem;
     text-align: end;
     color: #333;
+}
+
+.nuevoRegistro {
+    width: 47rem; 
+    display: flex;
+    justify-content: center;
+}
+
+.crearNuevoRegistro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nuevoRegistroInputs {
+    display: flex;
+    flex-direction: row !important;
+    gap: 1rem;
+    align-items: flex-end;
+    height: fit-content !important;
+    width: fit-content !important;
+}
+
+.nuevoRegistroInputs input {
+    background-color: var(--grisMenu);
+    color: var(--grisOcuro);
+}
+
+
+
+.nuevoRegistroBoton, .cancelarBoton {
+    width: 13rem;
+    height: 2.7rem;
+    font-weight: bold;
+    color: var(--blanco);
+    background-color: var(--verdeBoton);
+    border-radius: 0.7rem;
+    margin: 0 auto;
+}
+
+.cancelarBoton {
+    color: var(--verdeBoton) !important;
+    background-color: transparent;
+    border: 2px solid var(--verdeBoton);
 }
 
 .registro > div {

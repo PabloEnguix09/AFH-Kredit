@@ -68,7 +68,6 @@ function SelectorPrestamo(props: Props) {
         const getPrestamos = async() => {
             await getDocs(query(collection(db, "usuarios"), where("email", "==", props.userData.email))).then(async(res) => {
                 let user = res.docs[0].data()
-                console.log(user.prestamos);
                 let prestamos : IPrestamo[] = user.prestamos
                 setPrestamos(prestamos)
             })

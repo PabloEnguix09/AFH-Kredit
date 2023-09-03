@@ -1,35 +1,12 @@
 import styles from "../../css/simulador.module.css"
 import Formulario from "./Formulario";
 import Resumen from "./Resumen"
-import React, { Dispatch, useEffect, useState } from "react"
+import { useState } from "react"
 import Opciones from "./Opciones";
 import { NavigateFunction, useNavigate } from "react-router-dom";
+import { ISimuladorEstados } from "../../types/simulador.types";
 
-interface Estado {
-    estado: string,
-    cb: Dispatch<React.SetStateAction<string>>
-}
-
-interface Estados {
-    titular: Estado
-    edad: Estado,
-    ingresos: Estado,
-    deudas: Estado,
-    sabeCasa: Estado,
-    precio: Estado,
-    provincia: Estado,
-    quiereCasa: Estado,
-    uso: Estado,
-    tipoVivienda: Estado,
-    anyos: Estado,
-
-    siguiente: {
-        estado: number,
-        cb: Dispatch<React.SetStateAction<number>>
-    }
-}
-
-function pasosSimulador(estados: Estados, navigate: NavigateFunction) {
+function pasosSimulador(estados: ISimuladorEstados, navigate: NavigateFunction) {
     
     switch (estados.siguiente.estado) {
         case 1:
@@ -60,7 +37,7 @@ function SimuladorFormulario() {
     const [paso, setPaso] = useState(1)
     let navigate = useNavigate()
     
-    let estados : Estados = {
+    let estados : ISimuladorEstados = {
         titular: {estado: titular, cb: setTitular},
         edad: {estado: edad, cb: setEdad},
         ingresos: {estado: ingresos, cb: setIngresos},

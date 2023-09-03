@@ -4,18 +4,13 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 import styles from "../../../css/application/App.module.css"
 import Cookies from "js-cookie";
-import defaultImg from "../../../img/application/default-profile.svg"
+import { IContactoDatos } from "../../../types/app.types";
 
 interface Props {
     contactoSelected: string,
     setContactoSelected: Dispatch<SetStateAction<string>>,
     imgContactos: string,
     contactos: any[] | undefined
-}
-
-interface ContactoDatos {
-    displayName : string,
-    uid: string
 }
 
 interface RegistroTabla {
@@ -38,6 +33,10 @@ function checkIfScrollable() {
     }
 }
 
+function isIContactoDatos(object: IContactoDatos | Tabla): object is IContactoDatos {
+    return "imagen" in object
+}
+
 function Buscador({contactoSelected, setContactoSelected, imgContactos, contactos}: Props) {
     
     useEffect(() => {
@@ -45,8 +44,6 @@ function Buscador({contactoSelected, setContactoSelected, imgContactos, contacto
     }, [])
 
     let uid = Cookies.get("uid")
-    const imagen = imgContactos !== "" && imgContactos !== "none" ? imgContactos : defaultImg
-
 
     const [userName, setUserName] = useState("")
 
@@ -90,8 +87,15 @@ function Buscador({contactoSelected, setContactoSelected, imgContactos, contacto
                     {
                         document.getElementsByClassName(styles.tarjetaContacto).length !== undefined
                         ?
-                        contactos?.map((contacto : ContactoDatos | Tabla) => {
-                            return <TarjetaContacto imagenContacto={imgContactos} nombre={contacto.displayName} noLeidos={0} selected={contactoSelected} setSelected={setContactoSelected} key={contacto.uid + "-" + uid} />
+                        contactos?.map((contacto : IContactoDatos | Tabla) => {
+                            let img = ""
+                            if(isIContactoDatos(contacto)) {
+                                img = contacto.imagen
+                            }
+                            else {
+                                img = "none"
+                            }
+                            return <TarjetaContacto imagenContacto={img} nombre={contacto.displayName} noLeidos={0} selected={contactoSelected} setSelected={setContactoSelected} key={contacto.uid + "-" + uid} />
                         })
                         :
                         <></>

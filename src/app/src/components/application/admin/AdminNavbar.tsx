@@ -19,8 +19,6 @@ function AdminNavbar({cambioPagina, setCambioPagina}:Props) {
       switch(cambioPagina){
         case "Chat":
         case "Documentos":
-            setHasEstado(true)
-            break;
         case "BD":
         case "Blog":
         case "Ajustes":

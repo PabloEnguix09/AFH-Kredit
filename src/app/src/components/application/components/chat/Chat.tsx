@@ -2,51 +2,44 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import styles from "../../../../css/application/AppChat.module.css"
 import InfoContacto from "./InfoContacto"
 import Conversacion from "./Conversacion"
-import Cookies from "js-cookie"
 import Buscador from "../Buscador"
-import { auth, db } from "../../../../js/firebaseApp"
-import { DocumentData, collection, doc, getDoc, getDocs, query, where } from "firebase/firestore"
 import { User } from "firebase/auth"
+import { IContactoDatos, IConversacionInterfaz } from "../../../../types/app.types"
+import UsuarioAPI from "../../../../services/users"
+
+const api = new UsuarioAPI()
 
 interface Props {
     datos: User,
     contactoSelected: string,
-    contactos: ContactoDatos[],
-    conversaciones: ConversacionInterfaz[],
+    contactos: IContactoDatos[],
+    conversaciones: IConversacionInterfaz[],
     setContactoSelected: Dispatch<SetStateAction<string>>
-}
-
-interface ContactoDatos {
-    displayName : string,
-    uid: string,
-    key: string,
-    conversacionUID: string
-}
-
-interface ConversacionInterfaz {
-    uid: string,
-    mensajes: DocumentData
 }
 
 function Chat(props: Props) {
 
-    const [conversacionActual, setConversacionActual] = useState<ConversacionInterfaz>({uid: "", mensajes: []})
+    const [imgContacto, setImgContacto] = useState("")
+    const [conversacionActual, setConversacionActual] = useState<IConversacionInterfaz>({uid: "", mensajes: []})
 
     useEffect(() => {
-        if (props.contactoSelected !== "") {
-            
+        const crearChat = async() => {
             for (let i = 0; i < props.conversaciones.length; i++) {
-                const element : ConversacionInterfaz = props.conversaciones[i];
+                const element : IConversacionInterfaz = props.conversaciones[i];
 
                 let contactoSeleccionado = props.contactos.find((contacto) => {                    
                     return contacto.displayName === props.contactoSelected
                 })
                 if(contactoSeleccionado?.key === element.uid) {
-                    
-                    setConversacionActual(element)
-                    break;
+                    await api.getImagen(contactoSeleccionado.uid).then((res) => {
+                        setImgContacto(res)
+                        setConversacionActual(element)
+                    })
                 }
-            } 
+            }
+        }        
+        if (props.contactoSelected !== "") {
+            crearChat()
         }
     }, [props.conversaciones, props.contactoSelected, props.contactos])
 
@@ -58,7 +51,7 @@ function Chat(props: Props) {
                 {props.contactoSelected !== ""
                 ?
                     <>
-                        <InfoContacto imagenContacto={""} nombre={props.contactoSelected} telf={"+34 XXX XX XX XX"} />
+                        <InfoContacto imagenContacto={imgContacto} nombre={props.contactoSelected} telf={""} />
                         <Conversacion imagenContacto={""} conversacion={conversacionActual} />
                     </>
                 :

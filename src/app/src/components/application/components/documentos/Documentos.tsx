@@ -6,11 +6,12 @@ import InfoContacto from "../chat/InfoContacto"
 import Doc from "./Doc"
 import { getDownloadURL, listAll, ref } from "firebase/storage"
 import { storage } from "../../../../js/firebaseApp"
+import { User } from "firebase/auth"
 
 interface Props {
     contactos: ContactoDatos[]
     contactoSelected: string,
-    setContactoSelected: Dispatch<SetStateAction<string>>
+    setContactoSelected: Dispatch<SetStateAction<string>>,
 }
 interface ContactoDatos {
     displayName : string,
@@ -24,15 +25,29 @@ interface Documento {
     linkDescarga:string
 }
 
-function renderDocumentos(documentos: Documento[]) {
+function renderDocumentos(documentos: Documento[], emailUsuario: string, getAllFiles: (email: string) =>Promise<void>) {
         return documentos.map((documento) => {        
-            return <Doc nuevo={false} nombreDoc={documento.nombre} linkDoc={documento.linkDescarga} key={documento.nombre} />
+            return <Doc nuevo={false} nombreDoc={documento.nombre} linkDoc={documento.linkDescarga} key={documento.nombre} isAdmin={true} emailUsuario={emailUsuario} onUpdated={getAllFiles} />
         })
 }
 
 function Documentos(props:Props) {
 
     const [documentos, setDocumentos] = useState<Documento[]>([])
+    const [userEmail, setUserEmail] = useState("")
+    const getAllFiles = async(email: string) => {
+        setDocumentos([])
+        let documentos : Documento[] = []
+        await listAll(ref(storage, email)).then((res) => {
+            res.items.forEach(async(item) => {
+                documentos.push({nombre: item.name, linkDescarga: await getDownloadURL(item)})
+
+                if (documentos.length === res.items.length) {
+                    setDocumentos(documentos)
+                }
+            })
+        })
+    }
 
     useEffect(() => {
       
@@ -40,21 +55,11 @@ function Documentos(props:Props) {
             let datosContacto = props.contactos.find((contacto) => {
                 return contacto.displayName === props.contactoSelected
             })
-            
-            const getAllFiles =  async() => {
-                setDocumentos([])
-                let documentos : Documento[] = []
-                await listAll(ref(storage, datosContacto?.uid)).then((res) => {
-                    res.items.forEach(async(item) => {
-                        documentos.push({nombre: item.name, linkDescarga: await getDownloadURL(item)})
-    
-                        if (documentos.length === res.items.length) {
-                            setDocumentos(documentos)
-                        }
-                    })
-                })
-            }
-            getAllFiles()
+
+            if(datosContacto !== undefined) {
+                setUserEmail(datosContacto.uid)
+                getAllFiles(userEmail)
+            }  
         }
     }, [props.contactoSelected, props.contactos])
     
@@ -69,8 +74,8 @@ function Documentos(props:Props) {
                     <>
                         <InfoContacto imagenContacto={""} nombre={props.contactoSelected} telf={"+34 XXX XX XX XX"} />
                         <div className={styles.listaDocumentos}>
-                            <Doc nuevo={true} nombreDoc={""} linkDoc={""} />
-                            {renderDocumentos(documentos)}
+                            <Doc nuevo={true} nombreDoc={""} linkDoc={""} isAdmin={true} emailUsuario={userEmail} onUpdated={getAllFiles} />
+                            {renderDocumentos(documentos, userEmail, getAllFiles)}
                         </div>
                     </>
                 :

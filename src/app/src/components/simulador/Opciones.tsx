@@ -1,27 +1,7 @@
 import { Dispatch } from "react";
 import styles from "../../css/simulador.module.css"
 import { Tooltip } from "react-tooltip"
-import { calcularMensualidad } from "../../js/simulador";
-function seleccionarOpcion (id: string) {
-    const opciones = document.getElementsByClassName(styles.opcionHipoteca)
-
-    for (let i = 0; i < opciones.length; i++) {
-        const opcion = opciones[i];
-        
-        if(opcion.classList.contains(styles.opcionSeleccionada) && opcion.id === id) {
-            
-            opcion.classList.remove(styles.opcionSeleccionada)
-            return
-        }
-        else if (opcion.classList.contains(styles.opcionSeleccionada)) {
-            opcion.classList.remove(styles.opcionSeleccionada)
-        }
-        
-    }
-
-    const opcion = document.getElementById(id)
-    opcion?.classList.add(styles.opcionSeleccionada)
-}
+import { calcularMensualidad, calcularTae, seleccionarOpcion } from "../../js/simulador";
 
 interface Props {
     siguiente: number,
@@ -29,12 +9,6 @@ interface Props {
     capital: number,
     anyos: number
     
-}
-
-function calcularTae(interes : number) {
-
-    let tae = (1+interes/1200)**12-1
-    return parseFloat((tae*100).toFixed(2))
 }
 
 function Opciones(props:Props) {

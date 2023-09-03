@@ -1,5 +1,8 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import styles from "./FormularioContacto.module.css"
+import UsuarioAPI from "../../services/users"
+
+const api = new UsuarioAPI()
 
 interface Props {
     simulado: boolean,
@@ -15,30 +18,6 @@ interface Props {
     tipoVivienda: string,
     anyos: string,
     setUrl: Dispatch<SetStateAction<string>>
-}
-
-async function enviarFormulario(nombre: string, apellidos: string, correo: string, telefono: string, descripcion: string, setUrl: Dispatch<SetStateAction<string>>) {
-    let body = {
-        nombre: nombre,
-        apellidos: apellidos,
-        correo: correo,
-        telefono: telefono,
-        descripcion: descripcion
-    }
-    
-    await fetch("http://localhost:5050/api/sendContactMail", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
-    }).then(() => {
-        
-        alert("Correo enviado")
-        setUrl("/")
-    }).catch((error) => {
-        console.log(error);
-    })
 }
 
 function Formulario(props: Props) {
@@ -72,10 +51,10 @@ function Formulario(props: Props) {
 
                 <div>
                     <input type="checkbox" name="checkbox" id={styles.checkbox} required/>
-                    <label htmlFor="checkbox">He leído y acepto la política de privacidad y las condiciones de uso*</label>
+                    <label htmlFor={styles.checkbox}>He leído y acepto la política de privacidad y las condiciones de uso*</label>
                 </div>
 
-                <button onClick={async() => await enviarFormulario(nombre, apellidos, correo, telefono, descripcion, props.setUrl)}>ENVIAR</button>
+                <button onClick={async() => await api.enviarFormulario(nombre, apellidos, correo, telefono, descripcion, props.setUrl)}>ENVIAR</button>
             </div>
         </div>
     )

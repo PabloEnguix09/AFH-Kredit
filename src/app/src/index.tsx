@@ -13,6 +13,7 @@ import AdminApp from "./pages/appAdmin";
 import UserApp from "./pages/appUser";
 import reportWebVitals from "./reportWebVitals";
 import Estudio from "./pages/estudio";
+import Privacidad from "./pages/privacidad";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
@@ -29,6 +30,7 @@ root.render(
             <Route path="/recuperarContraseña" Component={RecuperarPass} />
             <Route path="/simulador" Component={Simulador} />
             <Route path="/blog" Component={Blog} />
+            <Route path="/privacidad" Component={Privacidad} />
             
             <Route path="/app/admin" Component={AdminApp} />
             <Route path="/app/user" Component={UserApp} />

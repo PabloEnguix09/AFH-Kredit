@@ -81,7 +81,7 @@ input[type="number"]::placeholder {
 
 .link {
   text-decoration: underline;
-  color: var(--verdeBoton);
+  color: var(--verdeOscuro);
 }
 
 button, select, input[type="checkbox"], input[type="radio"] {

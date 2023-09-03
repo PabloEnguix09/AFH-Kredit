@@ -19,7 +19,7 @@ function Alternativos() {
             </div>
             <div className={styles.alternativo}>
                 <img src={iconoWhatsapp} alt="WhatsApp" />
-                <a href="https://api.whatsapp.com/send?phone=34666666666">+34 666 66 66 66</a>
+                <a href="https://api.whatsapp.com/send?phone=34611627972">+34 611 62 79 72</a>
             </div>
             <div className={styles.linea}>
                 <hr />

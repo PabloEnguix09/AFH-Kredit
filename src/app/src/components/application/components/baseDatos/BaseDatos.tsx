@@ -2,19 +2,10 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import styles from "../../../../css/application/BaseDatos.module.css"
 import commonStyles from "../../../../css/application/AppChat.module.css"
 import Buscador from "../Buscador"
-import Registro from "./Registro"
 import { DocumentData, collection, getDocs } from "firebase/firestore"
 import { db } from "../../../../js/firebaseApp"
-
-function checkIfScrollable() {
-    let buscador = document.getElementsByClassName("listaTabla")[0]
-    let buscadorCss = window.getComputedStyle(document.getElementsByClassName("listaTabla")[0], "")
-    
-    if(buscador.clientHeight > parseFloat(buscadorCss.maxHeight)) {
-
-        buscador.classList.add("listaScrollable")
-    }
-}
+import ListaRegistros from "./ListaRegistros"
+import NuevoRegistro from "./NuevoRegistro"
 
 interface Tabla {
     displayName: string,
@@ -22,28 +13,36 @@ interface Tabla {
     uid: string
 }
 
-function setRegistros(listaRegistros: Tabla) {
-    
-    let lista = Object.entries(listaRegistros.valores).map((registro) => {
-        return <Registro nombre={registro[0]} valor={registro[1]} magnitud={"%"} key={registro[0]} nombreTabla={listaRegistros.displayName}/>
-    })
-    
-    return lista
+function setPaginaBd(pagina: number, setPagina: Dispatch<SetStateAction<number>>, tabla: Tabla) {
+    switch (pagina) {
+        case 1:
+            return <ListaRegistros tabla={tabla} pagina={pagina} setPagina={setPagina} />
+        case 2:
+            return <NuevoRegistro tabla={tabla} pagina={pagina} setPagina={setPagina} />
+        default:
+            break;
+    }
 }
 
 function BaseDatos() {
     const [tabla, setTabla] = useState("")
+    const [pagina, setPagina] = useState(1)
     const [listaTabla, setListaTabla] = useState<Tabla[]>([])
 
     useEffect(() => {
-        const dbRef = collection(db, "baseDatos")
+        let dbRef = collection(db, "baseDatos")
         const getBaseDatos = async() => {
-            await getDocs(dbRef).then((res) => {
+            await getDocs(dbRef).then(async(res) => {
                 let listaTabla : Tabla[] = []
                 res.docs.forEach(element => {
                     listaTabla.push({displayName: element.id, valores: element.data(), uid: "baseDatos-"+element.id})
                 });
-                setListaTabla(listaTabla)
+
+                dbRef = collection(db, "usuarios")
+                await getDocs(dbRef).then((res) => {
+                    listaTabla.push({displayName: "usuarios", valores: res.docs, uid: "usuarios"})
+                    setListaTabla(listaTabla)
+                })
             })
         }
 
@@ -58,12 +57,9 @@ function BaseDatos() {
             {
                     tabla !== ""
                     ?
-                    <div className={styles.listaTabla}>
-                        <h2>{tabla}</h2>
-                            <div>
-                                {setRegistros(listaTabla.find((tablaLista) => {return tablaLista.displayName === tabla})!)}
-                            </div>
-                    </div>                 
+                    <>
+                    {setPaginaBd(pagina, setPagina, listaTabla.find((tablaLista) => {return tablaLista.displayName === tabla})!)}
+                    </>                
                     :
                     <></>
                 }

@@ -1,12 +1,37 @@
-interface Mensualidad {
+import { IMensualidad, ISimuladorValores } from "../types/simulador.types"
+import styles from "../css/simulador.module.css"
 
-    mes: number,
-    cuota: number,
-    intereses: number,
-    principal: number,
-    restante: number,
-    pagado: boolean
-}
+export function validarDatos(states: ISimuladorValores) : number {
+    
+    try {
+          for(const [state, value] of Object.entries(states)) {
+  
+              if(states.sabeCasa === "Sí" && state === "quiereCasa") {
+                  continue
+              }
+  
+              if(value === "") {
+                  throw new Error("Debe rellenar todos los campos")
+              }
+          }
+  
+          if(parseInt(states.edad) < 18 || parseInt(states.edad) > 65)
+              throw new Error("Debes tener entre 18 y 65 años para poder solicitar un préstamo")
+  
+          if(parseInt(states.precio) < 20000 || parseInt(states.precio) > 1000000) 
+              throw new Error("El precio de la casa debe ser mayor que 20.000€ y menor que 1.000.000€. Asegúrate que el número no esté separado por puntos o comas. Si está fuera de estos límites, pida una consulta.")
+        
+          if(parseInt(states.anyos) < 10 || parseInt(states.anyos) > 40) 
+              throw new Error("El plazo de la hipoteca debe estar entre 10 y 40 años. Si buca algo fuera de estos límites, pida una consulta.")
+          if(parseInt(states.anyos) + parseInt(states.edad) > 75)
+              throw new Error("Usted debe poder acabar de pagar la hipoteca a los 75 años como máximo. Reduzca el plazo de la hipoteca o pida una consulta.")
+  
+    } catch (error) {
+        alert(error)
+        return states.siguiente
+    }
+    return states.siguiente + 1
+  }
 
 function toDosDigitos(numero: number) {
     return Math.round(numero * 100) / 100 
@@ -34,16 +59,20 @@ function calcularAmortizadoMensual(cuota: number, intereses: number) {
     return cuota - intereses
 }
 
+export function calcularTae(interes : number) {
+
+    let tae = (1+interes/1200)**12-1
+    return parseFloat((tae*100).toFixed(2))
+}
+
 export function calcular(capital: number, interes: number, anyos: number) {
-    let capitalRestante = capital
-    let interesesTotales = 0
     let totalAmortizado = 0
 
     let cuotaMensual = []
     let interesMensual = []
     let amortizacionMensual = []
     
-    let detalles : Mensualidad[] = []
+    let detalles : IMensualidad[] = []
 
     cuotaMensual.push(0)
     interesMensual.push(0)
@@ -54,8 +83,6 @@ export function calcular(capital: number, interes: number, anyos: number) {
             interesMensual.push(toDosDigitos(calcularInteresMensual(capital, totalAmortizado, interes)))
             amortizacionMensual.push(toDosDigitos(calcularAmortizadoMensual(cuotaMensual[i], interesMensual[i])))
 
-            capitalRestante -= cuotaMensual[i]
-            interesesTotales += interesMensual[i]
             totalAmortizado += amortizacionMensual[i]
 
             detalles.push({
@@ -69,4 +96,46 @@ export function calcular(capital: number, interes: number, anyos: number) {
     }
 
     return detalles
+}
+
+export function calcularTotalHipoteca(capital: number, interes: number, anyos: number) {
+    let interesesTotales = 0
+    let totalAmortizado = 0
+
+    let cuotaMensual = calcularMensualidad(capital, interes, anyos)
+    let interesMensual = []
+    let amortizacionMensual = []
+
+    interesMensual.push(0)
+    amortizacionMensual.push(0)
+
+    for (let i = 1; i < anyos*12; i++) {        
+            interesMensual.push(calcularInteresMensual(capital, totalAmortizado, interes))
+            amortizacionMensual.push(calcularAmortizadoMensual(cuotaMensual, interesMensual[i]))
+
+            interesesTotales += interesMensual[i]
+            totalAmortizado += amortizacionMensual[i]
+    }
+    return [Math.round(cuotaMensual * 100) / 100, Math.round(interesesTotales * 100) /100]
+}
+
+export function seleccionarOpcion (id: string) {
+    const opciones = document.getElementsByClassName(styles.opcionHipoteca)
+
+    for (let i = 0; i < opciones.length; i++) {
+        const opcion = opciones[i];
+        
+        if(opcion.classList.contains(styles.opcionSeleccionada) && opcion.id === id) {
+            
+            opcion.classList.remove(styles.opcionSeleccionada)
+            return
+        }
+        else if (opcion.classList.contains(styles.opcionSeleccionada)) {
+            opcion.classList.remove(styles.opcionSeleccionada)
+        }
+        
+    }
+
+    const opcion = document.getElementById(id)
+    opcion?.classList.add(styles.opcionSeleccionada)
 }

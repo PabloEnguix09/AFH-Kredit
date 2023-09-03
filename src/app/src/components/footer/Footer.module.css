@@ -103,6 +103,11 @@
     margin-bottom: 2.7rem;
 }
 
+.grupoEmpresas img {
+    width: fit-content;
+    height: fit-content;
+}
+
 @media screen and (min-width: 1920px) {
     .copy {
         font-size: 0.8rem;

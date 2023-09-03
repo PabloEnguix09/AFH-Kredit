@@ -17,11 +17,11 @@ function UserNavbar({cambioPagina, setCambioPagina}:Props) {
 
     useEffect(() => {
       switch(cambioPagina){
+        //setHasEstado(true)
+        //break;
         case "Chat":
         case "Documentos":
         case "Amortizacion":
-            setHasEstado(true)
-            break;
         case "Ajustes":
             setHasEstado(false)
             break;

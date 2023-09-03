@@ -52,7 +52,7 @@
 .listaDocumentos {
     display: grid;
     max-height: 24rem;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     grid-template-columns: repeat(5, 1fr);
     grid-column-gap: 1.25rem;
@@ -81,4 +81,5 @@
     top: 0.75rem;
     right: 0.88rem;
     z-index: 9;
+    filter: brightness(0) saturate(100%) invert(43%) sepia(23%) saturate(1872%) hue-rotate(315deg) brightness(86%) contrast(81%);
 }

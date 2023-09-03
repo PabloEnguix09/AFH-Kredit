@@ -13,7 +13,7 @@
 .listaNoticias {
     display: grid;
     height: 24rem;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     grid-template-columns: repeat(7, 1fr);
     grid-column-gap: 1.25rem;

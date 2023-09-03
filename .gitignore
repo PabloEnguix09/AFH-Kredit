@@ -12,3 +12,5 @@ serviceAccountKey.json
 doc/
 
 src/app/src/serviceAccountAppKey.json
+
+.unlighthouse/

@@ -1,7 +1,7 @@
 import Navbar from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
 import FormularioContacto from '../components/contacto/Contacto';
-import { useState, useEffect, SetStateAction } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Contacto() {

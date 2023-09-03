@@ -7,24 +7,15 @@ import Blog from "../components/application/components/blog/Blog"
 import Ajustes from "../components/application/components/Ajustes"
 
 import styles from "../css/application/App.module.css"
-import { auth, db } from "../js/firebaseApp"
-import { DocumentData, collection, doc, getDoc, getDocs, query, where } from "firebase/firestore"
+import { auth} from "../js/firebaseApp"
 import { User, onAuthStateChanged } from "firebase/auth"
 import { useNavigate } from "react-router-dom"
+import UsuarioAPI from "../services/users"
+import { IContactoDatos, IConversacionInterfaz } from "../types/app.types"
 
-interface ContactoDatos {
-    displayName : string,
-    uid: string,
-    key: string,
-    conversacionUID: string
-}
+const api = new UsuarioAPI()
 
-interface ConversacionInterfaz {
-    uid: string,
-    mensajes: DocumentData
-}
-
-function setPaginaAdmin(pagina:string, userData: User | null, contactos: ContactoDatos[], conversaciones: ConversacionInterfaz[], contactoSelected:string, setContactoSelected:Dispatch<SetStateAction<string>>) {
+function setPaginaAdmin(pagina:string, userData: User | null, contactos: IContactoDatos[], conversaciones: IConversacionInterfaz[], contactoSelected:string, setContactoSelected:Dispatch<SetStateAction<string>>) {
     if(userData !== null && contactos.length !== 0) {
         switch (pagina) {
             case "Chat":
@@ -36,7 +27,7 @@ function setPaginaAdmin(pagina:string, userData: User | null, contactos: Contact
             case "Blog":
                 return <Blog />
             case "Ajustes":
-                return <Ajustes nombreCompleto={userData.displayName!} correo={userData.email!} imagen={""} />
+                return <Ajustes nombreCompleto={userData.displayName!} correo={userData.email!} imagen={userData.photoURL} usuario={userData} />
         }
     }
         
@@ -48,8 +39,8 @@ function AdminApp() {
 
     const [pagina, setPagina] = useState("Chat")
 
-    const [contactos, setContactos] = useState<ContactoDatos[]>([])
-    const [conversaciones, setConversaciones] = useState<ConversacionInterfaz[]>([])
+    const [contactos, setContactos] = useState<IContactoDatos[]>([])
+    const [conversaciones, setConversaciones] = useState<IConversacionInterfaz[]>([])
 
 
     const [contactoSelected, setContactoSelected] = useState("")
@@ -58,49 +49,23 @@ function AdminApp() {
     useEffect(() => {
         const getUserData = async(user : User) => {
             let uid = user.email
-
-            await getDocs(query(collection(db, "usuarios"), where("email", "==", uid))).then(async(res) => {
-                let user = res.docs[0].data()
-                let contactos : ContactoDatos[] = []
-                let conversaciones : ConversacionInterfaz[] = []
-                for (let i = 0; i < user.contactos.length; i++) {
-                    await getDocs(query(collection(db, "usuarios"), where("email", "==", user.contactos[i]))).then(async(res) => {
-                        let contacto = res.docs[0].data()
-                        let key = contacto.rol === "Admin" ? contacto.email + "-"+uid : uid + "-" + contacto.email
-                        await getDoc(doc(db, "chats", key)).then((res) => {
-                            if(res.exists()) {
-                                contactos.push({displayName: contacto.nombre + " " + contacto.apellidos, uid: contacto.email, key:key, conversacionUID: res.id})
-                                conversaciones.push({uid: res.id, mensajes: res.data()}) 
-
-                                if(user.contactos.length === contactos.length) {                                    
-                                    setContactos(contactos)
-                                    setConversaciones(conversaciones)
-                                }
-                            }
-                        })
-                    })              
-                }
-            })
+            if(uid) {
+                await api.getContctos(uid, setContactos, setConversaciones)
+            }
+            
         }
         let contador = 0
-        onAuthStateChanged(auth, (user) => {            
+        onAuthStateChanged(auth, (user) => {
             if(user && userData === null && contador < 5) {
                 contador++
-                
-                getUserData(user)
                 setUserData(user)
+                getUserData(user)
             }
             else if(!user || contador >= 5){
-                console.log(user);
-                console.log(userData);
-                console.log(contador);
-                
                 if (contador >= 5) {
                     console.log("llama demasiado aqui");
-                    
                 }
                 contador = 0
-                
                 navigate("/login")
             }
         })

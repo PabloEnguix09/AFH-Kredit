@@ -1,105 +1,15 @@
-import React, {Dispatch, useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import RadioInputSim from './RadioInputSim'
 import TextInputSim from './TextInputSim'
 import styles from "../../css/simulador.module.css"
 import iconoUser from "../../img/User.svg"
-import { Buffer } from "buffer";
+import { ISimuladorEstados } from '../../types/simulador.types'
+import { validarDatos } from '../../js/simulador'
+import SimuladorAPI from '../../services/simulador'
 
-interface Estado {
-  estado: string,
-  cb: Dispatch<React.SetStateAction<string>>
-}
+const api = new SimuladorAPI()
 
-interface Props {
-  titular: Estado,
-  edad: Estado,
-  ingresos: Estado,
-  deudas: Estado,
-  sabeCasa: Estado,
-  precio: Estado,
-  provincia: Estado,
-  quiereCasa: Estado,
-  uso: Estado,
-  tipoVivienda: Estado,
-  anyos: Estado,
-
-  siguiente: {
-    estado: number,
-    cb: Dispatch<React.SetStateAction<number>>
-  }
-}
-
-interface Estados {
-  titular: string,
-  edad: string,
-  ingresos: string,
-  deudas: string,
-  sabeCasa: string,
-  precio: string,
-  provincia: string,
-  quiereCasa: string,
-  uso: string,
-  tipoVivienda: string,
-  anyos: string,
-  siguiente: number
-}
-
-interface Provincia {codigo:string, provincia: string}
-
-async function verCSV() {
-    let relPath = Buffer.from("src/app/public/", "ascii").toString("base64")
-    let name = Buffer.from("codprov.csv", "ascii")
-    
-    let respuesta = await fetch(`http://localhost:5050/api/documents/localFile/${relPath}/${name}`)
-    .then(response => response.json())
-    .then(data => {
-        let provincias : [] = data[0].split("\r\n")
-        let arrayProvincias : Provincia[] = []
-        provincias.forEach((provincia : string) => {
-            let [codigo, nombre] = provincia.split(",")
-            arrayProvincias.push({codigo: codigo.replaceAll("\"", ""), provincia: nombre.replaceAll("\"", "")})
-        });
-
-        return arrayProvincias
-
-    })
-
-    return respuesta
-}
-
-function validarDatos(states: Estados) : number {
-    
-  try {
-        for(const [state, value] of Object.entries(states)) {
-
-            if(states.sabeCasa === "Sí" && state === "quiereCasa") {
-                continue
-            }
-
-            if(value === "") {
-                throw new Error("Debe rellenar todos los campos")
-            }
-        }
-
-        if(parseInt(states.edad) < 18 || parseInt(states.edad) > 65)
-            throw new Error("Debes tener entre 18 y 65 años para poder solicitar un préstamo")
-
-        if(parseInt(states.precio) < 20000 || parseInt(states.precio) > 1000000) 
-            throw new Error("El precio de la casa debe ser mayor que 20.000€ y menor que 1.000.000€. Asegúrate que el número no esté separado por puntos o comas. Si está fuera de estos límites, pida una consulta.")
-      
-        if(parseInt(states.anyos) < 10 || parseInt(states.anyos) > 40) 
-            throw new Error("El plazo de la hipoteca debe estar entre 10 y 40 años. Si buca algo fuera de estos límites, pida una consulta.")
-        if(parseInt(states.anyos) + parseInt(states.edad) > 75)
-            throw new Error("Usted debe poder acabar de pagar la hipoteca a los 75 años como máximo. Reduzca el plazo de la hipoteca o pida una consulta.")
-
-  } catch (error) {
-      alert(error)
-      return states.siguiente
-  }
-  return states.siguiente + 1
-}
-
-const Formulario = (props: Props) => {
+const Formulario = (props: ISimuladorEstados) => {
 
   const estados = {
     titular: props.titular.estado,
@@ -122,7 +32,7 @@ const Formulario = (props: Props) => {
   useEffect(() => {
     if(estados.provincia.length === 5) {
         const cambiarProvincia = async() => {
-            let provincias = await verCSV()
+            let provincias = await api.verCSV()
             let provinciaCorrecta = provincias.filter((provincia) => {return provincia.codigo === estados.provincia.slice(0, 2)})[0]
             if(provinciaCorrecta !== undefined) {
                 setProvinciaCp(provinciaCorrecta.provincia)

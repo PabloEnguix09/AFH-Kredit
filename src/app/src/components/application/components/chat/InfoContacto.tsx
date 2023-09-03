@@ -11,7 +11,6 @@ function InfoContacto(props: Props) {
     
     const imagen = props.imagenContacto !== "" ? props.imagenContacto : defaultImg
 
-
     return (
         <div className={styles.infoContacto}>
             <img src={imagen} alt="Icono contacto" />
