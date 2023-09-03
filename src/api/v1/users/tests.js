@@ -10,22 +10,34 @@ const userTestSuite = () => describe("-----TESTS USUARIOS-----", () => {
     request = supertest(app)
   })
   
-  const defaultUserId = "test@afhkredit.com";
+  const defaultUserId = "testeador@afhkredit.com";
   const defaultUserData = {
     nombre: "Test",
     apellidos: "AFH Kredit",
     email: defaultUserId,
-    rol: "Admin"
+    rol: "Admin",
+    contactos: [],
+    prestamos: []
   };
   
-  const newUserId = "other@email.com";
+  const newUserId = "othertesteador@email.com";
   const newUserData = {
     nombre: "Otro",
     apellidos: "Test AFH",
     email: newUserId,
-    rol: "Usuario"
+    rol: "Usuario",
+    contactos: [],
+    prestamos: []
   };
-  describe("POST /users/create", async() => {
+
+  const sendContactData = {
+    nombre: "Otro",
+    apellidos: "Test AFH",
+    correo: newUserId,
+    telefono: "",
+    descripcion: ""
+}
+  describe("POST /users/create", () => {
   
     test("No deberian haber usuarios", async() => {
       await request.get("/api/users")
@@ -35,7 +47,6 @@ const userTestSuite = () => describe("-----TESTS USUARIOS-----", () => {
   
     test("Deberia funcionar correctamente", async() => {
       resData = defaultUserData;
-      resData.photoURL = "/default-profile.png";
       
       await request.post("/api/users/create")
       .send(defaultUserData)
@@ -140,6 +151,14 @@ const userTestSuite = () => describe("-----TESTS USUARIOS-----", () => {
       await request.delete("/api/users/delete").send({id:newUserId})
     });
   });
+
+  describe("POST /sendContactMail", () => {
+    test("Deberia funcionar correctamente", async() => {
+      await request.post("/api/sendContactMail")
+      .send(sendContactData)
+      .expect(200)
+    });
+  })
 
   console.log("---FIN TESTS USUARIOS---");
 })

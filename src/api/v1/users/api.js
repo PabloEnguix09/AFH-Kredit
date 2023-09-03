@@ -210,54 +210,6 @@ let borrar = async function (req, res) {
     res.status(response.status).send(response.data)
 }
 
-/**
- * 
- * @apiIgnore Method not done
- * 
- * @api {post} /users/login Login
- * @apiName Login
- * @apiGroup Users
- * @apiVersion  1.0.0
- * 
- * 
- * @apiParam  {String} paramName description
- * 
- * @apiSuccess (200) {type} name description
- * 
- * @apiParamExample  {type} Request-Example:
- * {
- *     property : value
- * }
- * 
- * 
- * @apiSuccessExample {type} Success-Response:
- * {
- *     property : value
- * }
- * 
- * 
- */
-let login = async function (req, res) {
-    let body = {
-        body: req.body,
-        params: req.params
-    }
-    let response = await api.login(body)
-    res.status(response.status).send(response.data)
-    /*try {
-        
-        if (response.data.providerData[0].isAdmin) {
-            res.status(response.status).redirect("http://localhost:3000/app/admin")
-            return
-        } else if(!response.data.providerData[0].isAdmin){
-            res.status(response.status).send(response.data)
-            return
-        }
-    } catch (error) {
-        res.status(response.status).send(response.data)
-    }*/
-}
-
 let sendContactMail = async function (req, res) {
     let body = {
         body: req.body,
@@ -275,6 +227,5 @@ module.exports = {
     update: update,
     create: create,
     delete: borrar,
-    login:login,
     sendEmail: sendContactMail
 };

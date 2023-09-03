@@ -1,4 +1,6 @@
 import { IProvincia } from "../types/simulador.types"
+import { Buffer } from "buffer";
+window.Buffer = window.Buffer || Buffer;
 
 class SimuladorAPI {
     verCSV = async () => {

@@ -5,16 +5,10 @@ function check_error(error) {
             data: {message: "Usuario no existente"}
         }
     }
-    else if(error.code == 6 || error.code == "auth/email-already-exists") {
+    else if(error.code == 6 || error.code == "auth/email-already-exists" || error.code == "auth/uid-already-exists") {
         return {
             status: 400,
             data: {message: "Usuario ya existente"}
-        }
-    }
-    else if(error.code == 404) {
-        return {
-            status: 404,
-            data: {message: "Registro no existente"}
         }
     }
     else {
