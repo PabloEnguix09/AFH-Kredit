@@ -61,3 +61,19 @@
     height: 1.6rem;
     font-size: 0.8rem;
 }
+
+.navbar .burger {
+    display: none;
+}
+
+@media screen and (max-width:360px) {
+    .navbar ul {
+        display: none;
+    }
+    .loginBtn {
+        display: none;
+    }
+    .navbar .burger {
+        display: block;
+    }
+}

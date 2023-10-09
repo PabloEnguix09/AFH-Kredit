@@ -5,7 +5,7 @@
 }
 
 .listaTabla {
-    width: 49rem;
+    width: 92%;
     height: 31.7rem;
     background: var(--blanco);
     border-radius: 1.5rem;
@@ -17,7 +17,7 @@
     display: flex;
     flex-direction: column;
     height: 25.5rem;
-    width: 50rem;
+    width: 100%;
     overflow-y: auto;
     gap: 0.5rem;
     margin-top: 1rem;
@@ -25,7 +25,7 @@
 }
 
 .registro {
-    width: 47rem;
+    width: 96%;
     height: 3rem;
     border-radius: 15rem;
     background: var(--gris);
