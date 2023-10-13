@@ -9,8 +9,10 @@ interface Props {
 function Cosa({nombre, img, texto}:Props) {
     return (
         <div className={styles.cosaQueNecesitas}>
-            <h2>{nombre}</h2>
-            {img}
+            <div className={styles.cosaNecesaria}>
+                <h2>{nombre}</h2>
+                {img}
+            </div>
             <span>{texto}</span>
         </div>
     )

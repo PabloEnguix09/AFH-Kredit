@@ -73,7 +73,7 @@ const Formulario = (props: ISimuladorEstados) => {
             </div>
     
             <hr />
-            <div className="prestamo">
+            <div className={styles.prestamo}>
                 <div>
                     <img src={iconoUser} alt="" />
                     <h2>Sobre tu préstamo</h2>

@@ -108,6 +108,63 @@
     height: fit-content;
 }
 
+@media screen and (max-width: 768px) {
+
+    .enlaces img {
+        width: 35.55vw;
+        height: auto;
+        margin-left: 8vw;
+    }
+
+    .enlaces div {
+        display: flex;
+        flex-direction: column;
+        gap: 0.625rem;
+        margin-right: 11.39vw;
+    }
+
+    .enlaces div a {
+        text-align: right;
+    }
+
+    .footer hr {
+        width: 83.33vw;
+    }
+
+    .copyRedes {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .redes img {
+        width: 7.5vw;
+        height: auto;
+    }
+
+    .empezamos h1 {
+        padding-top: 0;
+        font-size: 1.375rem;
+    }
+
+    .empezamos p {
+        width: 75vw;
+    }
+
+    .empezamos button {
+        width: 83.33vw;
+    }
+
+    .empresas img {
+        width: 35.55vw;
+        height: auto;
+    }
+
+    .grupoEmpresas > img {
+        width: 75vw;
+        height: auto;
+    }
+}
+
 @media screen and (min-width: 1920px) {
     .copy {
         font-size: 0.8rem;

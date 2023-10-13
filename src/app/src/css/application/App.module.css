@@ -138,3 +138,24 @@
     align-items: center;
     gap: 0.69vh;
 }
+
+@media screen and (max-width: 768px) {
+    .app {
+        margin-top: 0 !important;
+    }
+
+    .buscadorInput img {
+        width: 1.375rem;
+        height: 1.375rem;
+    }
+
+    .buscarInput {
+        height: 3.125rem !important;
+        border-radius: 1.5rem !important;
+        text-indent: 1rem !important;
+    }
+    
+    .buscarInput::placeholder {
+        font-size: 1rem;
+    }
+}

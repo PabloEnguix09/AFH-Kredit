@@ -139,6 +139,42 @@
     margin-left: 1.5rem;
 }
 
+@media screen and (max-width: 768px) {
+    .metodos {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .contacto .formulario {
+        width: 90%;
+        padding: 7.5vw;
+    }
+
+    .contacto .formulario .datos {
+        width: 100%;
+    }
+
+    .alternativos h2 {
+        width: 95vw;
+        font-size: 1.3rem;
+        text-align: center;
+    }
+
+    .linea hr {
+        width: 40vw;
+    }
+
+    .alternativos .redes {
+        display: flex;
+        gap: 1.5rem;
+        width: fit-content;
+    }
+
+    .alternativos .redes img {
+        margin: 0;
+    }
+}
+
 @media screen and (min-width: 1920px) {
     .contacto .metodos {
         margin: 3rem 12vw;

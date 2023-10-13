@@ -83,3 +83,34 @@
     z-index: 9;
     filter: brightness(0) saturate(100%) invert(43%) sepia(23%) saturate(1872%) hue-rotate(315deg) brightness(86%) contrast(81%);
 }
+
+@media screen and (max-width:768px) {
+    .documentosUser {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+    }
+
+    .listaDocumentos {
+        grid-template-columns: repeat(2, 1fr) !important;
+        max-height: 70vh;
+    }
+
+    .doc p {
+        width: 6.5rem;
+        font-size: 0.75rem;
+    }
+
+    .doc:first-child p {
+        width: 4.7rem;
+    }
+
+    .doc div {
+        width: 6.6rem;
+    }
+
+    .iconoDoc {
+        width: 3rem;
+        height: 3rem;
+    }
+}

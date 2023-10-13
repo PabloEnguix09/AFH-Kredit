@@ -71,7 +71,23 @@ input[type="password"] {
     margin: 0.5rem 0 !important;
 }
 
-@media screen and (min-width:1920px) {
+@media screen and (max-width: 768px) {
+    .login,
+    .login div {
+        width: 95%;
+    }
+
+    .login > div > div {
+        margin: 1rem 0;
+    }
+
+    .login input[type="text"],
+    .login input[type="password"] {
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media screen and (min-width: 1920px) {
     label {
         font-size: 1rem;
     }

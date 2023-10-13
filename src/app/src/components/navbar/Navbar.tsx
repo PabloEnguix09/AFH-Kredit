@@ -1,21 +1,10 @@
 import { useEffect, useState } from "react";
 import styles from "./Navbar.module.css"
 import { Link } from "react-router-dom";
-import burger from "../../img/burger_menu.svg"
 
 function Navbar() {
-    const [ventana, setVentana] = useState({
-        height: window.innerHeight,
-        width: window.innerWidth
-    })
+    const [open, setOpen] = useState(false)
 
-    useEffect(() => {
-        setVentana({
-            height: window.innerHeight,
-            width: window.innerWidth
-        })
-    }, [])
-    
     return(
         <nav className={styles.navbar}>
             <a href="/"><img src={require("../../img/Logo.png")} alt="Logo AFH Kredit" /></a>
@@ -34,8 +23,22 @@ function Navbar() {
                 <Link to={"/login"}>
                     <button className={styles.loginBtn}>Iniciar sesión</button>
                 </Link>
-                <img className={styles.burger} src={burger} alt="Menú móvil" />
+                <div className={open ? `${styles.burgerIcon} ${styles.openBurgerIcon}` : `${styles.burgerIcon} ${styles.closeBurgerIcon}`} onClick={() => setOpen(!open)}>
+                    <div/>
+                    <div/>
+                    <div/>
+                </div>
             </div>
+
+                <div className={open ? `${styles.burgerMenu} ${styles.openBurgerMenu}` : `${styles.burgerMenu} ${styles.closeBurgerMenu}`}>
+                    <ul className={styles.enlaces}>
+                        <li><a href="/nosotros">Nosotros</a></li>
+                        <li><a href="/simulador">Simula tu hipoteca</a></li>
+                        <li><a href="/contacto">Contacto</a></li>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/login">Iniciar sesión</a></li>
+                    </ul>
+                </div>
         </nav>
     )
 }

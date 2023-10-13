@@ -8,6 +8,7 @@
 
     background-repeat: no-repeat !important;
     background-size: cover !important;
+    background-position: center !important;
     position: relative !important;
 }
 
@@ -73,7 +74,6 @@ section div div {
 }
 
 .loQueNecesitas {
-    height: 34.4vh;
     background-color: #d9d9d9;
     padding: 2.5rem 0;
 }
@@ -108,16 +108,12 @@ section div div {
 
 .pasos {
     justify-content: center;
+    gap: 2rem;
     margin-top: 6rem;
 }
 
 .pasos div {
-    margin-left: 2rem;
     margin-top: 0;
-}
-
-.pasos div:first-child {
-    margin-left: 0;
 }
 
 .paso {
@@ -188,6 +184,130 @@ section div div {
     margin-top: 0.45rem;
     border-color: #d9d9d9;
     margin-bottom: 0.55rem;
+}
+
+@media screen and (max-width: 768px) {
+    .blur {
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(2px);
+    }
+
+    .landingPage {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 86vh;
+    }
+
+    .promo {
+        right: auto;
+        left: auto;
+    }
+
+    .promo img {
+        width: 60vw;
+    }
+
+    .promo p {
+        font-size: 1rem;
+        color: var(--blanco);
+    }
+
+    .cta {
+        width: 15rem;
+    }
+
+    .flechaAbajo {
+        left: auto;
+    }
+
+    section {
+        padding: 1rem 0 !important;
+    }
+
+    section div {
+        flex-direction: column;
+        width: auto;
+        margin-top: 0;
+        gap: 0.8rem;
+    }
+
+    .cosaNecesaria {
+        gap: 0;
+    }
+
+    .cosaNecesaria h2 {
+        margin-bottom: 0.33rem;
+    }
+
+    section div img {
+        width: 25px !important;
+        height: 25px !important;
+    }
+
+    .cosaQueNecesitas {
+        width: auto;
+        height: auto;
+        flex-direction: row;
+        gap: 0 !important;
+    }
+
+    .landing h1 {
+        font-size: 6vw;
+        margin-bottom: 0.8rem;
+    }
+
+    .cosaQueNecesitas h2 {
+        width: 16.67vw;
+        font-size: 4.44vw;
+        text-align: center;
+    }
+
+    .cosaQueNecesitas span {
+        width: 17.8rem;
+        text-align: left;
+    }
+
+    .pasosHipoteca h1 {
+        margin-bottom: 0;
+    }
+
+    .pasos {
+        margin-top: 1rem;
+        gap: 0.5rem;
+    }
+    .paso {
+        width: auto;
+        flex-direction: row;
+        gap: 0.1rem;
+    }
+
+    .numeroPaso {
+        font-size: 15vw;
+    }
+    .paso div {
+        align-items: start;
+        gap: 0;
+    }
+    .paso span {
+        width: 72.22vw;
+        text-align: left;
+    }
+    .paso h2 {
+        font-size: 1rem;
+    }
+
+    .faq {
+        width: 90vw;
+        gap: 0;
+    }
+    .faq div p {
+        font-size: 1rem;
+    }
+    .faq span {
+        font-size: 0.75rem;
+    }
 }
 
 @media screen and (min-width: 1920px) {

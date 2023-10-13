@@ -89,3 +89,49 @@
 .titular > div > div span {
     color: #999;
 }
+
+@media screen and (max-width:768px) {
+
+    .noticias {
+        width: 95%;
+        row-gap: 1rem;
+        column-gap: 1rem;
+        margin: 4vh 0;
+    }
+
+    .noticias > a:first-child > .titular {
+        flex-direction: column;
+    }
+
+    .noticias > a:first-child > .titular > div > p {
+        font-size: 1rem;
+        width: 95%;
+    }
+
+    .noticias > a:first-child > .titular > div > span {
+        width: 90%;
+        margin-bottom: 0;
+    }
+
+    .noticias > a:first-child > .titular > div > div {
+        margin-bottom: 0.5rem;
+    }
+
+    .titular > div > p {
+        font-size: 0.875rem;
+        width: 95%;
+    }
+
+    .titular > div > span {
+        width: 80%;
+    }
+
+    .titular > div > div {
+        width: 95%;
+    }
+
+    .titular > div > div span {
+        font-size: 0.5rem;
+    }
+
+}

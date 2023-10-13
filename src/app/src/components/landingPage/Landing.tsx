@@ -34,6 +34,7 @@ function Landing() {
     return (
         <div className={styles.landing} >
             <main className={styles.landingPage} style={{background: `url(${fondoLanding})`}}>
+                <div className={styles.blur}></div>
                 <article className={styles.promo}>
                     <img src={logoCompleto} alt="Logo AFH Kredit con nombre de empresa" />
                     <p>Tu hipoteca más fácil que nunca</p>

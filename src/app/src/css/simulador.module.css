@@ -330,6 +330,126 @@
 .gastosExtra h2 {
     color: var(--grisOscuro);
 }
+@media screen and (max-width: 768px) {
+    #simulador {
+        height: auto;
+    }
+
+    .formulario {
+        flex-direction: column;
+    }
+
+    .formulario h2 {
+        font-size: 1.375rem;
+    }
+
+    .datos, .datos > div {
+        margin-top: 0.5rem;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 1rem;
+        margin-right: 0;
+    }
+
+    .datos > div:last-child {
+        margin-top: 0;
+    }
+
+    .datos > div > p {
+        font-size: 1rem !important;
+        margin-top: 0 !important;
+    }
+
+    .radioInput, .textInput {
+        width: 53.6vw;
+    }
+    .radioInput p {
+        font-size: .75rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .textInput > div > input {
+        text-indent: 1rem;
+    }
+
+    .textInput p {
+        font-size: 1rem;
+    }
+    .textInput span {
+       font-size: 0.875rem; 
+    }
+    .textInput div span {
+        font-size: 1.375rem;
+        margin-right: 0.5rem;
+    }
+    .opciones .opcion {
+        padding: 3.33vw;
+    } 
+    .radioInput input[type="radio"] {
+        width: 7.22vw;
+        height: 7.22vw;
+    }
+    #simulador hr {
+        display: none;
+    }
+    .prestamo {
+        margin-top: 1rem;
+    }
+    #simulador > div > button {
+        width: 53.6vw;
+        border-radius: 0.625rem;
+        margin-top: 4.375vh;
+        font-size: 1rem;
+    }
+
+
+
+    .opcionesHipotecas h1 {
+        font-size: 1.375rem;
+    }
+
+    .opcionesHipotecas > div {
+        flex-direction: column;
+    }
+    .opcionHipoteca h2 {
+        font-size: 1.5rem;
+    }
+    .parteMixta {
+        font-size: 1.25rem !important;
+    }
+    .botones {
+        flex-direction: column;
+        margin-top: 1rem;
+    }
+    .botones button {
+        width: 70.27vw;
+        border-radius: 0.625rem;
+        font-size: 1.375rem;
+    }
+
+
+
+    .resultado {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .chartDiv {
+        width: 43vw;
+    }
+    .leyendaContainer {
+        margin-top: 0;
+    }
+    .leyendaContainer p {
+        font-size: 0.75rem;
+    }
+    .resultadoMensualidades h2 {
+        font-size: 1.5rem;
+    }
+    .resultadoMensualidades span {
+        font-size: 1rem;
+    }
+}
 
 @media screen and (min-width: 1920px) {
     .textInput > div > input {

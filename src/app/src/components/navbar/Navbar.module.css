@@ -12,7 +12,7 @@
     top: 0;
     width: 100%;
     box-sizing: border-box;
-    z-index: 999;
+    z-index: 9;
 }
 
 .navbar img {
@@ -62,18 +62,115 @@
     font-size: 0.8rem;
 }
 
-.navbar .burger {
+.navbar .burgerIcon {
+    cursor: pointer;
     display: none;
+    justify-content: space-around;
+    flex-flow: column nowrap;
+    position: fixed;
+    z-index: 10;
+    top: 15px;
+    right: 25px;
+
+    width: 2rem;
+    height: 2rem;
 }
 
-@media screen and (max-width:360px) {
-    .navbar ul {
+.navbar .burgerMenu {
+    display: none;
+    background-color: #399C85;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    transition: all 0.3s ease-in-out;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar .burgerIcon div {
+    width: 2rem;
+    height: 0.25rem;
+    transform-origin: 1px;
+}
+
+.burgerMenu ul {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 2.75rem;
+    font-weight: bold;
+}
+
+.burgerMenu ul li:last-child a {
+    color: #333;
+}
+
+.openBurgerIcon div {
+    transition: all 0.3s linear;
+    background-color: var(--blanco);
+
+    &:nth-child(1) {
+        transform: rotate(45deg);
+    }
+    &:nth-child(2) {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    &:nth-child(3) {
+        transform: rotate(-45deg);
+    }
+}
+
+.openBurgerMenu {
+    transform: translateX(0);
+}
+
+.closeBurgerMenu {
+    transform: translateX(100%);
+}
+
+.closeBurgerIcon div {
+    background-color: #399C85;
+    transition: all 0.3s linear;
+
+    &:nth-child(1) {
+        transform: rotate(0);
+    }
+    &:nth-child(2) {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    &:nth-child(3) {
+        transform: rotate(0deg);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .navbar img {
+        width: 40px;
+        height: 40px;
+        position: fixed;
+        z-index: 10;
+        top: 9px;
+        left: 22px;
+    }
+    .navbar > ul {
         display: none;
     }
     .loginBtn {
         display: none;
     }
-    .navbar .burger {
-        display: block;
+    .navbar .burgerIcon {
+        display: flex;
+    }
+    .navbar .burgerMenu {
+        display: flex;
+        position: fixed;
+        z-index: 9;
+    }
+
+    .burgerMenu ul li {
+        margin-left: 0;
     }
 }
