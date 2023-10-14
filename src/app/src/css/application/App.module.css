@@ -8,6 +8,7 @@
     flex-direction: column;
     gap: 2.9vh;
     max-height: 25.2rem;
+    overflow: auto;
 }
 
 .listaScrollable {
@@ -139,9 +140,26 @@
     gap: 0.69vh;
 }
 
+.buscadorMovil {
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--grisMenu);
+}
+
 @media screen and (max-width: 768px) {
     .app {
         margin-top: 0 !important;
+    }
+
+    .buscador {
+        display: none;
+    }
+
+    .buscadorMovil {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
     }
 
     .buscadorInput img {
@@ -157,5 +175,29 @@
     
     .buscarInput::placeholder {
         font-size: 1rem;
+    }
+
+    .listaContactos {
+        width: 83%;
+        max-height: 75vh;
+    }
+
+    .tarjetaContacto {
+        width: 95%;
+        border-radius: 1.5rem;
+    }
+
+    .tarjetaContacto div {
+        gap: 0.875rem;
+    }
+
+    .tarjetaContacto img {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .tarjetaContacto span {
+        font-size: 1.375rem;
+        max-width: 12rem;
     }
 }

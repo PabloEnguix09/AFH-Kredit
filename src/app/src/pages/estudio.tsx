@@ -44,9 +44,7 @@ function Estudio() {
 
     useEffect(() => {
       
-        if(url !== "") {
-            console.log(url);
-            
+        if(url !== "") {            
             navigate(url)
         }
     }, [url, navigate])

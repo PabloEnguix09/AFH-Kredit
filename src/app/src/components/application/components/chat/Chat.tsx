@@ -1,5 +1,6 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react"
 import styles from "../../../../css/application/AppChat.module.css"
+import appStyles from "../../../../css/application/App.module.css"
 import InfoContacto from "./InfoContacto"
 import Conversacion from "./Conversacion"
 import Buscador from "../Buscador"
@@ -19,6 +20,8 @@ interface Props {
 
 function Chat(props: Props) {
 
+
+    const [deviceWidth, setDeviceWidth] = useState(window.innerWidth)
     const [imgContacto, setImgContacto] = useState("")
     const [conversacionActual, setConversacionActual] = useState<IConversacionInterfaz>({uid: "", mensajes: []})
 
@@ -37,26 +40,52 @@ function Chat(props: Props) {
                     })
                 }
             }
-        }        
+        }
+
+        const cambiarPantallaMovil = async() => {
+                document.getElementsByClassName(styles.chatMovil)[0].getElementsByClassName(styles.ventanaChat)[0].classList.remove(appStyles.oculto)
+                console.log("chat mostrado");
+        }
         if (props.contactoSelected !== "") {
+            if(deviceWidth <= 768) {
+                cambiarPantallaMovil()
+            }
             crearChat()
         }
-    }, [props.conversaciones, props.contactoSelected, props.contactos])
+    }, [props.conversaciones, props.contactoSelected, props.contactos, deviceWidth])
 
     return(
-        <div className={styles.chat}>
-            <Buscador contactoSelected={props.contactoSelected} setContactoSelected={props.setContactoSelected} imgContactos={""} contactos={props.contactos} />
+        <div>
+            <div className={styles.chat}>
+                <Buscador contactoSelected={props.contactoSelected} setContactoSelected={props.setContactoSelected} imgContactos={""} contactos={props.contactos} />
 
-            <div className={styles.ventanaChat}>
-                {props.contactoSelected !== ""
-                ?
-                    <>
-                        <InfoContacto imagenContacto={imgContacto} nombre={props.contactoSelected} telf={""} />
-                        <Conversacion imagenContacto={""} conversacion={conversacionActual} />
-                    </>
-                :
-                    <></>
-                }
+                <div className={styles.ventanaChat}>
+                    {props.contactoSelected !== ""
+                    ?
+                        <>
+                            <InfoContacto imagenContacto={imgContacto} nombre={props.contactoSelected} telf={""} setContactoSelected={props.setContactoSelected}/>
+                            <Conversacion imagenContacto={""} conversacion={conversacionActual} />
+                        </>
+                    :
+                        <></>
+                    }
+                </div>
+            </div>
+
+            <div className={styles.chatMovil}>
+                <Buscador contactoSelected={props.contactoSelected} setContactoSelected={props.setContactoSelected} imgContactos={""} contactos={props.contactos} />
+
+                <div className={`${styles.ventanaChat} ${appStyles.oculto}`}>
+                    {props.contactoSelected !== ""
+                    ?
+                        <>
+                            <InfoContacto imagenContacto={imgContacto} nombre={props.contactoSelected} telf={""} setContactoSelected={props.setContactoSelected}/>
+                            <Conversacion imagenContacto={""} conversacion={conversacionActual} />
+                        </>
+                    :
+                        <></>
+                    }
+                </div>
             </div>
         </div>
     )

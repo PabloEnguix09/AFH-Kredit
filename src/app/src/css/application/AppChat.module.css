@@ -26,6 +26,13 @@
     gap: 1vw;
 }
 
+.flechaAtras {
+    width: 1.375rem !important;
+    height: 1.375rem !important;
+    margin-left: 5px !important;
+    display: none !important;
+}
+
 .infoContacto img {
     width: 3.125vw;
     height: 3.125vw;
@@ -172,6 +179,95 @@
     right: 1.3rem;
 }
 
+.chatMovil {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .chat {
+        display: none;
+    }
+
+    .chatMovil {
+        width: 100%;
+        height: 100vh;
+        display: block;
+    }
+
+    .ventanaChat {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+    }
+
+    .infoContacto {
+        width: 100%;
+        border-radius: 0;
+        height: 4.5rem;
+        margin-top: 0;
+        gap: 0.75rem;
+    }
+
+    .infoContacto img {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .infoContacto span {
+        font-size: 0.625rem;
+    }
+
+    .flechaAtras {
+        display: block !important;
+    }
+
+    .infoContacto p {
+        font-size: 1rem;
+    }
+
+    .conversacion {
+        width: 100%;
+        height: 81.9vh;
+        border-radius: 0;
+    }
+
+    .mensajes {
+        width: 100%;
+        height: 72vh;
+    }
+
+    .fecha {
+        font-size: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .contenidoMensaje {
+        max-width: 59vw;
+        gap: 0.5rem;
+    }
+
+    .mensaje img {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+    .enviar,
+    .adjuntar {
+        width: 1.125rem;
+        height: 1.125rem;
+    }
+
+    .enviar {
+        right: 0.75rem;
+    }
+    .adjuntar {
+        left: 0.5rem;
+    }
+
+    .chatInput .textareaInput {
+        padding: 0.25rem 2rem;
+    }
+}
 @media screen and (min-width: 1920px) {
     .contenidoMensaje p {
         font-size: 1rem;

@@ -76,13 +76,17 @@ function Buscador({contactoSelected, setContactoSelected, imgContactos, contacto
         }
     }
 
+    let condicionDisplay = contactoSelected === "" && window.innerWidth <= 768
+    console.log(condicionDisplay);
+    
+
     return(
-        <div className={styles.buscador}>
+        <div>
+            <div className={styles.buscador}>
                 <div className={styles.buscadorInput}>
                     <input type="text" className={styles.buscarInput} placeholder="Buscar..." onChange={e => {handleBuscar(e.target.value)}} value={userName}/>
                     <img src={buscar} alt="Icono buscar" />
                 </div>
-
                 <div className={styles.listaContactos}>
                     {
                         document.getElementsByClassName(styles.tarjetaContacto).length !== undefined
@@ -102,6 +106,31 @@ function Buscador({contactoSelected, setContactoSelected, imgContactos, contacto
                     }
                 </div>
             </div>
+            <div className={styles.buscadorMovil} style={{display: condicionDisplay ? 'flex' : 'none'}}>
+                <div className={styles.buscadorInput}>
+                    <input type="text" className={styles.buscarInput} placeholder="Buscar..." onChange={e => {handleBuscar(e.target.value)}} value={userName}/>
+                    <img src={buscar} alt="Icono buscar" />
+                </div>
+                <div className={styles.listaContactos}>
+                    {
+                        document.getElementsByClassName(styles.tarjetaContacto).length !== undefined
+                        ?
+                        contactos?.map((contacto : IContactoDatos | Tabla) => {
+                            let img = ""
+                            if(isIContactoDatos(contacto)) {
+                                img = contacto.imagen
+                            }
+                            else {
+                                img = "none"
+                            }
+                            return <TarjetaContacto imagenContacto={img} nombre={contacto.displayName} noLeidos={0} selected={contactoSelected} setSelected={setContactoSelected} key={contacto.uid + "-" + uid} />
+                        })
+                        :
+                        <></>
+                    }
+                </div>
+            </div>
+        </div>
     )
 }
 

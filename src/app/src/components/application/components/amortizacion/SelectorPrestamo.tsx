@@ -6,6 +6,7 @@ import Prestamo from "./Prestamo";
 import { User } from "firebase/auth";
 import { collection, getDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../../js/firebaseApp";
+import flechaIzq from "../../../../img/application/flecha_izq.svg"
 
 function setPaginaPrestamo(
     userData: User, pagina:number, 
@@ -77,7 +78,10 @@ function SelectorPrestamo(props: Props) {
     
     return (
         <div className={styles.amortizacion}>
-            <h1>{cambiarTituloSelector(pagina, nombrePrestamo)}</h1>
+            <div>
+                <img src={flechaIzq} style={{display: pagina === 0 ? 'none' : 'block'}} className={styles.flechaAtras} alt="Icono atrás" onClick={() => setPagina(0)}/>
+                <h1>{cambiarTituloSelector(pagina, nombrePrestamo)}</h1>
+            </div>
             <div className={styles.listaPrestamos}>
                 {setPaginaPrestamo(props.userData, pagina, setPagina, prestamos, nombrePrestamo, setNombrePrestamo)}
             </div>

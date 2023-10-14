@@ -3,6 +3,8 @@ import styles from "../../../../css/application/BaseDatos.module.css"
 import { DocumentData, collection, doc, setDoc } from "firebase/firestore"
 import TextInputSim from "../../../simulador/TextInputSim"
 import { db } from "../../../../js/firebaseApp"
+import flechaIzq from "../../../../img/application/flecha_izq.svg"
+
 
 interface Tabla {
     displayName: string,
@@ -13,7 +15,8 @@ interface Tabla {
 interface Props {
     tabla: Tabla,
     pagina: number, 
-    setPagina: Dispatch<SetStateAction<number>>
+    setPagina: Dispatch<SetStateAction<number>>,
+    setContactoSelected: Dispatch<SetStateAction<string>>
 }
 
 async function anyadirRegistro(nombreTabla: string, nombre: string, valor: string, setPagina: Dispatch<SetStateAction<number>>) {
@@ -99,7 +102,10 @@ function NuevoRegistro(props: Props) {
 
     return(
         <div className={styles.listaTabla}>
-            <h2>Nuevo registro: {props.tabla.displayName}</h2>
+            <div>
+                <img src={flechaIzq} className={styles.flechaAtras} alt="Icono atrás bd" onClick={() => {props.setPagina(1)}}/>
+                <h2>Nuevo registro: {props.tabla.displayName}</h2>
+            </div>
             {setNuevoRegistroInputs(props.tabla.displayName, 
                 props.pagina, props.setPagina, 
                 nuevoNombre, setNuevoNombre, 

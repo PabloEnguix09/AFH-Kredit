@@ -112,6 +112,7 @@ class UsuarioAPI {
             await getDoc(userRef).then(async(res) => {
     
                 Cookies.set("uid", await credentials.user.getIdToken())
+                Cookies.set("rol", res.data()!.rol)
         
                 setUrl(res.data()!.rol === "Admin" ? "../app/admin" : "../app/user")
             })
@@ -122,7 +123,7 @@ class UsuarioAPI {
         }
     }
 
-    getContctos = async(uid: string, setContactos: Dispatch<SetStateAction<IContactoDatos[]>>, setConversaciones: Dispatch<SetStateAction<IConversacionInterfaz[]>>) => {
+    getContactos = async(uid: string, setContactos: Dispatch<SetStateAction<IContactoDatos[]>>, setConversaciones: Dispatch<SetStateAction<IConversacionInterfaz[]>>) => {
         await getDocs(query(collection(db, "usuarios"), where("email", "==", uid))).then(async(res) => {
             let user = res.docs[0].data()
             let contactos : IContactoDatos[] = []

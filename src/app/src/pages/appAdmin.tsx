@@ -12,6 +12,7 @@ import { User, onAuthStateChanged } from "firebase/auth"
 import { useNavigate } from "react-router-dom"
 import UsuarioAPI from "../services/users"
 import { IContactoDatos, IConversacionInterfaz } from "../types/app.types"
+import Cookies from "js-cookie";
 
 const api = new UsuarioAPI()
 
@@ -23,7 +24,7 @@ function setPaginaAdmin(pagina:string, userData: User | null, contactos: IContac
             case "Documentos":
                 return <Documentos contactos={contactos} contactoSelected={contactoSelected} setContactoSelected={setContactoSelected} />
             case "BD":
-                return <BaseDatos />
+                return <BaseDatos setContactoSelected={setContactoSelected} />
             case "Blog":
                 return <Blog />
             case "Ajustes":
@@ -50,9 +51,8 @@ function AdminApp() {
         const getUserData = async(user : User) => {
             let uid = user.email
             if(uid) {
-                await api.getContctos(uid, setContactos, setConversaciones)
+                await api.getContactos(uid, setContactos, setConversaciones)
             }
-            
         }
         let contador = 0
         onAuthStateChanged(auth, (user) => {
@@ -61,10 +61,11 @@ function AdminApp() {
                 setUserData(user)
                 getUserData(user)
             }
-            else if(!user || contador >= 5){
+            else if(!user || contador >= 5 || Cookies.get("rol") !== "Admin"){
                 if (contador >= 5) {
                     console.log("llama demasiado aqui");
                 }
+                
                 contador = 0
                 navigate("/login")
             }

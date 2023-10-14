@@ -1,5 +1,6 @@
 import styles from "../../../../css/application/Documentos.module.css"
 import commonStyles from "../../../../css/application/AppChat.module.css"
+import appStyles from "../../../../css/application/App.module.css"
 import Buscador from "../Buscador"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import InfoContacto from "../chat/InfoContacto"
@@ -33,8 +34,10 @@ function renderDocumentos(documentos: Documento[], emailUsuario: string, getAllF
 
 function Documentos(props:Props) {
 
+    const [deviceWidth, setDeviceWidth] = useState(window.innerWidth)
     const [documentos, setDocumentos] = useState<Documento[]>([])
     const [userEmail, setUserEmail] = useState("")
+
     const getAllFiles = async(email: string) => {
         setDocumentos([])
         let documentos : Documento[] = []
@@ -49,6 +52,11 @@ function Documentos(props:Props) {
         })
     }
 
+    const cambiarPantallaMovil = async() => {
+        document.getElementsByClassName(styles.documentosMovil)[0].getElementsByClassName(commonStyles.ventanaChat)[0].classList.remove(appStyles.oculto)
+        console.log("docs mostrados");
+    }
+
     useEffect(() => {
       
         if(props.contactoSelected !== "") {
@@ -60,27 +68,52 @@ function Documentos(props:Props) {
                 setUserEmail(datosContacto.uid)
                 getAllFiles(userEmail)
             }  
+
+            if(deviceWidth <= 768) {
+                cambiarPantallaMovil()
+            }
         }
-    }, [props.contactoSelected, props.contactos])
+    }, [deviceWidth, props.contactoSelected, props.contactos])
     
 
     return(
-        <div className={styles.documentos}>
-            <Buscador contactoSelected={props.contactoSelected} setContactoSelected={props.setContactoSelected} imgContactos={""} contactos={props.contactos}/>
+        <div>
+            <div className={styles.documentos}>
+                <Buscador contactoSelected={props.contactoSelected} setContactoSelected={props.setContactoSelected} imgContactos={""} contactos={props.contactos}/>
 
-            <div className={commonStyles.ventanaChat}>
-            {props.contactoSelected !== ""
-                ?
-                    <>
-                        <InfoContacto imagenContacto={""} nombre={props.contactoSelected} telf={"+34 XXX XX XX XX"} />
-                        <div className={styles.listaDocumentos}>
-                            <Doc nuevo={true} nombreDoc={""} linkDoc={""} isAdmin={true} emailUsuario={userEmail} onUpdated={getAllFiles} />
-                            {renderDocumentos(documentos, userEmail, getAllFiles)}
-                        </div>
-                    </>
-                :
-                    <></>
-                }
+                <div className={commonStyles.ventanaChat}>
+                {props.contactoSelected !== ""
+                    ?
+                        <>
+                            <InfoContacto imagenContacto={""} nombre={props.contactoSelected} telf={"+34 XXX XX XX XX"} setContactoSelected={props.setContactoSelected}/>
+                            <div className={styles.listaDocumentos}>
+                                <Doc nuevo={true} nombreDoc={""} linkDoc={""} isAdmin={true} emailUsuario={userEmail} onUpdated={getAllFiles} />
+                                {renderDocumentos(documentos, userEmail, getAllFiles)}
+                            </div>
+                        </>
+                    :
+                        <></>
+                    }
+                </div>
+            </div>
+
+            <div className={styles.documentosMovil}>
+                <Buscador contactoSelected={props.contactoSelected} setContactoSelected={props.setContactoSelected} imgContactos={""} contactos={props.contactos}/>
+
+                <div className={`${commonStyles.ventanaChat} ${appStyles.oculto}`}>
+                {props.contactoSelected !== ""
+                    ?
+                        <>
+                            <InfoContacto imagenContacto={""} nombre={props.contactoSelected} telf={"+34 XXX XX XX XX"} setContactoSelected={props.setContactoSelected}/>
+                            <div className={styles.listaDocumentos}>
+                                <Doc nuevo={true} nombreDoc={""} linkDoc={""} isAdmin={true} emailUsuario={userEmail} onUpdated={getAllFiles} />
+                                {renderDocumentos(documentos, userEmail, getAllFiles)}
+                            </div>
+                        </>
+                    :
+                        <></>
+                    }
+                </div>
             </div>
         </div>
     )

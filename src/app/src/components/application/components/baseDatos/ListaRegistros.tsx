@@ -2,11 +2,14 @@ import { DocumentData } from "firebase/firestore"
 import styles from "../../../../css/application/BaseDatos.module.css"
 import Registro from "./Registro"
 import { Dispatch, SetStateAction } from "react"
+import flechaIzq from "../../../../img/application/flecha_izq.svg"
+
 
 interface Props {
     tabla: Tabla,
     pagina: number, 
-    setPagina: Dispatch<SetStateAction<number>>
+    setPagina: Dispatch<SetStateAction<number>>,
+    setContactoSelected: Dispatch<SetStateAction<string>>
 }
 
 interface Tabla {
@@ -30,7 +33,6 @@ function setRegistros(listaRegistros: Tabla, pagina: number, setPagina: Dispatch
     if (listaRegistros.displayName === "usuarios") {
         lista = Object.entries(listaRegistros.valores).map((registro) => {
             let datos: Usuario = registro[1].data()
-            console.log(datos);
             return <Registro nuevo={false} nombre={datos.email} nombreTabla={"usuarios"} valor={""} magnitud={""} pagina={pagina} setPagina={setPagina} />
         })
     }
@@ -46,7 +48,11 @@ function setRegistros(listaRegistros: Tabla, pagina: number, setPagina: Dispatch
 function ListaRegistros(props:Props) {
     return(
         <div className={styles.listaTabla}>
+            <div>
+            <img src={flechaIzq} className={styles.flechaAtras} alt="Icono atrás bd" onClick={() => {props.setContactoSelected(""); props.setPagina(1)}}/>
             <h2>{props.tabla.displayName}</h2>
+
+            </div>
                 <div>
                     <Registro nuevo={true} nombre={""} valor={""} magnitud={""} key={"nuevoRegistro"} nombreTabla={props.tabla.displayName} pagina={props.pagina} setPagina={props.setPagina} />
                     {setRegistros(props.tabla, props.pagina, props.setPagina)}

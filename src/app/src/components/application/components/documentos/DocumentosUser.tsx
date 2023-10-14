@@ -65,7 +65,6 @@ function DocumentosUser(props:Props) {
                 let nombre = documento.getElementsByClassName("nombreDoc")[0]
                 
                 if(!nombre.innerHTML.toLowerCase().includes(docu.toLowerCase())) {
-                    console.log(documento);
                                         
                     documento.classList.add(commonStyles.oculto)
                 }

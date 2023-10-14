@@ -16,7 +16,6 @@ async function borrarNoticia(nombre: string, setIsBorrado: Dispatch<SetStateActi
 
     await getDocs(query(blogRef,where("titular", "==", nombre))).then(async(docs) => {
         let noticia = docs.docs[0]
-        console.log(noticia);
         await deleteDoc(doc(db, "blog", docs.docs[0].id)).then(() => {
             setIsBorrado(true)
         })

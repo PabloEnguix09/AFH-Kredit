@@ -46,7 +46,6 @@ function Blog() {
                 let nombre = noticia.getElementsByClassName("nombreNoticia")[0]
                 
                 if(!nombre.innerHTML.toLowerCase().includes(noti.toLowerCase())) {
-                    console.log(noticia);
                                         
                     noticia.classList.add(commonStyles.oculto)
                 }

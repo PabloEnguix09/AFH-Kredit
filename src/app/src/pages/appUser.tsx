@@ -44,7 +44,7 @@ function UserApp() {
         const getUserData = async(user : User) => {
             let uid = user.email
             if(uid) {
-                await api.getContctos(uid, setContactos, setConversaciones)
+                await api.getContactos(uid, setContactos, setConversaciones)
             }
         }
         let contador = 0
