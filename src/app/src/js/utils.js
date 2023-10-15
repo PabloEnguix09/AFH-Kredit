@@ -7,4 +7,8 @@ function checkIfScrollable(nombreClase) {
     }
 }
 
-module.exports = {checkIfScrollable}
+function ScrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+module.exports = {checkIfScrollable, ScrollToTop}

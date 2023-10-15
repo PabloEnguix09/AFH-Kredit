@@ -14,6 +14,7 @@ import UserApp from "./pages/appUser";
 import reportWebVitals from "./reportWebVitals";
 import Estudio from "./pages/estudio";
 import Privacidad from "./pages/privacidad";
+import ScrollToTop from "./js/scrollToTop";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
@@ -21,6 +22,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
     <Router>
+        <ScrollToTop />
         <Routes>
             <Route path="/" Component={LandingPage} />
             <Route path="/contacto" Component={Contacto} />
@@ -31,7 +33,6 @@ root.render(
             <Route path="/simulador" Component={Simulador} />
             <Route path="/blog" Component={Blog} />
             <Route path="/privacidad" Component={Privacidad} />
-            
             <Route path="/app/admin" Component={AdminApp} />
             <Route path="/app/user" Component={UserApp} />
         </Routes>

@@ -404,9 +404,14 @@
     }
 
 
-
     .opcionesHipotecas h1 {
         font-size: 1.375rem;
+    }
+
+    .opcionesHipotecas hr {
+        height: 0 !important;
+        width: 100%;
+        display: block !important;
     }
 
     .opcionesHipotecas > div {

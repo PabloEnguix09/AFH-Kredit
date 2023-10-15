@@ -5,9 +5,11 @@ import { useState } from "react"
 import Opciones from "./Opciones";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { ISimuladorEstados } from "../../types/simulador.types";
+import { ScrollToTop } from "../../js/utils";
 
 function pasosSimulador(estados: ISimuladorEstados, navigate: NavigateFunction) {
     
+    ScrollToTop()
     switch (estados.siguiente.estado) {
         case 1:
             return <Formulario titular={estados.titular} edad={estados.edad} ingresos={estados.ingresos} deudas={estados.deudas} sabeCasa={estados.sabeCasa} precio={estados.precio} provincia={estados.provincia} quiereCasa={estados.quiereCasa} uso={estados.uso} tipoVivienda={estados.tipoVivienda} anyos={estados.anyos} siguiente={estados.siguiente} />

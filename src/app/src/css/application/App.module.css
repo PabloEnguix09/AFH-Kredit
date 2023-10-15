@@ -199,4 +199,11 @@
         font-size: 1.375rem;
         max-width: 12rem;
     }
+
+    .noLeidos {
+        width: 1.5rem;
+        height: 1.5rem;
+        font-size: 1rem !important;
+        text-align: center;
+    }
 }
