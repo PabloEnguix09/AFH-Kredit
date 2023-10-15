@@ -62,6 +62,7 @@ interface IPrestamo {
 
 function SelectorPrestamo(props: Props) {
     const [pagina, setPagina] = useState(0)
+    const [deviceWidth, setDeviceWidth] = useState(window.innerWidth)
     const [nombrePrestamo, setNombrePrestamo] = useState("")
     const [prestamos, setPrestamos] = useState<IPrestamo[]>([])
 
@@ -74,6 +75,9 @@ function SelectorPrestamo(props: Props) {
             })
         }
         getPrestamos()
+
+        window.addEventListener("resize", () => setDeviceWidth(window.innerWidth))
+
     }, [])
     
     return (

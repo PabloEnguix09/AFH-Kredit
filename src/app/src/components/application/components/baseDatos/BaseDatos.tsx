@@ -40,7 +40,13 @@ function BaseDatos(props: Props) {
         console.log("docs mostrados");
     }
 
+    const cambiarPantallaPc = async() => {
+        document.getElementsByClassName(styles.baseDatosMovil)[0].getElementsByClassName(commonStyles.ventanaChat)[0].classList.add(appStyles.oculto)
+        console.log("docs mostrados");
+    }
+
     useEffect(() => {
+        window.addEventListener("resize", () => setDeviceWidth(window.innerWidth))
         let dbRef = collection(db, "baseDatos")
         const getBaseDatos = async() => {
             await getDocs(dbRef).then(async(res) => {
@@ -57,8 +63,11 @@ function BaseDatos(props: Props) {
             })
         }
 
-        if(deviceWidth <= 768 && tabla !== "") {
+        if(deviceWidth <= 768) {
             cambiarPantallaMovil()
+        }
+        else {
+            cambiarPantallaPc()
         }
         
 
@@ -86,7 +95,7 @@ function BaseDatos(props: Props) {
 
             <div className={styles.baseDatosMovil}>
 
-                <div className={`${commonStyles.ventanaChat} `}>
+                <div className={`${commonStyles.ventanaChat} ${appStyles.oculto}`}>
                 {
                         tabla !== ""
                         ?

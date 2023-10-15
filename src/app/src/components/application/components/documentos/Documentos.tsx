@@ -7,7 +7,6 @@ import InfoContacto from "../chat/InfoContacto"
 import Doc from "./Doc"
 import { getDownloadURL, listAll, ref } from "firebase/storage"
 import { storage } from "../../../../js/firebaseApp"
-import { User } from "firebase/auth"
 
 interface Props {
     contactos: ContactoDatos[]
@@ -37,6 +36,7 @@ function Documentos(props:Props) {
     const [deviceWidth, setDeviceWidth] = useState(window.innerWidth)
     const [documentos, setDocumentos] = useState<Documento[]>([])
     const [userEmail, setUserEmail] = useState("")
+    const [isMovil, setIsMovil] = useState(deviceWidth <= 768)
 
     const getAllFiles = async(email: string) => {
         setDocumentos([])
@@ -57,6 +57,11 @@ function Documentos(props:Props) {
         console.log("docs mostrados");
     }
 
+    const cambiarPantallaPc = async() => {
+        document.getElementsByClassName(styles.documentosMovil)[0].getElementsByClassName(commonStyles.ventanaChat)[0].classList.add(appStyles.oculto)
+        console.log("docs mostrados");
+    }
+
     useEffect(() => {
       
         if(props.contactoSelected !== "") {
@@ -68,10 +73,14 @@ function Documentos(props:Props) {
                 setUserEmail(datosContacto.uid)
                 getAllFiles(userEmail)
             }  
-
+            window.addEventListener("resize", () => setDeviceWidth(window.innerWidth))
             if(deviceWidth <= 768) {
                 cambiarPantallaMovil()
             }
+        }
+        else if(deviceWidth <= 768) {
+            document.getElementsByClassName(styles.documentosMovil)[0].getElementsByClassName(commonStyles.ventanaChat)[0].classList.add(appStyles.oculto)
+
         }
     }, [deviceWidth, props.contactoSelected, props.contactos])
     

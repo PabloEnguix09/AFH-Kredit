@@ -1,7 +1,11 @@
 .documentos {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 2.5vw;
+}
+
+.documentosMovil {
+    display: none;
 }
 
 .documentosUser {
@@ -92,6 +96,10 @@
 @media screen and (max-width:768px) {
     .documentos {
         display: none;
+    }
+
+    .documentosMovil {
+        display: flex;
     }
 
     .documentosUser {

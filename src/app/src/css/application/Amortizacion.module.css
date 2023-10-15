@@ -11,8 +11,9 @@
     gap: 0.25rem;
 }
 
-h1 {
-    padding-top: 1.5rem;
+.amortizacion h1 {
+    padding-top: 0;
+    width: 90%;
 }
 
 .listaPrestamos {
@@ -160,26 +161,35 @@ h1 {
     padding: 0 1rem;
 }
 
+.amortizacion > div:first-child {
+    width: 100%;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin-left: 3rem;
+}
+
+.flechaAtras {
+    cursor: pointer;
+}
+
 @media screen and (max-width: 768px) {
+
     .amortizacion {
         width: 100%;
         height: 100vh;
         border-radius: 0;
     }
 
+    .amortizacion > div:first-child {
+        margin-left: 1rem;
+    }
+
     .amortizacion h1 {
         padding: 0;
         font-size: 1.4rem;
-    }
-
-    .amortizacion > div:first-child {
-        width: 100%;
-        height: 4rem;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 1rem;
-        margin-left: 1rem;
     }
 
     .listaPrestamos {
@@ -208,9 +218,6 @@ h1 {
         &:nth-child(3) {
             display: none;
         }
-    }
-
-    .titulos p {
     }
 
     .mensualidad {

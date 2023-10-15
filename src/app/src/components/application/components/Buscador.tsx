@@ -39,9 +39,16 @@ function isIContactoDatos(object: IContactoDatos | Tabla): object is IContactoDa
 
 function Buscador({contactoSelected, setContactoSelected, imgContactos, contactos}: Props) {
     
+    const [deviceWidth, setDeviceWidth] = useState(window.innerWidth)
+    const [condicionDisplay, setCondicionDisplay] = useState(contactoSelected === "" && deviceWidth <= 768)
+
+
     useEffect(() => {
         checkIfScrollable()
-    }, [])
+        window.addEventListener("resize", () => setDeviceWidth(window.innerWidth))
+        setCondicionDisplay(contactoSelected === "" && deviceWidth <= 768)
+        
+    }, [deviceWidth, contactoSelected])
 
     let uid = Cookies.get("uid")
 
@@ -74,11 +81,7 @@ function Buscador({contactoSelected, setContactoSelected, imgContactos, contacto
                 }
             }
         }
-    }
-
-    let condicionDisplay = contactoSelected === "" && window.innerWidth <= 768
-    console.log(condicionDisplay);
-    
+    }    
 
     return(
         <div>
