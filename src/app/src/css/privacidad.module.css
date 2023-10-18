@@ -23,3 +23,9 @@
 .privacidad a {
     text-decoration: underline;
 }
+
+@media screen and (max-width: 768px) {
+    .privacidad p {
+        width: 90%;
+    }
+}

@@ -6,3 +6,16 @@
     text-align: justify;
     margin: 0 5vw;
 }
+
+.nosotros ol li {
+    margin: 1rem 6vw;
+}
+
+.nosotros ol li p {
+    margin: 0;
+}
+
+.nosotros h3 {
+    margin-top: 2rem;
+    text-align: center;
+}

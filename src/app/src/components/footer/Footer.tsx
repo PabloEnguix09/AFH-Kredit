@@ -28,6 +28,7 @@ function Footer() {
                 </div>
                 <hr />
                 <div className={styles.copyRedes}>
+                    <p className={styles.copy}>Iconos hechos por <a href="https://www.flaticon.es/autores/freepik">Freepik</a></p>
                     <p className={styles.copy}>Copyright 2023 © AFH Kredit. Todos los derechos reservados</p>
                     <div className={styles.redes}>
                         <Link to={"https://www.tiktok.com"}>

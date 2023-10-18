@@ -1,4 +1,4 @@
-import { setPersistence, browserSessionPersistence, signInWithEmailAndPassword, signInWithPopup, GithubAuthProvider, UserCredential } from "firebase/auth";
+import { setPersistence, browserSessionPersistence, signInWithEmailAndPassword, signInWithPopup, GithubAuthProvider, UserCredential, deleteUser } from "firebase/auth";
 import { Dispatch, SetStateAction } from "react";
 import { auth, googleProvider, fbProvider, twitterProvider, db, storage } from "../js/firebaseApp";
 import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
@@ -51,7 +51,15 @@ class UsuarioAPI {
                     })
                 case "google":
                     return signInWithPopup(auth, googleProvider).then(async(credentials) => {
-                        await this.redirect(setUrl, credentials)
+                        this.getUsuarioExistente(credentials.user.email!).then(async(userExists) => {
+                            if (userExists) {
+                                await this.redirect(setUrl, credentials)
+                            }
+                            else {
+                                deleteUser(credentials.user)
+                                setErrText("El usuario especificado no existe. Inténtelo más tarde o espere a la respuesta vía e-mail")
+                            }
+                        })
                     }).catch(error => {
                         if(error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
                             setErrText("El usuario o la contraseña son incorrectos, por favor, inténtelo de nuevo")
@@ -59,7 +67,6 @@ class UsuarioAPI {
                         else {
                             setErrText("Ha habido un problema al iniciar sesión. Inténtelo de nuevo más tarde")
                             setErrText(error.code)
-        
                         }
                     })
                 case "facebook":
@@ -162,6 +169,12 @@ class UsuarioAPI {
             }
             return imagenUrl
         })
+    }
+
+    getUsuarioExistente = async(email: string) => {
+        let userRef = doc(db, "usuarios", email)
+        let data = (await getDoc(userRef)).data()
+        return data !== undefined
     }
 }
 

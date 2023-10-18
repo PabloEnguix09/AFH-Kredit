@@ -53,6 +53,10 @@
     font-size: 0.625rem;
 }
 
+.copy a {
+    text-decoration: underline;
+}
+
 .redes img {
     margin-left: 0.8rem;
     width: 2.125vw;
