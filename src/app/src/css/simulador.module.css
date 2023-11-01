@@ -40,7 +40,7 @@
 .textInput > p {
     font-weight: bold;
     text-align: center;
-    font-size: 1.25vw;
+    font-size: 1vw;
     margin-top: .8vw;
 }
 
@@ -58,7 +58,7 @@
 .radioInput > p {
     font-weight: bold;
     text-align: center;
-    font-size: .94vw;
+    font-size: 1vw;
     margin-top: .8vw;
 }
 .opciones .opcion {

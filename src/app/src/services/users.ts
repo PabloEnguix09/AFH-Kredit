@@ -1,10 +1,12 @@
 import { setPersistence, browserSessionPersistence, signInWithEmailAndPassword, signInWithPopup, GithubAuthProvider, UserCredential, deleteUser } from "firebase/auth";
 import { Dispatch, SetStateAction } from "react";
-import { auth, googleProvider, fbProvider, twitterProvider, db, storage } from "../js/firebaseApp";
+import { auth, googleProvider, fbProvider, db, storage } from "../js/firebaseApp";
 import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import Cookies from "js-cookie";
 import { IContactoDatos, IConversacionInterfaz } from "../types/app.types";
 import { getDownloadURL, listAll, ref } from "firebase/storage";
+
+const hostname = window.location.hostname
 
 class UsuarioAPI {
     enviarFormulario = async (nombre: string, apellidos: string, correo: string, telefono: string, descripcion: string, setUrl: Dispatch<SetStateAction<string>>) => {
@@ -16,7 +18,7 @@ class UsuarioAPI {
             descripcion: descripcion
         }
         
-        await fetch("http://localhost:5050/api/sendContactMail", {
+        await fetch(`http://${hostname}:5050/api/sendContactMail`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -79,18 +81,7 @@ class UsuarioAPI {
                         else {
                             setErrText("Ha habido un problema al iniciar sesión. Inténtelo de nuevo más tarde")
                         }
-                    })
-                case "twitter":
-                    return signInWithPopup(auth, twitterProvider).then(async(credentials) => {
-                        await this.redirect(setUrl, credentials)
-                    }).catch(error => {
-                        if(error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
-                            setErrText("El usuario o la contraseña son incorrectos, por favor, inténtelo de nuevo")
-                        }
-                        else {
-                            setErrText("Ha habido un problema al iniciar sesión. Inténtelo de nuevo más tarde")
-                        }
-                    })    
+                    })  
                 case "apple":
                     //TODO: Provider apple
                     return signInWithPopup(auth, new GithubAuthProvider()).then(async(credentials) => {

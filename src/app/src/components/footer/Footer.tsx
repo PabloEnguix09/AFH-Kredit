@@ -7,7 +7,7 @@ import instagramLogo from "../../img/instagram.svg"
 import twitterLogo from "../../img/twitter.svg"
 import facebookLogo from "../../img/facebook.svg"
 
-import afinhome from "../../img/Logo AFinHome.svg"
+import afinhome from "../../img/Logo_AFHHome.png"
 import grupoafh from "../../img/grupoAFH.svg"
 import { Link } from "react-router-dom";
 

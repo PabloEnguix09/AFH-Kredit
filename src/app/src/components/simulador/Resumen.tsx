@@ -13,6 +13,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 interface Props {
     capital: ISimuladorEstado,
     anyos: ISimuladorEstado,
+    interesInicial: number
     toggle: {
         estado: number,
         cb: Dispatch<React.SetStateAction<number>>
@@ -20,10 +21,10 @@ interface Props {
     estados: ISimuladorEstados
 }
 
-function Resumen({capital, anyos, toggle, estados}: Props) {
+function Resumen({capital, anyos, interesInicial, toggle, estados}: Props) {
 
     const [capitalState, setCapital] = useState<number>(parseInt(capital.estado))
-    const [interes, setInteres] = useState<number>(3)
+    const [interes, setInteres] = useState<number>(interesInicial)
     const [anyosState, setAnyos] = useState<number>(parseInt(anyos.estado))
 
     const [mensualidad, setMensualidad] = useState(0)
@@ -40,7 +41,8 @@ function Resumen({capital, anyos, toggle, estados}: Props) {
     const [gastosNotariaMin, setGastosNotariaMin] = useState(0)
     const [gastosNotariaMax, setGastosNotariaMax] = useState(0)
     const [gastosRegistroMin, setGastosRegistroMin] = useState(0)
-    const [transmisiones, setTransmisiones] = useState(0)
+    const [transmisionesMin, setTransmisionesMin] = useState(0)
+    const [transmisionesMax, setTransmisionesMax] = useState(0)
 
     const [datos, setDatos] = useState<ISimuladorValores>()
     let navigate = useNavigate()
@@ -54,7 +56,8 @@ function Resumen({capital, anyos, toggle, estados}: Props) {
 
         setGastosRegistroMin(0.1/100 * (capitalState+intereses))
 
-        setTransmisiones(0.4/100 * (capitalState+intereses))
+        setTransmisionesMin(4/100 * (capitalState))
+        setTransmisionesMax(11/100 * (capitalState))
 
         setData({
             labels: ["Intereses totales", "Capital"],
@@ -72,6 +75,7 @@ function Resumen({capital, anyos, toggle, estados}: Props) {
             deudas: estados.deudas.estado,
             sabeCasa: estados.sabeCasa.estado,
             precio: estados.precio.estado,
+            necesitas: estados.necesitas.estado,
             provincia: estados.provincia.estado,
             quiereCasa: estados.quiereCasa.estado,
             uso: estados.uso.estado,
@@ -112,7 +116,7 @@ function Resumen({capital, anyos, toggle, estados}: Props) {
                 </div>
                 <div className="inputs">
                 <TextInputSim titulo={"Capital inicial"} explicacion={""} tipo={"number"} placeholder={"Capital"} magnitud={"€"} valorDefault={capitalState} valorDefaultCb={setCapital} disabled={false}  />
-                <TextInputSim titulo={"Intereses"} explicacion={"Fijo: 3%, Variable: 4%, Mixto: 5%"} tipo={"number"} placeholder={"Intereses"} magnitud={"%"} valorDefault={interes} valorDefaultCb={setInteres} disabled={false}  />
+                <TextInputSim titulo={"Intereses"} explicacion={"Fijo: 4%, Variable: 5%, Mixto: 3%"} tipo={"number"} placeholder={"Intereses"} magnitud={"%"} valorDefault={interes} valorDefaultCb={setInteres} disabled={false}  />
                 <TextInputSim titulo={"Plazo de amortización"} explicacion={"Máximo fijo: 30 años\nMáximo variable: 40 años"} tipo={"number"} placeholder={"Años"} magnitud={"Años"} valorDefault={anyos.estado.toString()} valorDefaultCb={setAnyos} disabled={false}  />
             </div>
 
@@ -126,7 +130,7 @@ function Resumen({capital, anyos, toggle, estados}: Props) {
                 <div className={`${styles.mensualidad} ${styles.gastosExtra}`}>
                     <h2>Gastos tasación</h2>
                     <div>
-                        <span className={styles.magnitud}>{250} €</span>
+                        <span className={styles.magnitud}>300 - 600 €</span>
                     </div>
                 </div>
                 <div className={`${styles.mensualidad} ${styles.gastosExtra}`}>
@@ -138,7 +142,7 @@ function Resumen({capital, anyos, toggle, estados}: Props) {
                 <div className={`${styles.mensualidad} ${styles.gastosExtra}`}>
                     <h2>Gastos gestoría</h2>
                     <div>
-                        <span className={styles.magnitud}>{400} €</span>
+                        <span className={styles.magnitud}>300 - 600 €</span>
                     </div>
                 </div>
                 <div className={`${styles.mensualidad} ${styles.gastosExtra}`}>
@@ -151,9 +155,10 @@ function Resumen({capital, anyos, toggle, estados}: Props) {
                 <div className={`${styles.mensualidad} ${styles.gastosExtra}`}>
                     <h2>Impuestos</h2>
                     <div>
-                        <span className={styles.magnitud}>{transmisiones.toFixed(2)} €</span>
+                        <span className={styles.magnitud}>{transmisionesMin.toFixed(2)} € - {transmisionesMax.toFixed(2)} €</span>
                     </div>
                 </div>
+                *Gastos aproximados
             </div>
             </div>
             <div className={styles.botones}>

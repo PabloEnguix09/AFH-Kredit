@@ -49,7 +49,6 @@ function Login() {
                         <div className={styles.logins}>
                             <img src={googleLogo} alt="Inicia sesión con Google" onClick={async() => await api.login(email, pass, setUrl, "google", setErrText)}/>
                             <img src={fbLogo} alt="Inicia sesión con Facebook" onClick={async() => await api.login(email, pass, setUrl, "facebook", setErrText)}/>
-                            <img src={twitterLogo} alt="Inicia sesión con Twitter" onClick={async() => await api.login(email, pass, setUrl, "twitter", setErrText)}/>
                             <img src={appleLogo}  alt="Inicia sesión con Apple ID" onClick={async() => await api.login(email, pass, setUrl, "apple", setErrText)}/>
                         </div>
                     </div>

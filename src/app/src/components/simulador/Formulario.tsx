@@ -18,6 +18,7 @@ const Formulario = (props: ISimuladorEstados) => {
     deudas: props.deudas.estado,
     sabeCasa: props.sabeCasa.estado,
     precio: props.precio.estado,
+    necesitas: props.necesitas.estado,
     provincia: props.provincia.estado,
     quiereCasa: props.quiereCasa.estado,
     uso: props.uso.estado,
@@ -63,7 +64,7 @@ const Formulario = (props: ISimuladorEstados) => {
                 <div className={styles.datos}>
                     <div>
                         <RadioInputSim titulo={"¿Cuántos titulares va a tener la hipoteca?"} opcion1={"Uno"} opcion2={"Más de uno"} estadoCb={props.titular.cb} estado={props.titular.estado} />
-                        <TextInputSim titulo={"¿Qué edad tienes?"} explicacion={"Debes tener entre 18 y 66 años"} tipo={"number"} placeholder={"Edad"} magnitud={""} valorDefault={props.edad.estado} valorDefaultCb={props.edad.cb} disabled={false} />
+                        <TextInputSim titulo={"¿Qué edad tienes?"} explicacion={"Indica la edad del titular más mayor"} tipo={"number"} placeholder={"Edad"} magnitud={""} valorDefault={props.edad.estado} valorDefaultCb={props.edad.cb} disabled={false} />
                         <TextInputSim titulo={"¿Cuáles son tus ingresos?"} explicacion={"Suma cuánto dinero neto ingresas en un mes"} tipo={"number"} placeholder={"Total"} magnitud={"€"} valorDefault={props.ingresos.estado} valorDefaultCb={props.ingresos.cb} disabled={false}  />
                     </div>
                     <div>
@@ -80,16 +81,17 @@ const Formulario = (props: ISimuladorEstados) => {
                 </div>
                 <div className={styles.datos}>
                     <div>
-                        <RadioInputSim titulo={"¿Sabes cuál va a ser tu casa?"} opcion1={"Sí"} opcion2={"No"} estadoCb={props.sabeCasa.cb} estado={props.sabeCasa.estado} />
-                        <TextInputSim titulo={"¿Cuánto cuesta?"} explicacion={"Entre 20.000 y 1.000.000€"} tipo={"number"} placeholder={"Total"} magnitud={"€"} valorDefault={props.precio.estado} valorDefaultCb={props.precio.cb} disabled={false}  />
+                        <RadioInputSim titulo={"¿Ya tienes tu vivienda?"} opcion1={"Sí"} opcion2={"No"} estadoCb={props.sabeCasa.cb} estado={props.sabeCasa.estado} />
+                        <TextInputSim titulo={"¿Cuánto cuesta?"} explicacion={""} tipo={"number"} placeholder={"Total"} magnitud={"€"} valorDefault={props.precio.estado} valorDefaultCb={props.precio.cb} disabled={false}  />
+                        <TextInputSim titulo={"¿Cuánto necesitas?"} explicacion={""} tipo={"number"} placeholder={"Total"} magnitud={"€"} valorDefault={props.necesitas.estado} valorDefaultCb={props.necesitas.cb} disabled={false}  />
                         <TextInputSim titulo={"¿Dónde está?"} explicacion={"Introduzca el código postal de su localidad"} tipo={"number"} placeholder={"Código postal"} magnitud={""} valorDefault={props.provincia.estado} valorDefaultCb={props.provincia.cb} disabled={false} />
                         <p style={{visibility: cpCorrecto ? "visible" : "hidden", textAlign: "center", fontWeight: "bold", fontSize: "1.25vw", marginTop: "1vh"}}>{provinciaCp}</p>
 
                     </div>
                     <div>
-                        <RadioInputSim titulo={"¿Cuál va a ser el uso de la vivienda?"} opcion1={"Vivienda habitual"} opcion2={"Segunda residencia"} estadoCb={props.uso.cb} estado={props.uso.estado} />
+                        <RadioInputSim titulo={"¿Cuál va a ser el uso de la vivienda?"} opcion1={"Vivienda habitual"} opcion2={"Segunda o inversión"} estadoCb={props.uso.cb} estado={props.uso.estado} />
                         <RadioInputSim titulo={"¿Qué tipo de vivienda es?"} opcion1={"Segunda mano"} opcion2={"Nueva construcción"} estadoCb={props.tipoVivienda.cb} estado={props.tipoVivienda.estado} />
-                        <TextInputSim titulo={"¿Cuántos años necesitas?"} explicacion={"Entre 10 y 40 años"} tipo={"number"} placeholder={"Años"} magnitud={""} valorDefault={props.anyos.estado} valorDefaultCb={props.anyos.cb} disabled={false}  />
+                        <TextInputSim titulo={"¿Cuántos años necesitas?"} explicacion={"Máximo 40 años"} tipo={"number"} placeholder={"Años"} magnitud={""} valorDefault={props.anyos.estado} valorDefaultCb={props.anyos.cb} disabled={false}  />
                     </div>
                 </div>
             </div>

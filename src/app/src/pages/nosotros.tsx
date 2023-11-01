@@ -12,7 +12,7 @@ function Nosotros() {
                 <h1>Sobre nosotros</h1>
                 <p>
                     Bienvenido a <strong>AFH Kredit</strong>, empresa de confianza con años de experiencia en el sector hipotecario. Estamos aquí para hacer realidad el sueño de tener tu
-                    propia propiedad, brindándote soluciones de financiamiento a medida y asesoramiento experto en hipotecas.
+                    hogar, brindándote soluciones de financiación a medida y asesoramiento experto en hipotecas.
                 </p>
                 <br />
                 <p>
@@ -25,7 +25,7 @@ function Nosotros() {
                     trabajamos mano a mano contigo para entender tus necesidades y encontrar la solución hipotecaria que mejor se adapte a tu situación.
                 </p>
 
-                <h2 style={{textAlign: "center"}}>Por qué elegirnos:</h2>
+                <h2 style={{textAlign: "center", marginTop: "1rem"}}>Por qué elegirnos:</h2>
                 <ol type="1">
                     <li>
                         <p>
@@ -36,19 +36,19 @@ function Nosotros() {
                     <li>
                         <p>
                             <strong>Asesoramiento Personalizado</strong>: Entendemos que las hipotecas no son un enfoque único para todos. Te brindamos asesoramiento personalizado, analizando tus metas 
-                            y circunstancias para ofrecerte las mejores opciones de financiamiento.
+                            y circunstancias para ofrecerte las mejores opciones de financiación.
                         </p>
                     </li>
                     <li>
                         <p>
                             <strong>Proceso Transparente</strong>: Queremos que te sientas seguro en cada paso del proceso. Te mantendremos informado y te explicaremos cada detalle para que tomes 
-                            decisiones informadas.
+                            la decisión correcta.
 
                         </p>
                     </li>
                     <li>
                         <p>
-                            <strong>Amplia Gama de Opciones</strong>: Trabajamos con una variedad de prestamistas y programas hipotecarios. Esto significa que podemos ayudarte a explorar una amplia gama de 
+                            <strong>Amplia Gama de Opciones</strong>: Trabajamos con una gran variedad de entidades financieras. Esto significa que podemos ayudarte a explorar una amplia gama de 
                             opciones y encontrar la que mejor se adapte a ti.
                         </p>
                     </li>
@@ -61,7 +61,7 @@ function Nosotros() {
                 </ol>
 
                 <p>
-                    En AFH Kredit sabemos que tu hogar es tu inversión más valiosa. Permítenos ser parte de este emocionante viaje hacia la propiedad de tus sueños. Estamos aquí para brindarte el apoyo y 
+                    En AFH Kredit sabemos que tu casa es tu inversión más valiosa. Permítenos ser parte de este emocionante viaje hacia tu hogar. Estamos aquí para brindarte el apoyo y 
                     la orientación que necesitas en cada paso del camino.
                 </p>
 
