@@ -8,8 +8,6 @@ class SimuladorAPI {
         let name = Buffer.from("codprov.csv", "ascii")
         let hostname = window.location.hostname
         
-        
-        
         let respuesta = await fetch(`http://${hostname}:5050/api/documents/localFile/${relPath}/${name}`)
         .then(response => response.json())
         .then(data => {

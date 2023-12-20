@@ -9,10 +9,10 @@ function Navbar() {
         <nav className={styles.navbar}>
             <a href="/"><img src={require("../../img/Logo.png")} alt="Logo AFH Kredit" /></a>
             <ul className={styles.enlaces}>
-                <li><a href="/nosotros">Nosotros</a></li>
-                <li><a href="/simulador">Simula tu hipoteca</a></li>
-                <li><a href="/contacto">Contacto</a></li>
-                <li><a href="/blog">Blog</a></li>
+                <li><Link to={"/nosotros"}>Nosotros</Link></li>
+                <li><Link to={"/simulador"}>Simula tu hipoteca</Link></li>
+                <li><Link to={"/contacto"}>Contacto</Link></li>
+                <li><Link to={"/blog"}>Blog</Link></li>
             </ul>
             <div>
                 {/*<select name="" id="">
